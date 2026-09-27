@@ -1,0 +1,113 @@
+# Ayla Documentation
+
+> Documentation for Ayla
+
+Append .md to any documentation page URL to get its markdown version.
+
+## Guides
+- [Getting Started](https://docs.aylanetworks.com/docs/getting-started.md)
+- [Integrated Agent v4.0.1](https://docs.aylanetworks.com/docs/integrated-agent-v401.md)
+- [Integrated Agent v3.3](https://docs.aylanetworks.com/docs/integrated-agent-v33.md)
+- [Integrated Agent v3.2](https://docs.aylanetworks.com/docs/integrated-agent-v323.md)
+- [Integrated Agent v3.1](https://docs.aylanetworks.com/docs/integrated-agent-v31.md)
+- [Getting Started and Migration Guide: Transitioning from ADA 3.x to ADA 4.0 / MDA](https://docs.aylanetworks.com/docs/getting-started-and-migration-guide-transitioning-from-ada-3x-to-ada-40-mda.md)
+- [MQTT based Cloud Architecture and Features](https://docs.aylanetworks.com/docs/native-mqtt-cloud-architecture-and-features.md)
+- [Pass-through Properties](https://docs.aylanetworks.com/docs/passthrough-properties.md)
+- [Device Connection Status - SelfOffline](https://docs.aylanetworks.com/docs/device-connection-status-selfoffline.md): This page provides information about the SelfOffline status for sensor devices.
+- [Users](https://docs.aylanetworks.com/docs/users.md)
+- [Rule Based Notifications](https://docs.aylanetworks.com/docs/rules.md): Rule based notifications are used to automatically respond to the changes in the state of a device or to an event.
+- [Subscription-Based Rules and Notifications](https://docs.aylanetworks.com/docs/subscription-based-rules-and-notifications.md): Subscription-based rules and notifications are designed to simplify the creation, management, and customization of user-facing notifications. This approach minimizes API calls, reduces developer…
+- [Message Templates](https://docs.aylanetworks.com/docs/message-templates.md): In the Ayla Platform, notifications are used to help monitor device activity, for example, alerts that notify users of a specific action or event that occurred on the device. They are also used to…
+- [Specific-Component OTA Jobs](https://docs.aylanetworks.com/docs/specific-component-ota-jobs.md)
+- [Stage Run](https://docs.aylanetworks.com/docs/commandcenter-stage-run.md)
+- [OTA Best Practices](https://docs.aylanetworks.com/docs/command-center-ota-best-practices.md)
+- [Command Center Video Tutorial](https://docs.aylanetworks.com/docs/command-center-video-tutorial.md)
+- [Ayla Dashboard Tutorial](https://docs.aylanetworks.com/docs/tutorials.md)
+- [How to create Push notifications PEM file](https://docs.aylanetworks.com/docs/how-to-create-push-notifications-pem-file.md)
+- [Ayla Mobile SDK - MQTT Based (nMQTT) Developer Guide](https://docs.aylanetworks.com/docs/native-mqtt-mobile-sdk-developer-guide.md)
+- [Ayla Rule Service (ARS)](https://docs.aylanetworks.com/docs/ayla-rule-service-ars-preview.md): Created August 28, 2020. Last modified August 28, 2020.
+- [Data Export](https://docs.aylanetworks.com/docs/ayla-data-export-and-streaming-features-1.md)
+- [Data Export - GCP](https://docs.aylanetworks.com/docs/data-export-gcp.md)
+
+## API Reference
+- [Introduction](https://docs.aylanetworks.com/reference/getting_started.md)
+- [How to Make API Requests](https://docs.aylanetworks.com/reference/how-to-make-api-requests.md)
+- [Sign In](https://docs.aylanetworks.com/reference/sign-in.md): This API is used to sign a user into the Ayla IoT Cloud service. This API returns an access token and refresh token. The access token is required to use Ayla APIs. The refresh token can be used to…
+- [Get registrable device](https://docs.aylanetworks.com/reference/get-registrable-device.md): This API returns the device that matches the query parameters and is eligible for registration. If multiple devices match the query parameters, only the most recently connected device is returned.
+- [Register device](https://docs.aylanetworks.com/reference/register-device.md): This API registers the specified device to the caller.
+- [Create template](https://docs.aylanetworks.com/reference/create-template.md): This API creates a template.
+- [Update template](https://docs.aylanetworks.com/reference/create-template-2.md): This API is used to update a specific template.
+- [Create template properties](https://docs.aylanetworks.com/reference/create-template-properties.md): This API is used to create template properties. *Access Control*: OEM::Admin and above  For **feed_type** == **air_quality**, the value of the parameter "feed_data" can be any of the following: *…
+- [Get devices](https://docs.aylanetworks.com/reference/get-associated-devices.md): This API returns an array of device objects.This API returns an array of device objects in one of two formats depending on whether you include the paginated query parameter. If the `paginated`…
+- [Update device address](https://docs.aylanetworks.com/reference/update-device-address.md): This API updates the physical address of the device.
+- [Update device location](https://docs.aylanetworks.com/reference/update-device-location-id116.md): This API updates device location. Passing lat=0 and long=0 is acceptable.
+- [Update schedule](https://docs.aylanetworks.com/reference/update-schedule1.md): This API updates a schedule.
+- [Update schedule action](https://docs.aylanetworks.com/reference/update-schedule-action.md): This API creates a schedule action. *NOTE*: Specify value to just one of the following parameters in the request body: in_range, at_start, or at_end.
+- [Create notification app](https://docs.aylanetworks.com/reference/create-notification-app.md): This API creates a notification app associated with the specified notification.  | Name | Type | Description | |--|--|--| | app_type | string (255 chars) | Type of notification. The API supports the…
+- [Update notification app](https://docs.aylanetworks.com/reference/create-notification-app1.md): This API updates the specific notification application.
+- [Create trigger](https://docs.aylanetworks.com/reference/create-trigger.md): This API creates a trigger, and associates it with the specified property on the specified device. Including trigger apps as part of the request data is optional. See the createTriggerApp API for…
+- [Update trigger](https://docs.aylanetworks.com/reference/update-trigger1.md): This API updates the specified property trigger. Include only the key/value pairs you want to modify.
+- [Create datapoint in group](https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md): This API updates the value of a single property for all the devices in the specified device group.
+- [Get connection history](https://docs.aylanetworks.com/reference/get-connection-history.md): This API is used to get the connection status history for a given device.
+- [Get LAN data](https://docs.aylanetworks.com/reference/get-lan-data.md): This API is used to fetch LAN data.
+- [Create virtual device](https://docs.aylanetworks.com/reference/create-virtual-device.md): This API creates a virtual device.
+- [SSO sign in](https://docs.aylanetworks.com/reference/login.md): This API is called by the app to log into the Ayla service with the Identity Provider-issued access token. <br>Specify the token issued by the identity provider in the ```token``` field. <br>Upon…
+- [Token Validation](https://docs.aylanetworks.com/reference/token-validation.md)
+- [Update SSO User](https://docs.aylanetworks.com/reference/update-sso-user.md): This API is used to update an SSO (Single Sign-On) user in the system. The update operation is performed using the user’s unique uuid.
+- [Get OEMs](https://docs.aylanetworks.com/reference/get-oems.md): This API is used to get details of all the OEMs.
+- [Update device manufacturer info](https://docs.aylanetworks.com/reference/update-devices-manufacturer-info.md): This API updates a device with manufacturer information. The caller must be a member of the ```OEM::Admin``` role with ```module_manufacturer=true``` in the OEM Profile.  The response data object has…
+- [Update device OEM](https://docs.aylanetworks.com/reference/update-device-oem.md): This API updates a device with OEM information. The caller must be a member of the ```OEM::SoftwareOEMManufacturer``` role.  The response data object has one field named ```device``` containing a…
+- [Upload file](https://docs.aylanetworks.com/reference/upload-file.md): This API uploads a file and associates it with a file record.
+- [Remove OTA command](https://docs.aylanetworks.com/reference/remove-ota-command.md): This API removes the OTA command queued for the specified job for the DSNs that are in the "Queued" state. This API can be used only for the active jobs.
+- [Retry selected devices](https://docs.aylanetworks.com/reference/retry-selected-devices.md): This API is used to retry the selected DSN(s). This API can be used only for active/finished jobs.
+- [Delete actions in bulk](https://docs.aylanetworks.com/reference/delete-actions-in-bulk.md): This API deletes actions in bulk, but it does not delete rules associated with the action.
+- [Create rule](https://docs.aylanetworks.com/reference/create-rule.md): This API creates a rule for the user. Devices specified in the rule must exist. The caller must own, or have rights to, the device. Actions can be included at rule-creation time, or they can be added…
+- [Create destination](https://docs.aylanetworks.com/reference/create-destination.md): This API creates a message service destination. The following types are supported:  | Type | Provider | Required Fields | |--|--|--| | email | smtp | type, body or message_template_id, deliver_to |…
+- [Delete destination](https://docs.aylanetworks.com/reference/delete-destination.md): This API deletes a destination.
+- [Delete destinations in bulk](https://docs.aylanetworks.com/reference/delete-destinations-in-bulk.md): This API deletes destinations in bulk.
+- [Retrieve collections](https://docs.aylanetworks.com/reference/retrieve-collections.md): This API is used to retrieve the list of collections belonging to the user.
+- [Update custom attributes](https://docs.aylanetworks.com/reference/update-custom-attributes.md): This API is used to update custom attributes associated with the specified collection.
+- [Post datapoints to collection](https://docs.aylanetworks.com/reference/post-datapoints-to-collection.md): This API is used to post datapoints to a group associated with multiple devices.  **NOTE**: If you get response code 206, it indicates that some of the properties in the request are associated with…
+- [Get last posted datapoints for a collection](https://docs.aylanetworks.com/reference/get-last-posted-datapoints-for-a-collection.md): This API is used to retrieve last datapoints for collection associated with multiple devices (Group Only).
+- [Enable/Disable scene automation](https://docs.aylanetworks.com/reference/enable-disable-scene-automation.md): This API is used to enable or disable the scene automation.
+- [Activate scene based on countdown timer](https://docs.aylanetworks.com/reference/activate-scene-based-on-countdown-timer.md): This API is used to activate the specified scene based on the countdown timer.
+- [Create filter](https://docs.aylanetworks.com/reference/create-filter-1.md): This API creates a new filter and adds this new filter to the Ayla mDSSV2 filter list.
+- [Update filter](https://docs.aylanetworks.com/reference/update-filter-1.md): Updates the specified filter.
+- [Get filters](https://docs.aylanetworks.com/reference/get-filters-1.md): Returns the filters associated with the API caller.
+- [Get filters by filter_uuid](https://docs.aylanetworks.com/reference/get-filters-by-uuid.md): It returns the filter details based on the specified filter_uuid.
+- [Get associated topic](https://docs.aylanetworks.com/reference/get-associated-topic.md): Returns the associated topic for the API caller.
+- [GET MQTT credentials](https://docs.aylanetworks.com/reference/get-mqtt-credentials.md): Returns MQTT credentials for the caller to connect with EMQX broker.
+- [Delete filter](https://docs.aylanetworks.com/reference/delete-filter-copy.md): This API deletes the specified filter.
+- [Introduction](https://docs.aylanetworks.com/reference/dealer-service-introduction.md): This page will help you get started with Dealer Services.
+- [Create dealer](https://docs.aylanetworks.com/reference/create-dealer.md): This API creates a dealer. <br>Access permission: Ayla::Admin and OEM::Admin. <br>For more information on dealer, please refer [Dealer user](https://docs.aylanetworks.com/docs/users#dealer-users).
+- [Update dealer](https://docs.aylanetworks.com/reference/update-dealer.md): This API updates details of a dealer. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin</li></ul>
+- [Get dealers](https://docs.aylanetworks.com/reference/get-dealers.md): This API fetches the list of dealers associated with the specified OEM. <br><b>Access Control</b>: <ul><li>Ayla::Admin - read | write </li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read |…
+- [Get dealer by uuid](https://docs.aylanetworks.com/reference/get-dealer-by-uuid.md): This API fetches the details of a dealer specified by uuid. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin - read | write</li></ul>
+- [Search dealers](https://docs.aylanetworks.com/reference/search-dealers.md): This API is used to search list of dealers associated with a specified OEM. The result is based on your search criteria. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li>…
+- [Get dealer roles](https://docs.aylanetworks.com/reference/get-dealer-roles.md): This API fetches the role(s) of the dealer(s) for the specified OEM.<br><b>Access Control</b>:<ul><li>Ayla::Admin - read</li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read</li>…
+- [Delete dealer](https://docs.aylanetworks.com/reference/delete-dealer.md): This API deletes the specified dealer. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin</li></ul>
+- [Create dealer user](https://docs.aylanetworks.com/reference/create-dealer-user.md): This API creates a dealer user for the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read | write</li><li>OEM::Admin - read | write </li>…
+- [Get dealer users](https://docs.aylanetworks.com/reference/get-dealer-users.md): This API fetches all the dealer users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write…
+- [Search dealer users](https://docs.aylanetworks.com/reference/search-dealer-users.md): This API fetches all the dealer users associated with the specified dealer. The result is based on your search criteria. <br><b>Access Control</b>: <ul><li>Ayla::Admin - read | write </li>…
+- [Get end users of a dealer](https://docs.aylanetworks.com/reference/get-end-users-of-a-dealer.md): This API fetches all the end users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write…
+- [Search end users of a dealer](https://docs.aylanetworks.com/reference/search-end-users-of-a-dealer.md): This API fetches all the end users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write…
+- [Associate end user to a dealer](https://docs.aylanetworks.com/reference/associate-end-user-to-a-dealer.md): This API associates an end user to a dealer with role name. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li>…
+- [Get devices tagged to a dealer](https://docs.aylanetworks.com/reference/get-devices-tagged-to-a-dealer.md): This API fetches all the devices associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li>…
+- [Assign dealer to group](https://docs.aylanetworks.com/reference/assign-dealer-to-group.md): This API assigns a dealer to the specified group. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff -…
+- [Search Devices](https://docs.aylanetworks.com/reference/getting-started-with-your-api-2.md): This API is used to search for devices based on various fields, such as OEM, OEM model, status, property, etc.
+- [Search Dealer Devices](https://docs.aylanetworks.com/reference/search-devices-copy.md): This API is used to search for devices based on various fields, such as OEM, OEM model, status, property, etc.
+
+## Pages
+- [Release notes](https://docs.aylanetworks.com/page/release-notes.md)
+
+## Release Notes
+- [Sep 18, 2026](https://docs.aylanetworks.com/changelog/sep-18-2026.md)
+- [Sep 11, 2026](https://docs.aylanetworks.com/changelog/sep-11-2026.md)
+- [Sep 04, 2026](https://docs.aylanetworks.com/changelog/sep-04-2026.md)
+- [Aug 28, 2026](https://docs.aylanetworks.com/changelog/aug-28-2026.md)
+- [Aug 21, 2026](https://docs.aylanetworks.com/changelog/aug-21-2026.md)
+- [Aug 14, 2026](https://docs.aylanetworks.com/changelog/aug-14-2026.md)
+- [Aug 07, 2026](https://docs.aylanetworks.com/changelog/aug-07-2026.md)
+- [July 31, 2026](https://docs.aylanetworks.com/changelog/july-31-2026.md)
+- [July 17, 2026](https://docs.aylanetworks.com/changelog/july-17-2026.md)
+- [July 10, 2026](https://docs.aylanetworks.com/changelog/july-10-2026.md)

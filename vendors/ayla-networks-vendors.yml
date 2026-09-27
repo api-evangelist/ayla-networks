@@ -1,0 +1,75 @@
+generated: '2026-09-27'
+method: probed
+source: pre-flight dossier (docs platform, portal detections) + CNAME chains and response headers of the hosts apis.yml names
+registry: all/0-working/vendors.yml
+areas_vocabulary:
+- documentation
+- developer-portal
+- api-gateway
+- cdn
+- hosting
+- sdk-generation
+- api-collections
+- status-page
+- support
+- community
+- identity
+- mcp-hosting
+vendors:
+- vendor: cloudflare
+  name: Cloudflare
+  area: cdn
+  host: docs.aylanetworks.com
+  evidence: header:cf-ray
+  signal: header
+  confidence: high
+  kin_score:
+  - https_enforced
+  - hsts
+- vendor: fastly
+  name: Fastly
+  area: cdn
+  host: www.aylanetworks.com
+  evidence: header:x-served-by:cache-
+  signal: header
+  confidence: high
+  kin_score: []
+- vendor: readme
+  name: ReadMe
+  area: documentation
+  host: docs.aylanetworks.com
+  evidence: cname:readmessl.com
+  signal: docs-platform
+  confidence: high
+  kin_score:
+  - openapi_published
+  - changelog_present
+  - llms_txt
+  - api_explorer
+- vendor: wix
+  name: Wix
+  area: hosting
+  host: www.aylanetworks.com
+  evidence: cname:wixdns.net
+  signal: cname
+  confidence: high
+  kin_score: []
+reliance:
+  areas_vendor_served:
+  - cdn
+  - documentation
+  - hosting
+  vendor_count: 4
+  areas_observed: 12
+  share_of_observable_areas: 0.25
+  note: areas where a third party was DETECTED serving this provider; an area absent here was either self-run or not observed, and this script
+    cannot tell those apart
+checked:
+- 'docs-platform: readme'
+- www.aylanetworks.com (SignUp)
+- developer.aylanetworks.com (DeveloperPortal)
+- www.aylanetworks.com (Website)
+- docs.aylanetworks.com (Documentation)
+- docs.aylanetworks.com (APIReference)
+- docs.aylanetworks.com (GettingStarted)
+- www.aylanetworks.com (Support)

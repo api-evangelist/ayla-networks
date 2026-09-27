@@ -1,0 +1,11 @@
+generated: 2026-09-27
+method: probed
+source: https://www.aylanetworks.com/policies/privacy-policy
+signals:
+  age_assurance:
+    evidence:
+      - source: https://www.aylanetworks.com/policies/privacy-policy
+        http_status: 200
+        fetched: "true"
+        quote: "Our products are not directed to individuals, and in particular any individuals under the age of thirteen (13), and we request that these individuals do not provide any personal information to us."
+        note: Indicates that Ayla does not target children and requests they not provide personal data, reflecting age assurance.

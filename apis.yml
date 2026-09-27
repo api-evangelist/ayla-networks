@@ -1,23 +1,89 @@
 aid: ayla-networks
+
 name: Ayla Networks
-description: 'Ayla Networks is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+
+description: 'Ayla Networks, founded in 2010, provides a comprehensive IoT platform enabling manufacturers, ISPs, and enterprises to connect, manage, and monetize smart devices. Their cloud‑based solution includes device management, data analytics, and customizable applications, supporting a wide range of industries from smart homes to industrial IoT. Ayla’s platform empowers businesses to accelerate product development, ensure security, and deliver seamless user experiences across connected ecosystems.'
+
 url: https://raw.githubusercontent.com/api-evangelist/ayla-networks/refs/heads/main/apis.yml
+
 x-type: company
+
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-09-27 (modular-v1; was harvest)
+
 specificationVersion: '0.20'
+
 created: '2026-09-27'
+
 modified: '2026-09-27'
+
 tags:
-- Company
-apis: []
+- IoT
+- SmartHome
+- Platform
+- DeviceManagement
+- Cloud
+
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+
 common:
+- type: ChangeLog
+  url: changelog/ayla-networks-changelog.yml
+- type: Conventions
+  url: conventions/ayla-networks-conventions.yml
+- type: LLMsTxt
+  url: llms/ayla-networks-llms.txt
+- type: WellKnown
+  url: well-known/ayla-networks-well-known.yml
+- type: Hosts
+  url: hosts/ayla-networks-hosts.yml
+- type: Vendors
+  url: vendors/ayla-networks-vendors.yml
+- type: SignUp
+  url: https://www.aylanetworks.com/sign-up
+- type: Newsroom
+  url: https://www.aylanetworks.com/blogs-and-news/categories/news
+- type: DeveloperPortal
+  url: https://developer.aylanetworks.com/sign_in
+- type: ChangeLog
+  url: https://docs.aylanetworks.com/changelog
+- type: DomainSecurity
+  url: security/ayla-networks-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/ayla-networks_stock/
+  url: https://www.aylanetworks.com/
+- type: Documentation
+  url: https://docs.aylanetworks.com/docs/
+- type: APIReference
+  url: https://docs.aylanetworks.com/reference/
+- type: GettingStarted
+  url: https://docs.aylanetworks.com/docs/getting-started
+- type: Blog
+  url: https://www.aylanetworks.com/blogs-and-news
+- type: GitHubOrganization
+  url: https://github.com/AylaNetworks
+- type: Support
+  url: https://www.aylanetworks.com/contact-us
+
+apis: []
+
+x-coverage:
+  state: unreadable
+  reason: no-machine-readable-spec
+  detail: Docs pages return HTTP 429 rate limiting, preventing retrieval of any machine‑readable OpenAPI spec.
+  evidence:
+    - url: https://docs.aylanetworks.com/reference
+      status: 429
+    - url: https://docs.aylanetworks.com/docs/getting-started
+      status: 429
+x-enrichment:
+  date: '2026-09-27'
+  status: enriched
+  artifacts_added: 11
+  pass: modular-v1
+  engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local

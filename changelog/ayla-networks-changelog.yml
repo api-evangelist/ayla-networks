@@ -1,0 +1,63 @@
+generated: '2026-09-27'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://docs.aylanetworks.com/docs/getting-started-and-migration-guide-transitioning-from-ada-3x-to-ada-40-mda.md
+sources:
+- https://docs.aylanetworks.com/docs/getting-started-and-migration-guide-transitioning-from-ada-3x-to-ada-40-mda.md
+- https://docs.aylanetworks.com/page/release-notes.md
+- https://docs.aylanetworks.com/changelog/sep-18-2026.md
+- https://docs.aylanetworks.com/changelog/sep-11-2026.md
+entries:
+- breaking: false
+  highlights:
+  - Added the ability to change a legacy template to a MQTT based template while cloning, making it easier to migrate devices from legacy HTTP
+    to MQTT based.
+  date: '2026-09-18'
+- breaking: false
+  highlights:
+  - Fixed an issue where data point history for message properties was displayed as NULL instead of showing the available history.
+  date: '2026-09-18'
+- breaking: false
+  highlights:
+  - Fixed an issue where resetting a text-based device settings (such as a name) did not update the previous value.
+  date: '2026-09-18'
+- breaking: false
+  highlights:
+  - Fixed an issue where Reserve DSN failed with an authorization error when the reserved OEM ID did not match the OEM ID used in the provisioning
+    request.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Fixed an issue where an incorrect DNS name was displayed in Device Commands after triggering a Legacy OTA update.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Added the ability for OEM Support Managers to delete end users from the Dashboard, enabling them to manage end users directly.
+  - Updated the default delivery stage for OTA jobs to "10, All Devices" instead of "All" to enable a staged rollout, allowing the OTA update
+    to be validated on the first 10 devices before it is delivered to all devices.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Fixed an issue where a newly added device could continue showing an "Unknown" connection status instead of its actual status.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Fixed an issue where some devices restarted repeatedly. Devices now remain connected and operate normally.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Fixed an issue where users could not create a Legacy OTA job due to the Groups list failing to load.
+  date: '2026-09-11'
+- breaking: false
+  highlights:
+  - Fixed an issue where device shares were not automatically deleted when a user was deleted.
+  - Fixed an issue where iOS users could not continue using the app after their session expired due to a session refresh failure.
+  - Fixed an issue where users created with social login could not be found when searching by user ID.
+  - Added audit logging for sensitive data operations to improve data protection and traceability.
+  - Fixed an issue where users could not complete MFA login due to the MFA token not being created with the required expiry information.
+  - Fixed an issue where users could not share a device with another user due to missing user information.
+  - Optimized impersonation token handling to reuse the existing token instead of creating a new token for each request.
+  date: '2026-09-11'
+scheme: date-based (YYYY-MM-DD)
+current_version: '2026-09-18'
+docs: https://docs.aylanetworks.com/docs/getting-started-and-migration-guide-transitioning-from-ada-3x-to-ada-40-mda.md

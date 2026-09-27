@@ -1,0 +1,6 @@
+generated: '2026-09-27'
+method: probed
+generator: harvest-llms.py
+source: https://docs.aylanetworks.com/llms.txt
+bytes: 17583
+note: saved verbatim; the provider's own document

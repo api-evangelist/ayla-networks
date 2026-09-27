@@ -1,0 +1,29 @@
+generated: '2026-09-27'
+method: searched
+generator: extract-docs-artifacts.py (local)
+source: https://docs.aylanetworks.com/docs/getting-started.md
+sources:
+- https://docs.aylanetworks.com/docs/getting-started.md
+- https://docs.aylanetworks.com/docs/getting-started-and-migration-guide-transitioning-from-ada-3x-to-ada-40-mda.md
+- https://docs.aylanetworks.com/reference/getting_started.md
+- https://docs.aylanetworks.com/reference/getting-started-with-your-api-2.md
+idempotency:
+  coverage: none
+  evidence: The provided pages do not describe an idempotency key or mechanism for write operations.
+pagination:
+  style: page‑based
+  params:
+  - page
+  - per_page
+  response_fields:
+  - total
+  - previous_page
+  - next_page
+  - current_page_number
+  - start_count_on_page
+  - end_count_on_page
+  - devices
+  evidence: The Search Devices endpoint defines `page` and `per_page` query parameters and returns pagination metadata such as `total`, `previous_page`,
+    `next_page`, etc.
+authentication: apiKey in header named "Authorization" (see OpenAPI securitySchemes)
+docs: https://docs.aylanetworks.com/docs/getting-started.md
