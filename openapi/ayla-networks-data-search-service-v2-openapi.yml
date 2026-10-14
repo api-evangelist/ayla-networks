@@ -1,0 +1,399 @@
+openapi: 3.1.0
+info:
+  title: data-search-service-v2
+  version: '1.0'
+servers:
+- url: https://dsapi-dev.aylanetworks.com/
+security:
+- sec0: []
+x-readme-fauxas: true
+paths:
+  /dsapi/v2/devices.json:
+    get:
+      summary: Search Devices
+      description: This API is used to search for devices based on various fields, such as OEM, OEM model, status, property, etc.
+      operationId: getting-started-with-your-api-2
+      parameters:
+      - name: oem
+        in: query
+        schema:
+          type: string
+        description: ''
+      - name: oem_model
+        in: query
+        schema:
+          type: string
+      - name: oem_models
+        in: query
+        schema:
+          type: string
+      - in: query
+        name: sw_version_likert
+        schema:
+          type: string
+      - name: device_type
+        in: query
+        schema:
+          type: string
+      - name: device_types
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: model
+        in: query
+        schema:
+          type: string
+      - name: registered
+        in: query
+        schema:
+          type: boolean
+      - name: dealer_uuid
+        in: query
+        schema:
+          type: string
+      - name: facility_uuid
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        schema:
+          type: string
+      - name: direction
+        in: query
+        schema:
+          type: string
+      - name: dsn
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 1
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    devices:
+                    - device:
+                        oem: 0dfc7900
+                        id: 7553937
+                        dsn: AC000W049373002
+                        connection_status: Offline
+                        connected_at: '2026-05-25T06:39:43Z'
+                        sw_version: unknown
+                        oem_model: null
+                        model: AY008ESP1
+                        user_uuid: 5fe26868-ebc3-11f0-a0cb-a692cf83f417
+                        product_name: MDA demo
+                        mac: null
+                        registered: true
+                        dealer: null
+                        facility_uuid: null
+                        user_id: 5429604
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device:
+                          type: object
+                          properties:
+                            oem:
+                              type: string
+                              example: 0dfc7900
+                            id:
+                              type: integer
+                              example: 7553937
+                              default: 0
+                            dsn:
+                              type: string
+                              example: AC000W049373002
+                            connection_status:
+                              type: string
+                              example: Offline
+                            connected_at:
+                              type: string
+                              example: '2026-05-25T06:39:43Z'
+                            sw_version:
+                              type: string
+                              example: unknown
+                            oem_model:
+                              type: string
+                            model:
+                              type: string
+                              example: AY008ESP1
+                            user_uuid:
+                              type: string
+                              example: 5fe26868-ebc3-11f0-a0cb-a692cf83f417
+                            product_name:
+                              type: string
+                              example: MDA demo
+                            mac:
+                              type: string
+                            registered:
+                              type: boolean
+                              example: true
+                              default: true
+                            dealer:
+                              type: string
+                            facility_uuid:
+                              type: string
+                            user_id:
+                              type: integer
+                              example: 5429604
+                              default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+  /dsapi/v2/oems/{oem}/dealers/{dealer}/devices.json:
+    get:
+      summary: Search Dealer Devices
+      description: This API is used to search for devices based on various fields, such as OEM, OEM model, status, property, etc.
+      operationId: search-devices-copy
+      parameters:
+      - name: oem_model
+        in: query
+        schema:
+          type: string
+      - name: oem_models
+        in: query
+        schema:
+          type: string
+      - name: device_type
+        in: query
+        schema:
+          type: string
+      - name: device_types
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: model
+        in: query
+        schema:
+          type: string
+      - name: registered
+        in: query
+        schema:
+          type: boolean
+      - name: dealer_uuid
+        in: query
+        schema:
+          type: string
+      - name: facility_uuid
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        schema:
+          type: string
+      - name: direction
+        in: query
+        schema:
+          type: string
+      - name: dsn
+        in: query
+        schema:
+          type: string
+      - name: oem
+        in: path
+        schema:
+          type: string
+        required: true
+      - name: dealer
+        in: path
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 1
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    devices:
+                    - device:
+                        oem: 0dfc7900
+                        id: 6651411
+                        dsn: TESTDSN_7619053_000
+                        connection_status: Offline
+                        connected_at: null
+                        sw_version: '1.0'
+                        oem_model: ledevb-test
+                        model: AY001MUS1
+                        user_uuid: null
+                        product_name: TESTDEVICE_000
+                        mac: e1:04:22:6b:25:9e
+                        registered: false
+                        dealer: f59710c6-06d6-11ef-aad0-dea040915193
+                        facility_uuid: 70590508-e164-4854-8145-ea5bc750417d
+                        user_id: null
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device:
+                          type: object
+                          properties:
+                            oem:
+                              type: string
+                              example: 0dfc7900
+                            id:
+                              type: integer
+                              example: 6651411
+                              default: 0
+                            dsn:
+                              type: string
+                              example: TESTDSN_7619053_000
+                            connection_status:
+                              type: string
+                              example: Offline
+                            connected_at:
+                              type: string
+                            sw_version:
+                              type: string
+                              example: '1.0'
+                            oem_model:
+                              type: string
+                              example: ledevb-test
+                            model:
+                              type: string
+                              example: AY001MUS1
+                            user_uuid:
+                              type: string
+                            product_name:
+                              type: string
+                              example: TESTDEVICE_000
+                            mac:
+                              type: string
+                              example: e1:04:22:6b:25:9e
+                            registered:
+                              type: boolean
+                              example: false
+                              default: true
+                            dealer:
+                              type: string
+                              example: f59710c6-06d6-11ef-aad0-dea040915193
+                            facility_uuid:
+                              type: string
+                              example: 70590508-e164-4854-8145-ea5bc750417d
+                            user_id:
+                              type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/getting-started-with-your-api-2.md
+  - https://docs.aylanetworks.com/reference/search-devices-copy.md
+  merge:
+    pages: 2
+    deduped: 1
+    conflicts_kept_first: 0

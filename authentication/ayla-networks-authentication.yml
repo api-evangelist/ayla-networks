@@ -1,0 +1,37 @@
+generated: '2026-10-14'
+method: derived
+source: openapi/ayla-networks-client-mqtt-openapi.yml, openapi/ayla-networks-contracts-service-openapi.yml,
+  openapi/ayla-networks-data-search-service-v2-openapi.yml, openapi/ayla-networks-data-stream-service-v2-openapi.yml,
+  openapi/ayla-networks-dealer-service-openapi.yml, openapi/ayla-networks-device-service-openapi.yml,
+  openapi/ayla-networks-factory-proxy-service-openapi.yml, openapi/ayla-networks-groups-scenes-openapi.yml,
+  openapi/ayla-networks-iot-command-center-openapi.yml, openapi/ayla-networks-iot-command-center-v2-openapi.yml,
+  openapi/ayla-networks-message-service-openapi.yml, openapi/ayla-networks-metering-service-openapi.yml
+  ...
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: sec0
+  type: apiKey
+  in: header
+  parameter: Authorization
+  sources:
+  - openapi/ayla-networks-client-mqtt-openapi.yml
+  - openapi/ayla-networks-contracts-service-openapi.yml
+  - openapi/ayla-networks-data-search-service-v2-openapi.yml
+  - openapi/ayla-networks-data-stream-service-v2-openapi.yml
+  - openapi/ayla-networks-dealer-service-openapi.yml
+  - openapi/ayla-networks-device-service-openapi.yml
+  - openapi/ayla-networks-factory-proxy-service-openapi.yml
+  - openapi/ayla-networks-groups-scenes-openapi.yml
+  - openapi/ayla-networks-iot-command-center-openapi.yml
+  - openapi/ayla-networks-iot-command-center-v2-openapi.yml
+  - openapi/ayla-networks-message-service-openapi.yml
+  - openapi/ayla-networks-metering-service-openapi.yml
+  - openapi/ayla-networks-ota-service-openapi.yml
+  - openapi/ayla-networks-reports-service-openapi.yml
+  - openapi/ayla-networks-rule-service-openapi.yml
+  - openapi/ayla-networks-user-service-openapi.yml
+  - openapi/ayla-networks-virtual-devices-openapi.yml

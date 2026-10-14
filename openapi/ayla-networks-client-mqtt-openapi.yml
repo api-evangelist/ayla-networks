@@ -1,0 +1,727 @@
+openapi: 3.1.0
+info:
+  title: client-mqtt
+  version: '1.0'
+servers:
+- url: https://cmqtt-web-dev.aylanetworks.com
+security:
+- sec0: []
+x-readme-fauxas: true
+paths:
+  /mqtteventprocessor/api/v1/credentials.json:
+    get:
+      summary: GET MQTT credentials
+      description: Returns MQTT credentials for the caller to connect with EMQX broker.
+      operationId: get-mqtt-credentials
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"credentials\": {\n    \"username\": \"aylaCloud\",\n    \"password\": \"axxxxxxc-fc2f-4c91-b620-xxxxxxxx64c\",\n    \"client_id\": \"cmqtt-53xxxxx7-d79d-45df-a8c3-xxxxxxxxxd340\",\n    \"is_filter_available\": true\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  credentials:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                        example: aylaCloud
+                      password:
+                        type: string
+                        example: axxxxxxc-fc2f-4c91-b620-xxxxxxxx64c
+                      client_id:
+                        type: string
+                        example: cmqtt-53xxxxx7-d79d-45df-a8c3-xxxxxxxxxd340
+                      is_filter_available:
+                        type: boolean
+                        example: true
+                        default: true
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+      deprecated: false
+  /mqtteventprocessor/api/v1/filters.json:
+    post:
+      summary: Create filter
+      description: This API creates a new filter and adds this new filter to the Ayla mDSSV2 filter list.
+      operationId: create-filter-1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              Example request body:
+                value:
+                  filter:
+                    name: Mobile Subscription 01
+                    description: Mobile Subscription-01
+                    oem_id: 14xxxxxx1
+                    client_type: mobile
+                    user_uuid: 51dda1xxxxxxxv45
+                    filter_conditions:
+                    - dsn: []
+                      property_names:
+                      - Blue_button
+                      - Blue_LED
+                      - Green_LED
+                      - Red_LED
+                      event_type:
+                      - connectivity
+                      - datapoint
+                    - model:
+                      - ABC
+                      event_type:
+                      - Registration
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  filter:
+                    type: object
+                    properties:
+                      filter_uuid:
+                        type: string
+                        example: 28509751-xxxxxxx4-d70dc12ce0e8
+                      name:
+                        type: string
+                        example: Mobile Subscription 01
+                      description:
+                        type: string
+                        example: Mobile Subscription-01
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem_id:
+                        type: string
+                        example: 0dxxxx0
+                      app_id:
+                        type: string
+                        example: dashboard_id
+                      role:
+                        type: string
+                        example: Ayla::Admin
+                      client_type:
+                        type: string
+                        example: mobile
+                      is_active:
+                        type: boolean
+                        example: true
+                        default: true
+                      created_at:
+                        type: string
+                        example: '2026-05-13T07:31:03Z'
+                      updated_at:
+                        type: string
+                        format: date
+                      created_by:
+                        type: string
+                        example: b02cexxxxxxx-f6a43ee69b74
+                      updated_by:
+                        type: string
+                      filter_conditions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            event_type:
+                              type: array
+                              items:
+                                type: string
+                                example: connectivity
+                            property_names:
+                              type: array
+                              items:
+                                type: string
+                                example: Blue_LED
+                            uuid:
+                              type: string
+                              example: 2f2e5dcf-e6xxxxxxxf574b05eea
+                            dsn:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+              examples:
+                Created:
+                  summary: Created
+                  value:
+                    filter:
+                      filter_uuid: 28509751-xxxxxxx4-d70dc12ce0e8
+                      name: Mobile Subscription 01
+                      description: Mobile Subscription-01
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem_id: 0dxxxx0
+                      app_id: dashboard_id
+                      role: Ayla::Admin
+                      client_type: mobile
+                      is_active: true
+                      created_at: '2026-05-13T07:31:03Z'
+                      updated_at: null
+                      created_by: b02cexxxxxxx-f6a43ee69b74
+                      updated_by: null
+                      filter_conditions:
+                      - event_type:
+                        - connectivity
+                        - datapoint
+                        property_names:
+                        - Blue_LED
+                        - Green_LED
+                        uuid: 2f2e5dcf-e6xxxxxxxf574b05eea
+                        dsn: []
+                      - event_type:
+                        - registration
+                        property_names: []
+                        model:
+                        - ABC
+                        uuid: 0288552f-7xxxxxca4ddf013
+          description: Created
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+    get:
+      summary: Get filters
+      description: Returns the filters associated with the API caller.
+      operationId: get-filters-1
+      parameters:
+      - name: paginated
+        in: query
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: sort_by
+        in: query
+        description: created_at
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: asc | desc
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    filters:
+                    - filter:
+                        filter_uuid: 28509751-b18d-4551-9434-d70dc12ce0e8
+                        name: Mobile Subscription 02
+                        description: Mobile Subscription-02
+                        user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        oem_id: 0dfc7900
+                        app_id: dashboard_id
+                        role: Ayla::Admin
+                        client_type: mobile
+                        is_active: true
+                        created_at: '2026-05-13T07:31:04Z'
+                        updated_at: '2026-05-13T09:42:12Z'
+                        created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        filter_conditions:
+                        - event_type:
+                          - connectivity
+                          - datapoint
+                          property_names:
+                          - Blue_LED
+                          - Green_LED
+                          uuid: 2f2e5dcf-e65a-4275-81d2-a4f574b05eea
+                          dsn: []
+                        - event_type:
+                          - Location
+                          property_names: []
+                          model: []
+                          uuid: 0288552f-74d7-4076-a726-4e0ca4ddf013
+                    total: 1
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+              schema:
+                type: object
+                properties:
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        filter:
+                          type: object
+                          properties:
+                            filter_uuid:
+                              type: string
+                              example: 28509751-b18d-4551-9434-d70dc12ce0e8
+                            name:
+                              type: string
+                              example: Mobile Subscription 02
+                            description:
+                              type: string
+                              example: Mobile Subscription-02
+                            user_uuid:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            oem_id:
+                              type: string
+                              example: 0dfc7900
+                            app_id:
+                              type: string
+                              example: dashboard_id
+                            role:
+                              type: string
+                              example: Ayla::Admin
+                            client_type:
+                              type: string
+                              example: mobile
+                            is_active:
+                              type: boolean
+                              example: true
+                              default: true
+                            created_at:
+                              type: string
+                              example: '2026-05-13T07:31:04Z'
+                            updated_at:
+                              type: string
+                              example: '2026-05-13T09:42:12Z'
+                            created_by:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            updated_by:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            filter_conditions:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  event_type:
+                                    type: array
+                                    items:
+                                      type: string
+                                      example: connectivity
+                                  property_names:
+                                    type: array
+                                    items:
+                                      type: string
+                                      example: Blue_LED
+                                  uuid:
+                                    type: string
+                                    example: 2f2e5dcf-e65a-4275-81d2-a4f574b05eea
+                                  dsn:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties: {}
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+      deprecated: false
+  /mqtteventprocessor/api/v1/filters/{filter_uuid}.json:
+    put:
+      summary: Update filter
+      description: Updates the specified filter.
+      operationId: update-filter-1
+      parameters:
+      - name: filter_uuid
+        in: path
+        description: UUID of the filter you want to update.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              Example request body:
+                value:
+                  filter:
+                    name: Mobile Subscription 02
+                    description: Mobile Subscription-02
+                    filter_conditions:
+                    - uuid: 0288552f-7xxxxxxxx4e0ca4ddf013
+                      model: []
+                      event_type:
+                      - Location
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    filter:
+                      filter_uuid: 28509751-b18d-4551-9434-d70dc12ce0e8
+                      name: Mobile Subscription 02
+                      description: Mobile Subscription-02
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem_id: 0dfc7900
+                      app_id: dashboard_id
+                      role: Ayla::Admin
+                      client_type: mobile
+                      is_active: true
+                      created_at: '2026-05-13T07:31:04Z'
+                      updated_at: '2026-05-13T09:42:12Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      filter_conditions:
+                      - event_type:
+                        - connectivity
+                        - datapoint
+                        property_names:
+                        - Blue_LED
+                        - Green_LED
+                        uuid: 2f2e5dcf-e65a-4275-81d2-a4f574b05eea
+                        dsn: []
+                      - event_type:
+                        - Location
+                        property_names: []
+                        model: []
+                        uuid: 0288552f-74d7-4076-a726-4e0ca4ddf013
+              schema:
+                type: object
+                properties:
+                  filter:
+                    type: object
+                    properties:
+                      filter_uuid:
+                        type: string
+                        example: 28509751-b18d-4551-9434-d70dc12ce0e8
+                      name:
+                        type: string
+                        example: Mobile Subscription 02
+                      description:
+                        type: string
+                        example: Mobile Subscription-02
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem_id:
+                        type: string
+                        example: 0dfc7900
+                      app_id:
+                        type: string
+                        example: dashboard_id
+                      role:
+                        type: string
+                        example: Ayla::Admin
+                      client_type:
+                        type: string
+                        example: mobile
+                      is_active:
+                        type: boolean
+                        example: true
+                        default: true
+                      created_at:
+                        type: string
+                        example: '2026-05-13T07:31:04Z'
+                      updated_at:
+                        type: string
+                        example: '2026-05-13T09:42:12Z'
+                      created_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      filter_conditions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            event_type:
+                              type: array
+                              items:
+                                type: string
+                                example: connectivity
+                            property_names:
+                              type: array
+                              items:
+                                type: string
+                                example: Blue_LED
+                            uuid:
+                              type: string
+                              example: 2f2e5dcf-e65a-4275-81d2-a4f574b05eea
+                            dsn:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+    get:
+      summary: Get filters by filter_uuid
+      description: It returns the filter details based on the specified filter_uuid.
+      operationId: get-filters-by-uuid
+      parameters:
+      - name: filter_uuid
+        in: path
+        description: UUID of the filter.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    filter:
+                      filter_uuid: 28509751-b18d-4551-9434-d70dc12ce0e8
+                      name: Mobile Subscription 02
+                      description: Mobile Subscription-02
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem_id: 0dfc7900
+                      app_id: dashboard_id
+                      role: Ayla::Admin
+                      client_type: mobile
+                      is_active: true
+                      created_at: '2026-05-13T07:31:04Z'
+                      updated_at: '2026-05-13T09:42:12Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      filter_conditions:
+                      - event_type:
+                        - connectivity
+                        - datapoint
+                        property_names:
+                        - Blue_LED
+                        - Green_LED
+                        uuid: 2f2e5dcf-e65a-4275-81d2-a4f574b05eea
+                        dsn: []
+                      - event_type:
+                        - Location
+                        property_names: []
+                        model: []
+                        uuid: 0288552f-74d7-4076-a726-4e0ca4ddf013
+              schema:
+                type: object
+                properties:
+                  filter:
+                    type: object
+                    properties:
+                      filter_uuid:
+                        type: string
+                        example: 3xxxxxxx-68d7-4ea5-9946-2922eed0aeb6
+                      name:
+                        type: string
+                        example: Mobile Subscription2023
+                      description:
+                        type: string
+                        example: Mobile Subscription2023
+                      user_uuid:
+                        type: string
+                        example: 6xxxxxx-d86a-11e9-a921-0a245fa9783a
+                      oem_id:
+                        type: string
+                        example: bxxxxxx8
+                      client_type:
+                        type: string
+                        example: mobile
+                      is_active:
+                        type: boolean
+                        example: true
+                        default: true
+                      created_at:
+                        type: string
+                        example: '2023-12-22T12:35:25Z'
+                      updated_at: {}
+                      created_by:
+                        type: string
+                        example: 6xxxxxxxx-d86a-11e9-a921-0a245fa9783a
+                      updated_by: {}
+                      filter_conditions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            event_type:
+                              type: array
+                              items:
+                                type: string
+                                example: datapoint
+                            property_names:
+                              type: array
+                              items:
+                                type: string
+                                example: string_input_tp
+                            uuid:
+                              type: string
+                              example: bxxxxxxxx-1249-4e42-9355-1d309118bcb8
+                            dsn:
+                              type: array
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+  /mqtteventprocessor/api/v1/filters/{filter_uuid}.json (COPY):
+    delete:
+      summary: Delete filter
+      description: This API deletes the specified filter.
+      operationId: delete-filter-copy
+      parameters:
+      - name: filter_uuid
+        in: path
+        description: UUID of the filter you want to delete.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+  /mqtteventprocessor/api/v1/topics.json:
+    get:
+      summary: Get associated topic
+      description: Returns the associated topic for the API caller.
+      operationId: get-associated-topic
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n\t\"topic\": \"AYLA_EVENTS/axxxxxx-f3b6-4f60-8d75-xxxxxxe0b2f/#\"\n}"
+              schema:
+                type: object
+                properties:
+                  topic:
+                    type: string
+                    example: AYLA_EVENTS/axxxxxx-f3b6-4f60-8d75-xxxxxxe0b2f/#
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+      deprecated: false
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

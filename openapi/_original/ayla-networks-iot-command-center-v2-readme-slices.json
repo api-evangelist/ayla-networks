@@ -1,0 +1,439 @@
+[
+ {
+  "page": "https://docs.aylanetworks.com/reference/create-jobv2.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "iot-command-center-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://icc-dev.aylanetworks.com/icc/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/jobs": {
+     "post": {
+      "summary": "Create job (New API)",
+      "description": "This API creates a job. This single API covers filter, schedule, and OTA/Property/File Transfer jobs. This API provides efficient solution (when compared to the existing solution) to create a new job and better customer experience.",
+      "operationId": "create-jobv2",
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "required": [
+           "name",
+           "type_id",
+           "exec_method",
+           "filter_id"
+          ],
+          "properties": {
+           "name": {
+            "type": "string",
+            "description": "Job name."
+           },
+           "type_id": {
+            "type": "integer",
+            "description": "Job type identifier number. Any one of the following: <br> 1: Set properties <br> 2: OTA <br>3: File transfer",
+            "format": "int32"
+           },
+           "filter_id": {
+            "type": "integer",
+            "description": "Unique filter identifier number",
+            "format": "int32"
+           },
+           "exec_method": {
+            "type": "string",
+            "description": "Execution method: \"ONE_TIME\" or \"CONTINUOUS\"."
+           },
+           "delivery_option": {
+            "type": "string",
+            "description": "Delivery option: \"SYSTEM_PUSH\" or \"USER_CONSENT\"."
+           },
+           "oem_model": {
+            "type": "string",
+            "description": "OEM Model (required for Job or Filter)"
+           },
+           "description": {
+            "type": "string",
+            "description": "Short description of the job."
+           },
+           "job_metadata": {
+            "properties": {
+             "key": {
+              "type": "string",
+              "description": "Metadata key name."
+             },
+             "value": {
+              "type": "string",
+              "description": "Metadata key value."
+             }
+            },
+            "required": [],
+            "type": "object",
+            "description": "List of data objects."
+           },
+           "retries": {
+            "type": "integer",
+            "description": "Number of retry if one of the action of the device is failure, how many times should retry the action.",
+            "default": 0,
+            "format": "int32"
+           },
+           "action_payload": {
+            "type": "string",
+            "description": "An object that is used for job action, the payload depends on different type of action.",
+            "format": "json"
+           },
+           "stage_config": {
+            "type": "string",
+            "description": "A JSON string containing the stage configuration for the job.<br> <b>Example</b>:<br>stage_config: [     { stage: 1, devices: 10 },     { stage: 2, devices: * } ]",
+            "format": "json"
+           },
+           "filter": {
+            "type": "string",
+            "description": "filter_id or filter. This is same as Filter Creation payload. For more information, please refer: <a href=\"https://docs.aylanetworks.com/reference/create-filter\" target=\"_blank\">Create filter</a>",
+            "format": "json"
+           },
+           "schedule": {
+            "type": "string",
+            "description": "This is same as Schedule Creation payload. For more information, please refer:  <a href=\"https://docs.aylanetworks.com/reference/create-job-schedule\" target=\"_blank\">Create schedule</a>",
+            "format": "json"
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "201": {
+        "description": "Created",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "id": 203550,
+             "name": "test-api",
+             "description": "",
+             "status": "CREATED",
+             "retries": 0,
+             "payload": null,
+             "type_id": 1,
+             "filter": {
+              "id": 300846,
+              "name": "TestFileter33",
+              "description": null,
+              "attributes": null,
+              "dsns": null,
+              "properties": [],
+              "status": [],
+              "oem": "0dfc7900",
+              "oem_model": "ledevb",
+              "device_metadata": null,
+              "created_at": "2026-04-29T07:25:51+0000",
+              "updated_at": "2026-04-29T08:42:04+0000",
+              "filter_metadata": [],
+              "oem_version": null,
+              "match_oem_version": true,
+              "provision_key": null,
+              "user_uuid": "b02ce872-42d8-11f1-8aa5-f6a43ee69b74",
+              "user_role": "Ayla::Admin",
+              "dealer_uuid": null,
+              "facility_uuids": []
+             },
+             "filter_name": "TestFileter33",
+             "user_uuid": "b02ce872-42d8-11f1-8aa5-f6a43ee69b74",
+             "user_role": "Ayla::Admin",
+             "dealer_uuid": null,
+             "schedule_type": "IMMEDIATE",
+             "started_at": null,
+             "stopped_at": null,
+             "created_at": "2026-04-29T09:21:36+0000",
+             "updated_at": "2026-04-29T09:21:36+0000",
+             "device_total": 0,
+             "devices_processing": 0,
+             "devices_succeed": 0,
+             "devices_failed": 0,
+             "job_metadata": [],
+             "exec_method": "CONTINUOUS",
+             "delivery_option": "SYSTEM_PUSH",
+             "last_modified_by": "Jennifer Griffin",
+             "from_version": "All",
+             "exclude_version": null,
+             "oem_model": "ledevb",
+             "image_id": 0,
+             "stage_config": null,
+             "needs_action": false,
+             "schedule": null,
+             "last_scheduler_query_at": "2026-04-29T09:21:36+0000",
+             "job_type": "Set property"
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "integer",
+             "example": 203550,
+             "default": 0
+            },
+            "name": {
+             "type": "string",
+             "example": "test-api"
+            },
+            "description": {
+             "type": "string",
+             "example": ""
+            },
+            "status": {
+             "type": "string",
+             "example": "CREATED"
+            },
+            "retries": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "payload": {
+             "type": "string"
+            },
+            "type_id": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "filter": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "integer",
+               "example": 300846,
+               "default": 0
+              },
+              "name": {
+               "type": "string",
+               "example": "TestFileter33"
+              },
+              "description": {},
+              "attributes": {},
+              "dsns": {},
+              "properties": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {}
+               }
+              },
+              "status": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {}
+               }
+              },
+              "oem": {
+               "type": "string",
+               "example": "0dfc7900"
+              },
+              "oem_model": {
+               "type": "string",
+               "example": "ledevb"
+              },
+              "device_metadata": {},
+              "created_at": {
+               "type": "string",
+               "example": "2026-04-29T07:25:51+0000"
+              },
+              "updated_at": {
+               "type": "string",
+               "example": "2026-04-29T08:42:04+0000"
+              },
+              "filter_metadata": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {}
+               }
+              },
+              "oem_version": {},
+              "match_oem_version": {
+               "type": "boolean",
+               "example": true,
+               "default": true
+              },
+              "provision_key": {},
+              "user_uuid": {
+               "type": "string",
+               "example": "b02ce872-42d8-11f1-8aa5-f6a43ee69b74"
+              },
+              "user_role": {
+               "type": "string",
+               "example": "Ayla::Admin"
+              },
+              "dealer_uuid": {},
+              "facility_uuids": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {}
+               }
+              }
+             }
+            },
+            "filter_name": {
+             "type": "string",
+             "example": "TestFileter33"
+            },
+            "user_uuid": {
+             "type": "string",
+             "example": "b02ce872-42d8-11f1-8aa5-f6a43ee69b74"
+            },
+            "user_role": {
+             "type": "string",
+             "example": "Ayla::Admin"
+            },
+            "dealer_uuid": {
+             "type": "string"
+            },
+            "schedule_type": {
+             "type": "string",
+             "example": "IMMEDIATE"
+            },
+            "started_at": {
+             "type": "string"
+            },
+            "stopped_at": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "string",
+             "example": "2026-04-29T09:21:36+0000"
+            },
+            "updated_at": {
+             "type": "string",
+             "example": "2026-04-29T09:21:36+0000"
+            },
+            "device_total": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "devices_processing": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "devices_succeed": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "devices_failed": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "job_metadata": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {}
+             }
+            },
+            "exec_method": {
+             "type": "string",
+             "example": "CONTINUOUS"
+            },
+            "delivery_option": {
+             "type": "string",
+             "example": "SYSTEM_PUSH"
+            },
+            "last_modified_by": {
+             "type": "string",
+             "example": "Jennifer Griffin"
+            },
+            "from_version": {
+             "type": "string",
+             "example": "All"
+            },
+            "exclude_version": {
+             "type": "string"
+            },
+            "oem_model": {
+             "type": "string",
+             "example": "ledevb"
+            },
+            "image_id": {
+             "type": "integer",
+             "example": 0,
+             "default": 0
+            },
+            "stage_config": {
+             "type": "string"
+            },
+            "needs_action": {
+             "type": "boolean",
+             "example": false,
+             "default": true
+            },
+            "schedule": {
+             "type": "string"
+            },
+            "last_scheduler_query_at": {
+             "type": "string",
+             "example": "2026-04-29T09:21:36+0000"
+            },
+            "job_type": {
+             "type": "string",
+             "example": "Set property"
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ }
+]

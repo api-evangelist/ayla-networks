@@ -1,0 +1,2741 @@
+[
+ {
+  "page": "https://docs.aylanetworks.com/reference/update-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}.json": {
+     "put": {
+      "summary": "Update dealer",
+      "description": "This API updates details of a dealer. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin</li></ul>",
+      "operationId": "update-dealer",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer you want to update.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "dealer": {
+            "properties": {
+             "name": {
+              "type": "string",
+              "description": "Name of the dealer."
+             },
+             "email": {
+              "type": "string",
+              "description": "Email address of the dealer."
+             },
+             "state": {
+              "type": "string",
+              "description": "Dealer's state."
+             },
+             "street": {
+              "type": "string",
+              "description": "Street address of the dealer."
+             },
+             "city": {
+              "type": "string",
+              "description": "City of the dealer."
+             },
+             "zip": {
+              "type": "string",
+              "description": "Address zipcode."
+             },
+             "country": {
+              "type": "string",
+              "description": "Dealer's country."
+             },
+             "phone": {
+              "type": "string",
+              "description": "Phone number of the dealer."
+             },
+             "phone_country_code": {
+              "type": "string",
+              "description": "Country code of the dealer's phone."
+             }
+            },
+            "required": [],
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "city": "Bengaluru",
+             "country": "India",
+             "email": "dealer53@aylanetworks.com",
+             "name": "Dealer53",
+             "oem_id": "xxxxx8",
+             "phone": "90xxxxxxxxx",
+             "phone_country_code": "+91",
+             "street": "Kadubeesanahalli",
+             "state": "Karnataka",
+             "uuid": "xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx",
+             "zip": "560103"
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "city": {
+             "type": "string",
+             "example": "Bengaluru"
+            },
+            "country": {
+             "type": "string",
+             "example": "India"
+            },
+            "email": {
+             "type": "string",
+             "example": "dealer53@aylanetworks.com"
+            },
+            "name": {
+             "type": "string",
+             "example": "Dealer53"
+            },
+            "oem_id": {
+             "type": "string",
+             "example": "xxxxx8"
+            },
+            "phone": {
+             "type": "string",
+             "example": "90xxxxxxxxx"
+            },
+            "phone_country_code": {
+             "type": "string",
+             "example": "+91"
+            },
+            "street": {
+             "type": "string",
+             "example": "Kadubeesanahalli"
+            },
+            "state": {
+             "type": "string",
+             "example": "Karnataka"
+            },
+            "uuid": {
+             "type": "string",
+             "example": "xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"
+            },
+            "zip": {
+             "type": "string",
+             "example": "560103"
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-dealers.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers.json": {
+     "get": {
+      "summary": "Get dealers",
+      "description": "This API fetches the list of dealers associated with the specified OEM. <br><b>Access Control</b>: <ul><li>Ayla::Admin - read | write </li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read | write </li>   <li>OEM::Staff - read</li> </ul>",
+      "operationId": "get-dealers",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID to find the OEM and fetch the list of dealers.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "With Pagination": {
+            "value": {
+             "previous_page": null,
+             "next_page": null,
+             "current_page_number": 1,
+             "start_count_on_page": 1,
+             "end_count_on_page": 3,
+             "total": 3,
+             "dealers": [
+              {
+               "name": "Test Dealer",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "xxxxxxxxxxx"
+              },
+              {
+               "name": "Test Dealer2",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5"
+              },
+              {
+               "name": "Dealer53",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "3cxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f"
+              }
+             ]
+            }
+           },
+           "Without Pagination": {
+            "value": "[\n    {\n      \"name\": \"Test Dealer\",\n      \"oem_id\": xxxxx8,\n      \"state\": \"Karnataka\",\n      \"uuid\": “2exxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86\"\n    },\n    {\n      \"name\": \"Test Dealer2\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5\"\n    },\n    {\n      \"name\": \"Dealer53\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"3cxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f\"\n    }\n]"
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "previous_page": {
+             "type": "integer"
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 3,
+             "default": 0
+            },
+            "total": {
+             "type": "integer",
+             "example": 3,
+             "default": 0
+            },
+            "dealers": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string",
+                "example": "Test Dealer"
+               },
+               "oem_id": {
+                "type": "string",
+                "example": "xxxxx8"
+               },
+               "state": {
+                "type": "string",
+                "example": "Karnataka"
+               },
+               "uuid": {
+                "type": "string",
+                "example": "xxxxxxxxxxx"
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-dealer-by-uuid.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}.json": {
+     "get": {
+      "summary": "Get dealer by uuid",
+      "description": "This API fetches the details of a dealer specified by uuid. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin - read | write</li></ul>",
+      "operationId": "get-dealer-by-uuid",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer you want to fetch.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "city": "Bengaluru",
+             "country": "India",
+             "email": "dealer53@aylanetworks.com",
+             "name": "Dealer53",
+             "oem_id": "xxxx8",
+             "phone": "900xxxxxx9",
+             "phone_country_code": "+91",
+             "street": "Kadubeesanahalli",
+             "state": "Karnataka",
+             "uuid": "3xxxxxx-0xxx-xxxx-xxxx-f2xxxxxxx681f",
+             "zip": "560103"
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "city": {
+             "type": "string",
+             "example": "Bengaluru"
+            },
+            "country": {
+             "type": "string",
+             "example": "India"
+            },
+            "email": {
+             "type": "string",
+             "example": "dealer53@aylanetworks.com"
+            },
+            "name": {
+             "type": "string",
+             "example": "Dealer53"
+            },
+            "oem_id": {
+             "type": "string",
+             "example": "xxxx8"
+            },
+            "phone": {
+             "type": "string",
+             "example": "900xxxxxx9"
+            },
+            "phone_country_code": {
+             "type": "string",
+             "example": "+91"
+            },
+            "street": {
+             "type": "string",
+             "example": "Kadubeesanahalli"
+            },
+            "state": {
+             "type": "string",
+             "example": "Karnataka"
+            },
+            "uuid": {
+             "type": "string",
+             "example": "3xxxxxx-0xxx-xxxx-xxxx-f2xxxxxxx681f"
+            },
+            "zip": {
+             "type": "string",
+             "example": "560103"
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/search-dealers.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oemid}/dealers.json": {
+     "get": {
+      "summary": "Search dealers",
+      "description": "This API is used to search list of dealers associated with a specified OEM. The result is based on your search criteria. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read | write </li>   <li>OEM::Staff - read</li> </ul>",
+      "operationId": "search-dealers",
+      "parameters": [
+       {
+        "name": "oemid",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "name",
+        "in": "query",
+        "description": "Search by the name of the dealer.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "uuid",
+        "in": "query",
+        "description": "Search by the uuid of the dealer.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "phone",
+        "in": "query",
+        "description": "Search by phone number.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "email",
+        "in": "query",
+        "description": "Search by email address of the dealer.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "state",
+        "in": "query",
+        "description": "Filter by state.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "per_page",
+        "in": "query",
+        "description": "Maximum number of records per page.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "page",
+        "in": "query",
+        "description": "Specify page number of the response report you want to view.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "order_by",
+        "in": "query",
+        "description": "Possible value - uuid, if uuid is specified as the search filter.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "sort_by",
+        "in": "query",
+        "description": "Possible value - name, if name is specified as the search filter.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "order",
+        "in": "query",
+        "description": "desc or asc.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true or 1 means results will be paginated.",
+        "schema": {
+         "type": "boolean"
+        }
+       },
+       {
+        "name": "direction",
+        "in": "query",
+        "description": "desc or asc.",
+        "schema": {
+         "type": "string"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "With Pagination": {
+            "value": {
+             "previous_page": null,
+             "next_page": null,
+             "current_page_number": 1,
+             "start_count_on_page": 1,
+             "end_count_on_page": 3,
+             "total": 3,
+             "dealers": [
+              {
+               "name": "Test Dealer",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86"
+              },
+              {
+               "name": "Test Dealer2",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5"
+              },
+              {
+               "name": "Dealer53",
+               "oem_id": "xxxxx8",
+               "state": "Karnataka",
+               "uuid": "3cxxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f"
+              }
+             ]
+            }
+           },
+           "without Pagination": {
+            "value": "[\n    {\n      \"name\": \"Test Dealer\",\n      \"oem_id\": xxxxx8,\n      \"state\": \"Karnataka\",\n      \"uuid\": “xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86\"\n    },\n    {\n      \"name\": \"Test Dealer2\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5\"\n    },\n    {\n      \"name\": \"Dealer53\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"3cxxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f\"\n    }\n  ]"
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "previous_page": {
+             "type": "integer"
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 3,
+             "default": 0
+            },
+            "total": {
+             "type": "integer",
+             "example": 3,
+             "default": 0
+            },
+            "dealers": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string",
+                "example": "Test Dealer"
+               },
+               "oem_id": {
+                "type": "string",
+                "example": "xxxxx8"
+               },
+               "state": {
+                "type": "string",
+                "example": "Karnataka"
+               },
+               "uuid": {
+                "type": "string",
+                "example": "xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86"
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-dealer-roles.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/dealer_roles.json": {
+     "get": {
+      "summary": "Get dealer roles",
+      "description": "This API fetches the role(s) of the dealer(s) for the specified OEM.<br><b>Access Control</b>:<ul><li>Ayla::Admin - read</li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read</li>   <li>OEM::Staff - read</li></ul>",
+      "operationId": "get-dealer-roles",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": "[\n  {\n    \"role_name\": \"Dealer::Admin\"\n  },\n  {\n    \"role_name\": \"Dealer::Manager\"\n  },\n  {\n    \"role_name\": \"Dealer::Staff\"\n  },\n  {\n    \"role_name\": \"Dealer::Supervisor\"\n  }\n]"
+           }
+          },
+          "schema": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "role_name": {
+              "type": "string",
+              "example": "Dealer::Admin"
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/delete-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}.json": {
+     "delete": {
+      "summary": "Delete dealer",
+      "description": "This API deletes the specified dealer. <br><b>Access Control</b>: <ul><li>Ayla::Admin</li><li>OEM::Admin</li></ul>",
+      "operationId": "delete-dealer",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer you want to delete.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "responses": {
+       "204": {
+        "description": "No Content",
+        "content": {
+         "application/json": {
+          "examples": {
+           "No Content": {
+            "summary": "No Content",
+            "value": "{}"
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/create-dealer-user.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}/users.json": {
+     "post": {
+      "summary": "Create dealer user",
+      "description": "This API creates a dealer user for the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read | write</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read | write</li> <li>Dealer::Admin - read | write</li><li>Dealer::Manager - read | write</li></ul>",
+      "operationId": "create-dealer-user",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "user": {
+            "properties": {
+             "email": {
+              "type": "string",
+              "description": "Email address of the dealer user."
+             },
+             "password": {
+              "type": "string",
+              "description": "Provide password to the dealer user to access/perform required tasks."
+             },
+             "password_confirmation": {
+              "type": "string",
+              "description": "Re-enter the password for confirmation."
+             },
+             "firstname": {
+              "type": "string",
+              "description": "First name of the dealer user."
+             },
+             "lastname": {
+              "type": "string",
+              "description": "Last name of the dealer user."
+             },
+             "role": {
+              "type": "string"
+             },
+             "company": {
+              "type": "string",
+              "description": "Company name of the dealer user."
+             },
+             "phone": {
+              "type": "string",
+              "description": "Phone number of the dealer user."
+             },
+             "phone_country_code": {
+              "type": "string",
+              "description": "Country code of the dealer user's phone."
+             },
+             "street": {
+              "type": "string",
+              "description": "Street address of the dealer user."
+             },
+             "city": {
+              "type": "string",
+              "description": "City of the dealer user."
+             },
+             "state": {
+              "type": "string",
+              "description": "Dealer user's state."
+             },
+             "country": {
+              "type": "string",
+              "description": "Dealer user's country."
+             },
+             "zip": {
+              "type": "string",
+              "description": "Address zipcode."
+             }
+            },
+            "required": [
+             "email",
+             "password",
+             "password_confirmation",
+             "firstname",
+             "lastname",
+             "role",
+             "phone",
+             "phone_country_code"
+            ],
+            "type": "object"
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "201": {
+        "description": "Created",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "admin": false,
+             "approved": true,
+             "confirmed": true,
+             "ayla_dev_kit_num": null,
+             "city": null,
+             "company": null,
+             "country": null,
+             "created_at": "2026-05-14T09:01:14Z",
+             "email": "stalin1@gmail.com",
+             "firstname": "strag",
+             "id": 5493264,
+             "lastname": "shjgiyge",
+             "oem_approved": false,
+             "oem_id": null,
+             "oem_name": null,
+             "origin_oem_id": 2,
+             "origin_oem_name": "Ayla",
+             "phone_country_code": "91",
+             "phone": "9876543210",
+             "primary_contact": "email",
+             "state": null,
+             "street": null,
+             "terms_accepted": true,
+             "terms_accepted_at": "2026-05-14T09:01:14Z",
+             "terms_email_sent_at": null,
+             "terms_token": null,
+             "updated_at": "2026-05-14T09:01:14Z",
+             "username": "stalin1@gmail.com",
+             "zip": null,
+             "uuid": "75d5091e-4f73-11f1-ac0a-f6068ea05808",
+             "roles": [
+              {
+               "id": 13,
+               "name": "EndUser"
+              },
+              {
+               "id": 2284,
+               "name": "Dealer::Admin"
+              }
+             ],
+             "confirmation_sent_at": null,
+             "dealers": [
+              {
+               "dealer_name": "Testdealer",
+               "dealer_uuid": "69775f94-4f66-11f1-bc9b-7e8d9e9a1067"
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "admin": {
+             "type": "boolean",
+             "example": false,
+             "default": true
+            },
+            "approved": {
+             "type": "boolean",
+             "example": true,
+             "default": true
+            },
+            "confirmed": {
+             "type": "boolean",
+             "example": true,
+             "default": true
+            },
+            "ayla_dev_kit_num": {
+             "type": "string"
+            },
+            "city": {
+             "type": "string"
+            },
+            "company": {
+             "type": "string"
+            },
+            "country": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "string",
+             "example": "2026-05-14T09:01:14Z"
+            },
+            "email": {
+             "type": "string",
+             "example": "stalin1@gmail.com"
+            },
+            "firstname": {
+             "type": "string",
+             "example": "strag"
+            },
+            "id": {
+             "type": "integer",
+             "example": 5493264,
+             "default": 0
+            },
+            "lastname": {
+             "type": "string",
+             "example": "shjgiyge"
+            },
+            "oem_approved": {
+             "type": "boolean",
+             "example": false,
+             "default": true
+            },
+            "oem_id": {
+             "type": "string"
+            },
+            "oem_name": {
+             "type": "string"
+            },
+            "origin_oem_id": {
+             "type": "integer",
+             "example": 2,
+             "default": 0
+            },
+            "origin_oem_name": {
+             "type": "string",
+             "example": "Ayla"
+            },
+            "phone_country_code": {
+             "type": "string",
+             "example": "91"
+            },
+            "phone": {
+             "type": "string",
+             "example": "9876543210"
+            },
+            "primary_contact": {
+             "type": "string",
+             "example": "email"
+            },
+            "state": {
+             "type": "string"
+            },
+            "street": {
+             "type": "string"
+            },
+            "terms_accepted": {
+             "type": "boolean",
+             "example": true,
+             "default": true
+            },
+            "terms_accepted_at": {
+             "type": "string",
+             "example": "2026-05-14T09:01:14Z"
+            },
+            "terms_email_sent_at": {
+             "type": "string"
+            },
+            "terms_token": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "string",
+             "example": "2026-05-14T09:01:14Z"
+            },
+            "username": {
+             "type": "string",
+             "example": "stalin1@gmail.com"
+            },
+            "zip": {
+             "type": "string"
+            },
+            "uuid": {
+             "type": "string",
+             "example": "75d5091e-4f73-11f1-ac0a-f6068ea05808"
+            },
+            "roles": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "id": {
+                "type": "integer",
+                "example": 13,
+                "default": 0
+               },
+               "name": {
+                "type": "string",
+                "example": "EndUser"
+               }
+              }
+             }
+            },
+            "confirmation_sent_at": {
+             "type": "string"
+            },
+            "dealers": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "dealer_name": {
+                "type": "string",
+                "example": "Testdealer"
+               },
+               "dealer_uuid": {
+                "type": "string",
+                "example": "69775f94-4f66-11f1-bc9b-7e8d9e9a1067"
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-dealer-users.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oemid}/dealers/{dealer_uuid}/users.json": {
+     "get": {
+      "summary": "Get dealer users",
+      "description": "This API fetches all the dealer users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read</li> <li>Dealer::Admin - read</li><li>Dealer::Manager - read</li><li>Dealer:: Supervisor - read</li></ul>",
+      "operationId": "get-dealer-users",
+      "parameters": [
+       {
+        "name": "oemid",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "page",
+        "in": "query",
+        "description": "Specify the response page number you want to view.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       },
+       {
+        "name": "per_page",
+        "in": "query",
+        "description": "Number of records to be shown in a page.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "With Pagination": {
+            "value": {
+             "previous_page": null,
+             "next_page": null,
+             "current_page_number": 1,
+             "start_count_on_page": 1,
+             "end_count_on_page": 1,
+             "total": 1,
+             "users": [
+              {
+               "approved": true,
+               "confirmed": true,
+               "id": 5493099,
+               "uuid": "7ad3ba32-4ebf-11f1-8169-f6068ea05808",
+               "origin_oem_name": "Ayla",
+               "roles": [
+                {
+                 "id": 13,
+                 "name": "EndUser"
+                },
+                {
+                 "id": 2284,
+                 "name": "Dealer::Admin"
+                }
+               ],
+               "dealers": [
+                {
+                 "dealer_name": "stalin",
+                 "dealer_uuid": "94c71484-4ded-11f1-93dd-6e791713c565",
+                 "facilities": [
+                  "*"
+                 ]
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "Without Pagination": {
+            "value": "[\n    {\n      \"approved\": true,\n      \"confirmed\": true,\n      \"id\": 4xxxxx1,\n      \"uuid\": \"52xxxxx8-xxxx-11ef-xxxx-2axxxxxx74d8\",\n      \"origin_oem_name\": \"Ayla Automation\",\n      \"roles\": [\n        {\n          \"id\": 13,\n          \"name\": \"EndUser\"\n        },\n        {\n          \"id\": 2xx5,\n          \"name\": \"Dealer::Staff\"\n        }\n      ]\n    }\n  ]"
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "previous_page": {
+             "type": "integer"
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "total": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "users": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "approved": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "confirmed": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "id": {
+                "type": "integer",
+                "example": 5493099,
+                "default": 0
+               },
+               "uuid": {
+                "type": "string",
+                "example": "7ad3ba32-4ebf-11f1-8169-f6068ea05808"
+               },
+               "origin_oem_name": {
+                "type": "string",
+                "example": "Ayla"
+               },
+               "roles": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "id": {
+                   "type": "integer",
+                   "example": 13,
+                   "default": 0
+                  },
+                  "name": {
+                   "type": "string",
+                   "example": "EndUser"
+                  }
+                 }
+                }
+               },
+               "dealers": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "dealer_name": {
+                   "type": "string",
+                   "example": "stalin"
+                  },
+                  "dealer_uuid": {
+                   "type": "string",
+                   "example": "94c71484-4ded-11f1-93dd-6e791713c565"
+                  },
+                  "facilities": {
+                   "type": "array",
+                   "items": {
+                    "type": "string",
+                    "example": "*"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/search-dealer-users.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}/users.json": {
+     "get": {
+      "summary": "Search dealer users",
+      "description": "This API fetches all the dealer users associated with the specified dealer. The result is based on your search criteria. <br><b>Access Control</b>: <ul><li>Ayla::Admin - read | write </li>   <li>Ayla::Staff - read</li>   <li>OEM::Admin - read | write </li>   <li>OEM::Staff - read</li> </ul>\n<b>NOTE</b>: The example response provided for this API assumes that General Data Protection Regulation (GDPR) is enabled. If GDPR is not enabled, the response will include additional dealer user data.",
+      "operationId": "search-dealer-users",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "firstname",
+        "in": "query",
+        "description": "First name of the dealer user.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "lastname",
+        "in": "query",
+        "description": "Last name of the dealer user.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "uuid",
+        "in": "query",
+        "description": "UUID of the dealer user you want to search.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "email",
+        "in": "query",
+        "description": "Email address of the dealer user.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "role",
+        "in": "query",
+        "description": "Dealer user role.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "page",
+        "in": "query",
+        "description": "Specify the response page number you want to view.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       },
+       {
+        "name": "per_page",
+        "in": "query",
+        "description": "Number of records to be shown in a page.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "previous_page": null,
+             "next_page": null,
+             "current_page_number": 1,
+             "start_count_on_page": 1,
+             "end_count_on_page": 1,
+             "total": 1,
+             "users": [
+              {
+               "approved": true,
+               "confirmed": true,
+               "id": 5493099,
+               "uuid": "7ad3ba32-4ebf-11f1-8169-f6068ea05808",
+               "origin_oem_name": "Ayla",
+               "roles": [
+                {
+                 "id": 13,
+                 "name": "EndUser"
+                },
+                {
+                 "id": 2284,
+                 "name": "Dealer::Admin"
+                }
+               ],
+               "dealers": [
+                {
+                 "dealer_name": "stalin",
+                 "dealer_uuid": "94c71484-4ded-11f1-93dd-6e791713c565",
+                 "facilities": [
+                  "*"
+                 ]
+                }
+               ]
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "previous_page": {
+             "type": "integer"
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "total": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "users": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "approved": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "confirmed": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "id": {
+                "type": "integer",
+                "example": 5493099,
+                "default": 0
+               },
+               "uuid": {
+                "type": "string",
+                "example": "7ad3ba32-4ebf-11f1-8169-f6068ea05808"
+               },
+               "origin_oem_name": {
+                "type": "string",
+                "example": "Ayla"
+               },
+               "roles": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "id": {
+                   "type": "integer",
+                   "example": 13,
+                   "default": 0
+                  },
+                  "name": {
+                   "type": "string",
+                   "example": "EndUser"
+                  }
+                 }
+                }
+               },
+               "dealers": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "dealer_name": {
+                   "type": "string",
+                   "example": "stalin"
+                  },
+                  "dealer_uuid": {
+                   "type": "string",
+                   "example": "94c71484-4ded-11f1-93dd-6e791713c565"
+                  },
+                  "facilities": {
+                   "type": "array",
+                   "items": {
+                    "type": "string",
+                    "example": "*"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-end-users-of-a-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oem_id}/dealers/{dealer_uuid}/end_users.json": {
+     "get": {
+      "summary": "Get end users of a dealer",
+      "description": "This API fetches all the end users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read</li> <li>Dealer::Admin - read</li><li>Dealer::Manager - read</li><li>Dealer:: Supervisor - read</li></ul>",
+      "operationId": "get-end-users-of-a-dealer",
+      "parameters": [
+       {
+        "name": "oem_id",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "facility_uuid": {
+            "type": "string",
+            "description": "uuid to identify the facility."
+           },
+           "first_name": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "With Pagination": {
+            "value": {
+             "previous_page": null,
+             "next_page": null,
+             "current_page_number": 1,
+             "start_count_on_page": 1,
+             "end_count_on_page": 1,
+             "total": 1,
+             "users": [
+              {
+               "approved": true,
+               "confirmed": true,
+               "id": "4xxxxx2",
+               "uuid": "4xxxxxxx2-xxxx-xxxx-xxxx-564xxxxxxx4d",
+               "origin_oem_name": "Ayla Automation",
+               "roles": [
+                {
+                 "id": 2342,
+                 "name": "EndUser"
+                }
+               ]
+              }
+             ]
+            }
+           },
+           "Without Pagination": {
+            "summary": "Without Pagination",
+            "value": [
+             {
+              "approved": true,
+              "confirmed": true,
+              "id": 3,
+              "uuid": "f906d368-828c-11e5-9609-0ee0c870bcec",
+              "origin_oem_name": "Ayla",
+              "roles": [
+               {
+                "id": 13,
+                "name": "EndUser"
+               }
+              ],
+              "dealers": [
+               {
+                "dealer_name": "stalin",
+                "dealer_uuid": "94c71484-4ded-11f1-93dd-6e791713c565",
+                "facilities": []
+               }
+              ]
+             }
+            ]
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "previous_page": {
+             "type": "integer"
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "total": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "users": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "approved": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "confirmed": {
+                "type": "boolean",
+                "example": true,
+                "default": true
+               },
+               "id": {
+                "type": "string",
+                "example": "4xxxxx2"
+               },
+               "uuid": {
+                "type": "string",
+                "example": "4xxxxxxx2-xxxx-xxxx-xxxx-564xxxxxxx4d"
+               },
+               "origin_oem_name": {
+                "type": "string",
+                "example": "Ayla Automation"
+               },
+               "roles": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "id": {
+                   "type": "integer",
+                   "example": 2342,
+                   "default": 0
+                  },
+                  "name": {
+                   "type": "string",
+                   "example": "EndUser"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/search-end-users-of-a-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/api/v1/oems/{oemid}/dealers/{dealer_uuid}/end_users.json": {
+     "get": {
+      "summary": "Search end users of a dealer",
+      "description": "This API fetches all the end users associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read</li> <li>Dealer::Admin - read</li><li>Dealer::Manager - read</li><li>Dealer:: Supervisor - read</li></ul>",
+      "operationId": "search-end-users-of-a-dealer",
+      "parameters": [
+       {
+        "name": "oemid",
+        "in": "path",
+        "description": "OEM ID.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "first_name",
+        "in": "query",
+        "description": "First name of the end user you want to search.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "last_name",
+        "in": "query",
+        "description": "Last name of the end user you want to search.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "uuid",
+        "in": "query",
+        "description": "UUID of the end user you want to search.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "username",
+        "in": "query",
+        "description": "Username of the end user you want to search.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "facility_uuid": {
+            "type": "string",
+            "description": "uuid to identify the facility."
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "With Pagination": {
+            "value": "{\n  \"previous_page\": null,\n  \"next_page\": null,\n  \"current_page_number\": 1,\n  \"start_count_on_page\": 1,\n  \"end_count_on_page\": 1,\n  \"total\": 1,\n  \"users\": [\n    {\n      \"approved\": true,\n      \"confirmed\": true,\n      \"id\": 43xxxxx2,\n      \"uuid\": \"4xxxxx2-cxx7-xxxx-9xx6-564xxxxxxx4d\",\n      \"origin_oem_name\": \"Ayla Automation\",\n      \"roles\": [\n        {\n          \"id\": 13,\n          \"name\": \"EndUser\"\n        }\n      ]\n    }\n  ]\n}"
+           },
+           "Without Pagination": {
+            "value": [
+             {
+              "approved": true,
+              "confirmed": true,
+              "id": 3,
+              "uuid": "f906d368-828c-11e5-9609-0ee0c870bcec",
+              "origin_oem_name": "Ayla",
+              "roles": [
+               {
+                "id": 13,
+                "name": "EndUser"
+               }
+              ],
+              "dealers": [
+               {
+                "dealer_name": "stalin",
+                "dealer_uuid": "94c71484-4ded-11f1-93dd-6e791713c565",
+                "facilities": []
+               }
+              ]
+             }
+            ]
+           }
+          },
+          "schema": {
+           "type": "array",
+           "items": {
+            "type": "object",
+            "properties": {
+             "approved": {
+              "type": "boolean",
+              "example": true,
+              "default": true
+             },
+             "confirmed": {
+              "type": "boolean",
+              "example": true,
+              "default": true
+             },
+             "id": {
+              "type": "integer",
+              "example": 3,
+              "default": 0
+             },
+             "uuid": {
+              "type": "string",
+              "example": "f906d368-828c-11e5-9609-0ee0c870bcec"
+             },
+             "origin_oem_name": {
+              "type": "string",
+              "example": "Ayla"
+             },
+             "roles": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "integer",
+                 "example": 13,
+                 "default": 0
+                },
+                "name": {
+                 "type": "string",
+                 "example": "EndUser"
+                }
+               }
+              }
+             },
+             "dealers": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "dealer_name": {
+                 "type": "string",
+                 "example": "stalin"
+                },
+                "dealer_uuid": {
+                 "type": "string",
+                 "example": "94c71484-4ded-11f1-93dd-6e791713c565"
+                },
+                "facilities": {
+                 "type": "array",
+                 "items": {
+                  "type": "object",
+                  "properties": {}
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/associate-end-user-to-a-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/admin/users/{user_uuid}/associate_dealer.json": {
+     "put": {
+      "summary": "Associate end user to a dealer",
+      "description": "This API associates an end user to a dealer with role name. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read</li></ul>",
+      "operationId": "associate-end-user-to-a-dealer",
+      "parameters": [
+       {
+        "name": "user_uuid",
+        "in": "path",
+        "description": "UUID of the end user you want to associate to the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "required": [
+           "dealer_uuid",
+           "role_name"
+          ],
+          "properties": {
+           "dealer_uuid": {
+            "type": "string",
+            "description": "UUID of the dealer."
+           },
+           "role_name": {
+            "type": "string",
+            "description": "Dealer role name."
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": "OK"
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-devices-tagged-to-a-dealer.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "dealer-service",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://user-dev.aylanetworks.com/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/apiv1/oems/{oem_str}/dealers/{dealer_uuid}/devices": {
+     "get": {
+      "summary": "Get devices tagged to a dealer",
+      "description": "This API fetches all the devices associated with the specified dealer. <br><b>Access Control</b>:<ul><li>Ayla::Admin - read | write </li><li>Ayla::Staff - read</li><li>OEM::Admin - read | write </li> <li>OEM::Staff - read</li><li>Dealer::Admin - read</li><li>Dealer::Staff - read</li><li>Dealer::Manager - read</li><li>Dealer::Supervisor - read</li></ul>",
+      "operationId": "get-devices-tagged-to-a-dealer",
+      "parameters": [
+       {
+        "name": "oem_str",
+        "in": "path",
+        "description": "OEM ID",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "dealer_uuid",
+        "in": "path",
+        "description": "UUID of the dealer.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       },
+       {
+        "name": "facility_uuid",
+        "in": "query",
+        "description": "UUID of the facility.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "true = Response is shown in paginated format. <br> false = Response is shown without pagination.",
+        "schema": {
+         "type": "boolean"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "devices": [
+              {
+               "device": {
+                "product_name": "Ayla Devkit",
+                "dsn": "ACxxxxxxxxxxx85",
+                "sw_version": "bc 2.9-eng 10/03/17 15:00:22 ID PHunt/2214507+ dev",
+                "ip": "49.249.89.50",
+                "connected_at": "2022-09-22T03:29:02Z",
+                "user_id": 4061257,
+                "user_uuid": "226051xxxxxxxxxxx-06452889cfce",
+                "lat": "12.9634",
+                "lng": "77.5855",
+                "locality": "560001",
+                "homekit": null,
+                "connection_status": "Offline",
+                "oem_model": "AylaShield",
+                "dealer": {
+                 "dealer_name": "test Siva",
+                 "dealer_uuid": "f597xxxxxxxxxxxd0-dea040915193"
+                },
+                "facility_uuid": null,
+                "manuf_model": "LBWA1Zxxxxxxxxxxx-AYLA"
+               }
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "devices": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "device": {
+                "type": "object",
+                "properties": {
+                 "product_name": {
+                  "type": "string",
+                  "example": "Ayla Devkit"
+                 },
+                 "dsn": {
+                  "type": "string",
+                  "example": "ACxxxxxxxxxxx85"
+                 },
+                 "sw_version": {
+                  "type": "string",
+                  "example": "bc 2.9-eng 10/03/17 15:00:22 ID PHunt/2214507+ dev"
+                 },
+                 "ip": {
+                  "type": "string",
+                  "example": "49.249.89.50"
+                 },
+                 "connected_at": {
+                  "type": "string",
+                  "example": "2022-09-22T03:29:02Z"
+                 },
+                 "user_id": {
+                  "type": "integer",
+                  "example": 4061257,
+                  "default": 0
+                 },
+                 "user_uuid": {
+                  "type": "string",
+                  "example": "226051xxxxxxxxxxx-06452889cfce"
+                 },
+                 "lat": {
+                  "type": "string",
+                  "example": "12.9634"
+                 },
+                 "lng": {
+                  "type": "string",
+                  "example": "77.5855"
+                 },
+                 "locality": {
+                  "type": "string",
+                  "example": "560001"
+                 },
+                 "homekit": {
+                  "type": "string"
+                 },
+                 "connection_status": {
+                  "type": "string",
+                  "example": "Offline"
+                 },
+                 "oem_model": {
+                  "type": "string",
+                  "example": "AylaShield"
+                 },
+                 "dealer": {
+                  "type": "object",
+                  "properties": {
+                   "dealer_name": {
+                    "type": "string",
+                    "example": "test Siva"
+                   },
+                   "dealer_uuid": {
+                    "type": "string",
+                    "example": "f597xxxxxxxxxxxd0-dea040915193"
+                   }
+                  }
+                 },
+                 "facility_uuid": {
+                  "type": "string"
+                 },
+                 "manuf_model": {
+                  "type": "string",
+                  "example": "LBWA1Zxxxxxxxxxxx-AYLA"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ }
+]

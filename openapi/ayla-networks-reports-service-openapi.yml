@@ -1,0 +1,186 @@
+openapi: 3.1.0
+info:
+  title: reports-service
+  version: '1.0'
+servers:
+- url: https://arsb-dev.aylanetworks.com/reportingservice/api/v1/
+security:
+- sec0: []
+x-readme-fauxas: true
+paths:
+  /reportsdata:
+    get:
+      summary: Get report data
+      description: This API fetches data of a specified report.
+      operationId: get-report-data
+      parameters:
+      - name: report_name
+        in: query
+        description: Name of the report you want to fetch.
+        required: true
+        schema:
+          type: string
+      - name: aggregate_by
+        in: query
+        description: 'The value can be any one of the following: “day“, “month”, “week”, or “year”. The default value is "month".'
+        schema:
+          type: string
+          default: month
+      - name: billing_start_date
+        in: query
+        description: The date (YYYY-MM-DD) from which you want to fetch the data.
+        schema:
+          type: string
+      - name: billing_end_date
+        in: query
+        description: The date (YYYY-MM-DD) till which you want to fetch the data.
+        schema:
+          type: string
+      - name: dp_name
+        in: query
+        description: Property display name. You can enter a specific property display name or mention "All" to include all the properties.
+        schema:
+          type: string
+      - name: start_date
+        in: query
+        description: Start date and end date provide duration range to be considered for fetching contract data.
+        required: true
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: Start date and end date provide duration range to be considered for fetching contract data.
+        required: true
+        schema:
+          type: string
+      - name: left_start_date
+        in: query
+        schema:
+          type: string
+      - name: left_end_date
+        in: query
+        schema:
+          type: string
+      - name: notification_type
+        in: query
+        description: Notification type. You can enter a specific notification type or mention"All" to include all notification types.
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model name.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: region_name
+        in: query
+        description: Name of the region for which you want to fetch the data.
+        schema:
+          type: string
+      - name: sw_version
+        in: query
+        description: Software version number.
+        schema:
+          type: string
+      - name: right_end_date
+        in: query
+        schema:
+          type: string
+      - name: right_end_date
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"values\": \"\"\n  },\n  {\n    \"values\": \" ledevf\"\n  },\n  {\n    \"values\": \"00test\"\n  },\n  {\n    \"values\": \"AV970\"\n  },\n  {\n    \"values\": \"AY001MRT1\"\n  },\n  {\n    \"values\": \"AylaShield\"\n  },\n  {\n    \"values\": \"BabyOwl\"\n  },\n  {\n    \"values\": \"BabyOwl1\"\n  },\n  {\n    \"values\": \"BabyOwl2\"\n  },\n  {\n    \"values\": \"BabyOwl3\"\n  },\n  {\n    \"values\": \"BabyOwl4\"\n  },\n  {\n    \"values\": \"JEFFMODEL\"\n  },\n  {\n    \"values\": \"KurtTest\"\n  },\n  {\n    \"values\": \"LINUXEX1\"\n  },\n  {\n    \"values\": \"OTEST\"\n  },\n  {\n    \"values\": \"RV1000\"\n  },\n  {\n    \"values\": \"RV1000A\"\n  },\n  {\n    \"values\": \"RV1100\"\n  },\n  {\n    \"values\": \"RV1100A\"\n  },\n  {\n    \"values\": \"RV1100AA\"\n  },\n  {\n    \"values\": \"RV1100AAX\"\n  },\n  {\n    \"values\": \"RV2000D\"\n  },\n  {\n    \"values\": \"RV2000WD\"\n  },\n  {\n    \"values\": \"RV2500A\"\n  },\n  {\n    \"\
+                    values\": \"RV750\"\n  },\n  {\n    \"values\": \"RV750P\"\n  },\n  {\n    \"values\": \"RV850\"\n  },\n  {\n    \"values\": \"RV871\"\n  },\n  {\n    \"values\": \"TEST\"\n  },\n  {\n    \"values\": \"UI_OEM_MODEL\"\n  },\n  {\n    \"values\": \"bulb-color\"\n  },\n  {\n    \"values\": \"dpggtest\"\n  },\n  {\n    \"values\": \"generic\"\n  },\n  {\n    \"values\": \"green_led\"\n  },\n  {\n    \"values\": \"ledevb\"\n  },\n  {\n    \"values\": \"ledevb-cn-f\"\n  },\n  {\n    \"values\": \"ledevb-field\"\n  },\n  {\n    \"values\": \"ledevb-test\"\n  },\n  {\n    \"values\": \"ledevb-test182998\"\n  },\n  {\n    \"values\": \"ledevb-test396065\"\n  },\n  {\n    \"values\": \"ledevb-test400574\"\n  },\n  {\n    \"values\": \"ledevb-test575043\"\n  },\n  {\n    \"values\": \"ledevb-test720391\"\n  },\n  {\n    \"values\": \"ledevb-test760481\"\n  },\n  {\n    \"values\": \"ledevb-test806685\"\n  },\n  {\n    \"values\": \"ledevf\"\n  },\n  {\n    \"values\": \"linuxex1\"\
+                    \n  },\n  {\n    \"values\": \"linuxex1f\"\n  },\n  {\n    \"values\": \"lynx-prod\"\n  },\n  {\n    \"values\": \"plug-1\"\n  },\n  {\n    \"values\": \"pythonagent\"\n  },\n  {\n    \"values\": \"switch-test1\"\n  },\n  {\n    \"values\": \"zigbee1\"\n  }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    values:
+                      type: string
+                      example: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+  /reportsmetadata:
+    get:
+      summary: Get report metadata
+      description: This API fetches metadata details associated with the specified report.
+      operationId: get-report-metadata
+      parameters:
+      - name: report_name
+        in: query
+        description: Name of the report you want to fetch.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"description\": \"This chart shows the new devices that were activated for the date range and OEM model\",\n  \"expanded_desc\": \"This chart shows the new devices that were activated for the date range and OEM model. If there was already a record of that Device Serial Number (DSN) before with a previous activation, it will not be part of this list. This chart can be displayed in weeks, months or years.\"\n}"
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    example: This chart shows the new devices that were activated for the date range and OEM model
+                  expanded_desc:
+                    type: string
+                    example: This chart shows the new devices that were activated for the date range and OEM model. If there was already a record of that Device Serial Number (DSN) before with a previous activation, it will not be part of this list. This chart can be displayed in weeks, months or years.
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/get-report-data.md
+  - https://docs.aylanetworks.com/reference/get-report-metadata.md
+  merge:
+    pages: 2
+    deduped: 1
+    conflicts_kept_first: 0

@@ -39,6 +39,16 @@ maintainers:
   email: info@apis.io
 
 common:
+- type: AgenticAccess
+  url: agentic-access/ayla-networks-agentic-access.yml
+- type: Spectral
+  url: rules/ayla-networks-rules.yml
+- type: ErrorCatalog
+  url: errors/ayla-networks-problem-types.yml
+- type: Conformance
+  url: conformance/ayla-networks-conformance.yml
+- type: Authentication
+  url: authentication/ayla-networks-authentication.yml
 - url: https://www.aylanetworks.com/blog-feed.xml
   type: BlogRSS
 - type: ChangeLog
@@ -78,8 +88,186 @@ common:
 - type: Support
   url: https://www.aylanetworks.com/contact-us
 
-apis: []
-
+apis:
+- aid: ayla-networks:ayla-networks-client-mqtt
+  name: Ayla Networks Networks Client Mqtt Openapi.Yml API
+  description: >-
+    The Networks Client Mqtt Openapi.Yml API from Ayla Networks — 5 operation(s) for networks client mqtt
+    openapi.yml.
+  tags:
+  - Networks Client Mqtt Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-client-mqtt-openapi.yml
+- aid: ayla-networks:ayla-networks-contracts-service
+  name: Ayla Networks Networks Contracts Service Openapi.Yml API
+  description: >-
+    The Networks Contracts Service Openapi.Yml API from Ayla Networks — 2 operation(s) for networks contracts
+    service openapi.yml.
+  tags:
+  - Networks Contracts Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-contracts-service-openapi.yml
+- aid: ayla-networks:ayla-networks-data-search-service-v2
+  name: Ayla Networks Networks Data Search Service V2 Openapi.Yml API
+  description: >-
+    The Networks Data Search Service V2 Openapi.Yml API from Ayla Networks — 2 operation(s) for networks
+    data search service v2 openapi.yml.
+  tags:
+  - Networks Data Search Service V2 Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-data-search-service-v2-openapi.yml
+- aid: ayla-networks:ayla-networks-data-stream-service-v2
+  name: Ayla Networks Networks Data Stream Service V2 Openapi.Yml API
+  description: >-
+    The Networks Data Stream Service V2 Openapi.Yml API from Ayla Networks — 3 operation(s) for networks
+    data stream service v2 openapi.yml.
+  tags:
+  - Networks Data Stream Service V2 Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-data-stream-service-v2-openapi.yml
+- aid: ayla-networks:ayla-networks-dealer-service
+  name: Ayla Networks Networks Dealer Service Openapi.Yml API
+  description: >-
+    The Networks Dealer Service Openapi.Yml API from Ayla Networks — 10 operation(s) for networks dealer
+    service openapi.yml.
+  tags:
+  - Networks Dealer Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-dealer-service-openapi.yml
+- aid: ayla-networks:ayla-networks-device-service
+  name: Ayla Networks Networks Device Service Openapi.Yml API
+  description: >-
+    The Networks Device Service Openapi.Yml API from Ayla Networks — 70 operation(s) for networks device
+    service openapi.yml.
+  tags:
+  - Networks Device Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-device-service-openapi.yml
+- aid: ayla-networks:ayla-networks-factory-proxy-service
+  name: Ayla Networks Networks Factory Proxy Service Openapi.Yml API
+  description: >-
+    The Networks Factory Proxy Service Openapi.Yml API from Ayla Networks — 3 operation(s) for networks
+    factory proxy service openapi.yml.
+  tags:
+  - Networks Factory Proxy Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-factory-proxy-service-openapi.yml
+- aid: ayla-networks:ayla-networks-groups-scenes
+  name: Ayla Networks Networks Groups Scenes Openapi.Yml API
+  description: >-
+    The Networks Groups Scenes Openapi.Yml API from Ayla Networks — 25 operation(s) for networks groups
+    scenes openapi.yml.
+  tags:
+  - Networks Groups Scenes Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-groups-scenes-openapi.yml
+- aid: ayla-networks:ayla-networks-iot-command-center
+  name: Ayla Networks Networks Iot Command Center Openapi.Yml API
+  description: >-
+    The Networks Iot Command Center Openapi.Yml API from Ayla Networks — 38 operation(s) for networks
+    iot command center openapi.yml.
+  tags:
+  - Networks Iot Command Center Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-iot-command-center-openapi.yml
+- aid: ayla-networks:ayla-networks-iot-command-center-v2
+  name: Ayla Networks Networks Iot Command Center V2 Openapi.Yml API
+  description: >-
+    The Networks Iot Command Center V2 Openapi.Yml API from Ayla Networks — 1 operation(s) for networks
+    iot command center v2 openapi.yml.
+  tags:
+  - Networks Iot Command Center V2 Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-iot-command-center-v2-openapi.yml
+- aid: ayla-networks:ayla-networks-message-service
+  name: Ayla Networks Networks Message Service Openapi.Yml API
+  description: >-
+    The Networks Message Service Openapi.Yml API from Ayla Networks — 4 operation(s) for networks message
+    service openapi.yml.
+  tags:
+  - Networks Message Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-message-service-openapi.yml
+- aid: ayla-networks:ayla-networks-metering-service
+  name: Ayla Networks Networks Metering Service Openapi.Yml API
+  description: >-
+    The Networks Metering Service Openapi.Yml API from Ayla Networks — 1 operation(s) for networks metering
+    service openapi.yml.
+  tags:
+  - Networks Metering Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-metering-service-openapi.yml
+- aid: ayla-networks:ayla-networks-ota-service
+  name: Ayla Networks Networks Ota Service Openapi.Yml API
+  description: >-
+    The Networks Ota Service Openapi.Yml API from Ayla Networks — 8 operation(s) for networks ota service
+    openapi.yml.
+  tags:
+  - Networks Ota Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-ota-service-openapi.yml
+- aid: ayla-networks:ayla-networks-reports-service
+  name: Ayla Networks Networks Reports Service Openapi.Yml API
+  description: >-
+    The Networks Reports Service Openapi.Yml API from Ayla Networks — 2 operation(s) for networks reports
+    service openapi.yml.
+  tags:
+  - Networks Reports Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-reports-service-openapi.yml
+- aid: ayla-networks:ayla-networks-rule-service
+  name: Ayla Networks Networks Rule Service Openapi.Yml API
+  description: >-
+    The Networks Rule Service Openapi.Yml API from Ayla Networks — 13 operation(s) for networks rule service
+    openapi.yml.
+  tags:
+  - Networks Rule Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-rule-service-openapi.yml
+- aid: ayla-networks:ayla-networks-sign-in
+  name: Ayla Networks Networks Sign In Openapi.Yml API
+  description: >-
+    The Networks Sign In Openapi.Yml API from Ayla Networks — 1 operation(s) for networks sign in openapi.yml.
+  tags:
+  - Networks Sign In Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-sign-in-openapi.yml
+- aid: ayla-networks:ayla-networks-user-service
+  name: Ayla Networks Networks User Service Openapi.Yml API
+  description: >-
+    The Networks User Service Openapi.Yml API from Ayla Networks — 47 operation(s) for networks user service
+    openapi.yml.
+  tags:
+  - Networks User Service Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-user-service-openapi.yml
+- aid: ayla-networks:ayla-networks-virtual-devices
+  name: Ayla Networks Networks Virtual Devices Openapi.Yml API
+  description: >-
+    The Networks Virtual Devices Openapi.Yml API from Ayla Networks — 1 operation(s) for networks virtual
+    devices openapi.yml.
+  tags:
+  - Networks Virtual Devices Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/ayla-networks-virtual-devices-openapi.yml
 x-coverage:
   state: unreadable
   reason: no-machine-readable-spec
@@ -95,3 +283,8 @@ x-enrichment:
   artifacts_added: 11
   pass: modular-v1
   engine: identity=local,contract=local,surfaces=local,docs=local,regulatory=local
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 335
+  tool: harvest-readme-openapi.py
+  portal: https://docs.aylanetworks.com

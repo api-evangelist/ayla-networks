@@ -1,62 +1,30 @@
-generated: '2026-09-27'
+generated: '2026-10-14'
 method: derived
 source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
 generator: derive-hosts.py
 summary:
-  hosts: 6
-  own: 5
+  hosts: 4
+  own: 3
   other_domain: 0
   platform: 1
   roles:
-  - api
   - docs
-  - other
   - portal
   - source
   - website
 hosts:
-- host: api.aylanetworks.com
-  found_by:
-  - contract-discovery
-  types: []
-  serves: []
-  registrable_domain: aylanetworks.com
-  role: api
-  relation: own
-- host: dashboard.aylanetworks.com
-  found_by:
-  - probed
-  - site-links
-  - contract-discovery
-  - well-known
-  types: []
-  serves: []
-  registrable_domain: aylanetworks.com
-  role: other
-  relation: own
 - host: developer.aylanetworks.com
   found_by:
   - pointer
-  - probed
-  - site-links
-  - docs-index
-  - contract-discovery
-  - well-known
   types:
   - DeveloperPortal
-  serves:
-  - docs
+  serves: []
   registrable_domain: aylanetworks.com
   role: portal
   relation: own
 - host: docs.aylanetworks.com
   found_by:
   - pointer
-  - probed
-  - site-links
-  - docs-index
-  - contract-discovery
-  - well-known
   - vendor-detect
   types:
   - ChangeLog
@@ -64,7 +32,6 @@ hosts:
   - APIReference
   - GettingStarted
   serves:
-  - docs
   - cdn
   - documentation
   vendor: cloudflare
@@ -83,11 +50,9 @@ hosts:
 - host: www.aylanetworks.com
   found_by:
   - pointer
-  - probed
-  - contract-discovery
-  - well-known
   - vendor-detect
   types:
+  - BlogRSS
   - SignUp
   - Newsroom
   - Website

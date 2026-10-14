@@ -1,0 +1,1627 @@
+[
+ {
+  "page": "https://docs.aylanetworks.com/reference/create-data-stream.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "data-stream-service-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://message-dev.aylanetworks.com/dss/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/streams": {
+     "post": {
+      "summary": "Create datastream",
+      "description": "This API creates a new datastream. </br>**Note**: Before creating a Pub/Sub stream, contact the Ayla Customer Support team to obtain Pub/Sub topic permissions.",
+      "operationId": "create-data-stream",
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "oneOf": [
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string",
+              "description": "Unique name assigned to the stream configuration."
+             },
+             "descriptio": {
+              "type": "string",
+              "description": "Additional information about the publication/stream"
+             },
+             "oem_model": {
+              "type": "string",
+              "description": "OEM device model associated with the stream."
+             },
+             "destination_type": {
+              "type": "string",
+              "description": "Specifies the external destination where stream data is delivered. For AWS Kinesis, set this value to kinesis."
+             },
+             "stream_type": {
+              "type": "string",
+              "description": "Type of publication.(For example, datapoint, connection, registration, location, activation)"
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "description": "Contains authentication and configuration details required to connect to the destination service.",
+              "properties": {
+               "aws_access_key": {
+                "type": "string",
+                "description": "AWS access key used to authenticate with AWS Kinesis."
+               },
+               "aws_secret_key": {
+                "type": "string",
+                "description": "AWS secret key associated with the AWS access key."
+               },
+               "arn": {
+                "type": "string",
+                "description": "Amazon Resource Name (ARN) of the AWS Kinesis stream destination."
+               },
+               "server_side_encryption": {
+                "type": "string",
+                "description": "Specifies whether server-side encryption is enabled for the destination storage."
+               },
+               "kms_key_arn": {
+                "type": "string",
+                "description": "Specifies the Amazon Resource Name (ARN) of the AWS Key Management Service (KMS) key used for server-side encryption."
+               }
+              },
+              "required": [
+               "arn",
+               "aws_secret_key",
+               "aws_access_key"
+              ]
+             }
+            },
+            "title": "Streamtype=kinesis",
+            "required": [
+             "name",
+             "oem_model",
+             "destination_type",
+             "stream_type",
+             "destination_metadata_details"
+            ]
+           },
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string",
+              "description": "Name of the stream configuration."
+             },
+             "description": {
+              "type": "string",
+              "description": "Description providing additional information about the stream."
+             },
+             "oem_model": {
+              "type": "string",
+              "description": "Device model for which the stream is configured."
+             },
+             "destination_type": {
+              "type": "string",
+              "description": "Destination service type. Set this value to eventhub for Azure Event Hub."
+             },
+             "stream_type": {
+              "type": "string",
+              "description": "Type of device data being streamed."
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "properties": {
+               "eventhub_name": {
+                "type": "string",
+                "description": "Name of the Azure Event Hub where datapoints are published."
+               },
+               "namespace_name": {
+                "type": "string",
+                "description": "Name of the Azure Event Hub namespace that contains the Event Hub instance."
+               },
+               "sas_key": {
+                "type": "string",
+                "description": "Shared Access Signature (SAS) key used for authenticating with Azure Event Hub."
+               },
+               "sas_key_name": {
+                "type": "string",
+                "description": "Name of the Shared Access Policy associated with the SAS key."
+               }
+              },
+              "description": "Contains Azure Event Hub connection details required to publish datapoints.",
+              "required": [
+               "eventhub_name",
+               "namespace_name",
+               "sas_key",
+               "sas_key_name"
+              ]
+             }
+            },
+            "required": [
+             "name",
+             "oem_model",
+             "destination_type",
+             "stream_type"
+            ],
+            "title": "Streamtype=eventhub"
+           },
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string",
+              "description": "Unique name for the stream configuration."
+             },
+             "description": {
+              "type": "string",
+              "description": "Description of the stream purpose."
+             },
+             "oem_model": {
+              "type": "string",
+              "description": "Device model for which the stream is created."
+             },
+             "destination_type": {
+              "type": "string",
+              "description": "Destination service where data is published. For Google Pub/Sub, use pubsub."
+             },
+             "stream_type": {
+              "type": "string",
+              "description": "Type of device data being streamed."
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "properties": {
+               "project_id": {
+                "type": "string",
+                "description": "Google Cloud project ID where the Pub/Sub topic exists."
+               },
+               "topic_name": {
+                "type": "string",
+                "description": "Name of the Pub/Sub topic where datapoints are published."
+               }
+              },
+              "required": [
+               "topic_name",
+               "project_id"
+              ],
+              "description": "Configuration details required to connect to the destination service."
+             }
+            },
+            "required": [
+             "name",
+             "destination_metadata_details",
+             "stream_type",
+             "destination_type",
+             "oem_model"
+            ],
+            "title": "Streamtype=pubsub"
+           }
+          ]
+         },
+         "examples": {
+          "Example  request for stream_type=pubsub": {
+           "summary": "Example  request for stream_type=pubsub",
+           "value": {
+            "name": "",
+            "description": "",
+            "oem_id": "",
+            "oem_model": "",
+            "destination_type": "",
+            "stream_type": "",
+            "destination_metadata_details": {
+             "project_id": "",
+             "topic_name": ""
+            }
+           }
+          },
+          "Example request for stream_type = eventhub": {
+           "summary": "Example request for stream_type = eventhub",
+           "value": {
+            "description": "",
+            "destination_type": "",
+            "name": "",
+            "oem_model": "",
+            "stream_type": "",
+            "destination_metadata_details": {
+             "eventhub_name": "",
+             "namespace_name": "",
+             "sas_key": "",
+             "sas_key_name": ""
+            }
+           }
+          },
+          "Example request data for stream_type = kinesis": {
+           "summary": "Example request data for stream_type = kinesis",
+           "value": {
+            "description": "",
+            "destination_type": "",
+            "name": "",
+            "oem_model": "",
+            "stream_type": "",
+            "destination_metadata_details": {
+             "arn": "",
+             "aws_access_key": "",
+             "aws_secret_key": "",
+             "kms_key_arn": "",
+             "server_side_encryption": ""
+            }
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "201": {
+        "content": {
+         "application/json": {
+          "schema": {
+           "oneOf": [
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string",
+               "example": "Test1246"
+              },
+              "description": {
+               "type": "string",
+               "example": ""
+              },
+              "oem_id": {
+               "type": "string",
+               "example": "0xxxxxx0"
+              },
+              "oem_model": {
+               "type": "string",
+               "example": "ledevb"
+              },
+              "user_uuid": {
+               "type": "string",
+               "example": "123xxxxxx90a12"
+              },
+              "stream_type": {
+               "type": "string",
+               "example": "datapoint"
+              },
+              "destination_type": {
+               "type": "string",
+               "example": "kinesis"
+              },
+              "rule_uuid": {
+               "type": "string",
+               "example": "122fa030-xxxxxx-9cc4a123456"
+              },
+              "is_enabled": {
+               "type": "boolean",
+               "example": true,
+               "default": true
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "destination_uuid": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxx"
+                },
+                "aws_access_key": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxxxxxxxxxxxx"
+                },
+                "aws_secret_key": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxxxxxxxxxxxxxx"
+                },
+                "aws_region": {
+                 "type": "string",
+                 "example": "us-west-2"
+                },
+                "arn": {
+                 "type": "string",
+                 "example": "xxxxxxx"
+                },
+                "server_side_encryption": {
+                 "type": "boolean",
+                 "example": false,
+                 "default": true
+                },
+                "kms_key_arn": {},
+                "created_at": {
+                 "type": "string",
+                 "example": "2020-12-18T07:18:23.100+0000"
+                },
+                "updated_at": {
+                 "type": "string",
+                 "example": "2020-12-18T07:18:23.100+0000"
+                }
+               }
+              }
+             },
+             "title": "Example response data for stream_type = kinesis"
+            },
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "oem_id": {
+               "type": "string"
+              },
+              "oem_model": {
+               "type": "string"
+              },
+              "user_uuid": {
+               "type": "string"
+              },
+              "stream_type": {
+               "type": "string"
+              },
+              "destination_type": {
+               "type": "string"
+              },
+              "rule_uuid": {
+               "type": "string"
+              },
+              "is_enabled": {
+               "type": "boolean"
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "stream_uuid": {
+                 "type": "string"
+                },
+                "eventhub_name": {
+                 "type": "string"
+                },
+                "namespace_name": {
+                 "type": "string"
+                },
+                "sas_key": {
+                 "type": "string"
+                },
+                "sas_key_name": {
+                 "type": "string"
+                },
+                "domain_name": {
+                 "type": "string"
+                },
+                "created_at": {
+                 "type": "string"
+                },
+                "updated_at": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "title": "Example response for stream_type = eventhub"
+            },
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "oem_id": {
+               "type": "string"
+              },
+              "oem_model": {
+               "type": "string"
+              },
+              "user_uuid": {
+               "type": "string"
+              },
+              "stream_type": {
+               "type": "string"
+              },
+              "destination_type": {
+               "type": "string"
+              },
+              "rule_uuid": {
+               "type": "string"
+              },
+              "is_enabled": {
+               "type": "boolean"
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "destination_uuid": {
+                 "type": "string"
+                },
+                "project_id": {
+                 "type": "string"
+                },
+                "topic_name": {
+                 "type": "string"
+                },
+                "created_at": {
+                 "type": "string"
+                },
+                "updated_at": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "title": "Example response for stream_type=pubsub"
+            }
+           ]
+          },
+          "examples": {
+           "Example response data for stream_type = kinesis": {
+            "summary": "Example response data for stream_type = kinesis",
+            "value": {
+             "name": "Test1246",
+             "description": "",
+             "oem_id": "0xxxxxx0",
+             "oem_model": "ledevb",
+             "user_uuid": "123xxxxxx90a12",
+             "stream_type": "datapoint",
+             "destination_type": "kinesis",
+             "rule_uuid": "122fa030-xxxxxx-9cc4a123456",
+             "is_enabled": true,
+             "destination_metadata_details": {
+              "destination_uuid": "xxxxxxxxxxx",
+              "aws_access_key": "xxxxxxxxxxxxxxxxxxxxx",
+              "aws_secret_key": "xxxxxxxxxxxxxxxxxxxxxxx",
+              "aws_region": "us-west-2",
+              "arn": "xxxxxxx",
+              "server_side_encryption": false,
+              "kms_key_arn": null,
+              "created_at": "2020-12-18T07:18:23.100+0000",
+              "updated_at": "2020-12-18T07:18:23.100+0000"
+             }
+            }
+           },
+           "Example response for stream_type = eventhub": {
+            "summary": "Example response for stream_type = eventhub",
+            "value": {
+             "name": "Test Stream",
+             "description": "Testing Stream with azure eventhub",
+             "oem_id": "0dfcXXX",
+             "oem_model": "genericnode",
+             "user_uuid": "xxxxxxxxxxxxxxxxx",
+             "stream_type": "datapoint",
+             "destination_type": "eventhub",
+             "rule_uuid": "xxxxxxxxxxxxxxxxx",
+             "is_enabled": true,
+             "destination_metadata_details": {
+              "stream_uuid": "xxxxxxxxxxxxxxxxx",
+              "eventhub_name": "xxxxxxxxxxxxxxxxx",
+              "namespace_name": "xxxxxxxxxxxxxxxxx",
+              "sas_key": "xxxxxxxxxxxxxxxxx",
+              "sas_key_name": "xxxxxxxxxxxxxxxxx",
+              "domain_name": null,
+              "created_at": "2019-01-01T00:00:01.000+0000",
+              "updated_at": "2019-01-01T00:00:01.000+0000"
+             }
+            }
+           },
+           "Example response for stream_type=pubsub": {
+            "summary": "Example response for stream_type=pubsub",
+            "value": {
+             "name": "Test Stream - 31231",
+             "description": "Testing Stream with Pubsub",
+             "oem_id": "0xxx00",
+             "oem_model": "ledevb-test",
+             "user_uuid": "b02ce872-xxxxxxx-f6a43ee69b74",
+             "stream_type": "datapoint",
+             "destination_type": "pubsub",
+             "rule_uuid": "dbxxxxxxx9f5aa319159",
+             "is_enabled": true,
+             "destination_metadata_details": {
+              "destination_uuid": "a4aexxxxxxx05-24ed768eb7b2",
+              "project_id": "ayxxxxx-svc-prj",
+              "topic_name": "dev-xxxxxxpubsub",
+              "created_at": 1784716442228,
+              "updated_at": 1784716442228
+             }
+            }
+           }
+          }
+         }
+        },
+        "description": "Created"
+       },
+       "400": {
+        "content": {},
+        "description": "Bad Request"
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/update-data-stream.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "data-stream-service-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://message-dev.aylanetworks.com/dss/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/streams/{destination_uuid}": {
+     "put": {
+      "summary": "Update datastream",
+      "description": "This API updates an existing datastream identified by using destination UUID.",
+      "operationId": "update-data-stream",
+      "parameters": [
+       {
+        "name": "destination_uuid",
+        "in": "path",
+        "description": "Unique key of the stream.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "oneOf": [
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string",
+              "description": "Name of the datastream."
+             },
+             "description": {
+              "type": "string",
+              "description": "Description of your datastream."
+             },
+             "oem_id": {
+              "type": "string",
+              "description": "Your OEM ID."
+             },
+             "destination_uuid": {
+              "type": "string",
+              "description": "Unique key of the stream."
+             },
+             "destination_type": {
+              "type": "string",
+              "description": "Name of data streaming platform."
+             },
+             "rule_uuid": {
+              "type": "string"
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "properties": {
+               "aws_access_key": {
+                "type": "string"
+               },
+               "aws_secret_key": {
+                "type": "string"
+               },
+               "arn": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "title": "Stream Type=kinesis"
+           },
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string"
+             },
+             "description": {
+              "type": "string"
+             },
+             "rule_uuid": {
+              "type": "string"
+             },
+             "destination_type": {
+              "type": "string"
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "properties": {
+               "eventhub_name": {
+                "type": "string"
+               },
+               "namespace_name": {
+                "type": "string"
+               },
+               "sas_key": {
+                "type": "string"
+               },
+               "sas_key_name": {
+                "type": "string"
+               },
+               "domain_name": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "title": "Stream Type=eventhub"
+           },
+           {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string"
+             },
+             "description": {
+              "type": "string"
+             },
+             "oem_model": {
+              "type": "string"
+             },
+             "destination_type": {
+              "type": "string"
+             },
+             "destination_metadata_details": {
+              "type": "object",
+              "properties": {
+               "project_id": {
+                "type": "string"
+               },
+               "topic_name": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "title": "Stream Type=pubsub"
+           }
+          ]
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Example response data for stream_type = kinesis": {
+            "value": "{\n    \"name\": \"Test1246\",\n    \"description\": \"\",\n    \"oem_id\": \"0dfc7900\",\n    \"oem_model\": \"ledevb\",\n    \"user_uuid\": \"1234f1c2-12fb-12eb-bc1f-0a120ae90a12\",\n    \"stream_type\": \"datapoint\",\n    \"destination_type\": \"kinesis\",\n    \"rule_uuid\": \"122fa030-1234-11eb-84ed-09cc4a123456\",\n    \"is_enabled\": true,\n    \"destination_metadata_details\": {\n        \"destination_uuid\": \"xxxxxxxxxxx\",\n        \"aws_access_key\": \"xxxxxxxxxxxxxxxxxxxxx\",\n        \"aws_secret_key\": \"xxxxxxxxxxxxxxxxxxxxxxx\",\n        \"aws_region\": \"us-west-2\",\n        \"arn\": \"xxxxxxx\",\n        \"server_side_encryption\": false,\n        \"kms_key_arn\": null,\n        \"created_at\": \"2020-12-18T07:18:23.100+0000\",\n        \"updated_at\": \"2020-12-18T07:18:23.100+0000\"\n    }\n}",
+            "summary": "Example response data for stream_type = kinesis"
+           },
+           "Example response for stream_type = eventhub": {
+            "summary": "Example response for stream_type = eventhub",
+            "value": {
+             "name": "Test Stream",
+             "description": "Testing Stream with azure eventhub",
+             "oem_id": "0dfcXXX",
+             "oem_model": "genericnode",
+             "user_uuid": "xxxxxxxxxxxxxxxxx",
+             "stream_type": "datapoint",
+             "destination_type": "eventhub",
+             "rule_uuid": "xxxxxxxxxxxxxxxxx",
+             "is_enabled": true,
+             "destination_metadata_details": {
+              "stream_uuid": "xxxxxxxxxxxxxxxxx",
+              "eventhub_name": "xxxxxxxxxxxxxxxxx",
+              "namespace_name": "xxxxxxxxxxxxxxxxx",
+              "sas_key": "xxxxxxxxxxxxxxxxx",
+              "sas_key_name": "xxxxxxxxxxxxxxxxx",
+              "domain_name": null,
+              "created_at": "2019-01-01T00:00:01.000+0000",
+              "updated_at": "2019-01-01T00:00:01.000+0000"
+             }
+            }
+           },
+           "Example response for stream_type=pubsub": {
+            "summary": "Example response for stream_type=pubsub",
+            "value": {
+             "name": "Test Stream - 31231",
+             "description": "Testing Stream with Pubsub",
+             "oem_id": "0xxx00",
+             "oem_model": "ledevb-test",
+             "user_uuid": "b02ce872-xxxxxxx-f6a43ee69b74",
+             "stream_type": "datapoint",
+             "destination_type": "pubsub",
+             "rule_uuid": "dbxxxxxxx9f5aa319159",
+             "is_enabled": true,
+             "destination_metadata_details": {
+              "destination_uuid": "a4aexxxxxxx05-24ed768eb7b2",
+              "project_id": "ayxxxxx-svc-prj",
+              "topic_name": "dev-xxxxxxpubsub",
+              "created_at": 1784716442228,
+              "updated_at": 1784716442228
+             }
+            }
+           }
+          },
+          "schema": {
+           "oneOf": [
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string",
+               "example": "Test1246"
+              },
+              "description": {
+               "type": "string",
+               "example": ""
+              },
+              "oem_id": {
+               "type": "string",
+               "example": "0dfc7900"
+              },
+              "oem_model": {
+               "type": "string",
+               "example": "ledevb"
+              },
+              "user_uuid": {
+               "type": "string",
+               "example": "1234f1c2-12fb-12eb-bc1f-0a120ae90a12"
+              },
+              "stream_type": {
+               "type": "string",
+               "example": "datapoint"
+              },
+              "destination_type": {
+               "type": "string",
+               "example": "kinesis"
+              },
+              "rule_uuid": {
+               "type": "string",
+               "example": "122fa030-1234-11eb-84ed-09cc4a123456"
+              },
+              "is_enabled": {
+               "type": "boolean",
+               "example": true,
+               "default": true
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "destination_uuid": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxx"
+                },
+                "aws_access_key": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxxxxxxxxxxxx"
+                },
+                "aws_secret_key": {
+                 "type": "string",
+                 "example": "xxxxxxxxxxxxxxxxxxxxxxx"
+                },
+                "aws_region": {
+                 "type": "string",
+                 "example": "us-west-2"
+                },
+                "arn": {
+                 "type": "string",
+                 "example": "xxxxxxx"
+                },
+                "server_side_encryption": {
+                 "type": "boolean",
+                 "example": false,
+                 "default": true
+                },
+                "kms_key_arn": {
+                 "type": "string"
+                },
+                "created_at": {
+                 "type": "string",
+                 "example": "2020-12-18T07:18:23.100+0000"
+                },
+                "updated_at": {
+                 "type": "string",
+                 "example": "2020-12-18T07:18:23.100+0000"
+                }
+               }
+              }
+             },
+             "title": "Example response data for stream_type = kinesis"
+            },
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "oem_id": {
+               "type": "string"
+              },
+              "oem_model": {
+               "type": "string"
+              },
+              "user_uuid": {
+               "type": "string"
+              },
+              "stream_type": {
+               "type": "string"
+              },
+              "destination_type": {
+               "type": "string"
+              },
+              "rule_uuid": {
+               "type": "string"
+              },
+              "is_enabled": {
+               "type": "boolean"
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "destination_uuid": {
+                 "type": "string"
+                },
+                "eventhub_name": {
+                 "type": "string"
+                },
+                "namespace_name": {
+                 "type": "string"
+                },
+                "sas_key": {
+                 "type": "string"
+                },
+                "sas_key_name": {
+                 "type": "string"
+                },
+                "domain_name": {
+                 "type": "string"
+                },
+                "created_at": {
+                 "type": "string"
+                },
+                "updated_at": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "title": "Example response for stream_type = eventhub"
+            },
+            {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "oem_id": {
+               "type": "string"
+              },
+              "oem_model": {
+               "type": "string"
+              },
+              "user_uuid": {
+               "type": "string"
+              },
+              "stream_type": {
+               "type": "string"
+              },
+              "destination_type": {
+               "type": "string"
+              },
+              "rule_uuid": {
+               "type": "string"
+              },
+              "is_enabled": {
+               "type": "boolean"
+              },
+              "destination_metadata_details": {
+               "type": "object",
+               "properties": {
+                "destination_uuid": {
+                 "type": "string"
+                },
+                "project_id": {
+                 "type": "string"
+                },
+                "topic_name": {
+                 "type": "string"
+                },
+                "created_at": {
+                 "type": "string"
+                },
+                "updated_at": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "title": "Example response for stream_type=pubsub"
+            }
+           ]
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-data-streams.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "data-stream-service-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://message-dev.aylanetworks.com/dss/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/streams?{destination_type}": {
+     "get": {
+      "summary": "Get datastreams",
+      "description": "This API returns a list of datastreams created by OEM.",
+      "operationId": "get-data-streams",
+      "parameters": [
+       {
+        "name": "destination_type",
+        "in": "query",
+        "description": "Name of data streaming platform.",
+        "required": true,
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "oem_id",
+        "in": "query",
+        "description": "Unique OEM ID.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "paginated",
+        "in": "query",
+        "description": "True or 1 means results will be paginated.",
+        "schema": {
+         "type": "boolean"
+        }
+       },
+       {
+        "name": "per_page",
+        "in": "query",
+        "description": "Maximum number of records per page.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "page",
+        "in": "query",
+        "description": "The page number you want to view.",
+        "schema": {
+         "type": "integer",
+         "format": "int32"
+        }
+       },
+       {
+        "name": "sort_by",
+        "in": "query",
+        "description": "Sorts the result based on the specified field.",
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "order_by",
+        "in": "query",
+        "description": "Sorts the result in ascending or descending order.",
+        "schema": {
+         "type": "string"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": {
+             "total": 5,
+             "current_page_number": 1,
+             "next_page": null,
+             "previous_page": null,
+             "start_count_on_page": 1,
+             "end_count_on_page": 5,
+             "streams": [
+              {
+               "name": "dss_demo_jeff",
+               "description": "Jeff's DSS Demo",
+               "oem_id": "0dfc7900",
+               "oem_model": "AylaShield",
+               "user_uuid": "1e51c3axxxxxxxxxxxxxxxxxxx51d704787",
+               "stream_type": "datapoint",
+               "destination_type": "kinesis",
+               "rule_uuid": "cbf0caxxxxxxxxxxxxxxxxxxx768174",
+               "is_enabled": false,
+               "filter": {
+                "property_name": {
+                 "include": [
+                  "Blue_LED",
+                  "Green_LED",
+                  "Blue_button",
+                  "log"
+                 ]
+                }
+               },
+               "destination_metadata_details": {
+                "destination_uuid": "e613b2xxxxxxxxxxxxxxxxxxxf484a96",
+                "aws_access_key": "xxxxxxxxxxxxxxxxxxx",
+                "aws_secret_key": "xxxxxxxxxxxxxxxxxxx",
+                "aws_region": "us-east-1",
+                "arn": "xxxxxxxxxxxxxxxxxxx",
+                "server_side_encryption": false,
+                "kms_key_arn": null,
+                "created_at": "2022-07-21T14:24:06.000+00:00",
+                "updated_at": "2022-07-21T16:33:06.000+00:00"
+               }
+              },
+              {
+               "name": "dss_demo_jeff ",
+               "description": "Jeff's DSS Demo",
+               "oem_id": "0dfc7900",
+               "oem_model": "AylaShield",
+               "user_uuid": "2b4abxxxxxxxxxxxxxxxxxxxb9",
+               "stream_type": "datapoint",
+               "destination_type": "kinesis",
+               "rule_uuid": "41a6cc8xxxxxxxxxxxxxxxxxxx20b36",
+               "is_enabled": false,
+               "destination_metadata_details": {
+                "destination_uuid": "e613b2xxxxxxxxxxxxxxxxxxx3f484a96",
+                "aws_access_key": "xxxxxxxxxxxxxxxxxxx",
+                "aws_secret_key": "xxxxxxxxxxxxxxxxxxx",
+                "aws_region": "us-east-1",
+                "arn": "xxxxxxxxxxxxxxxxxxx",
+                "server_side_encryption": false,
+                "kms_key_arn": null,
+                "created_at": "2022-07-21T14:24:06.000+00:00",
+                "updated_at": "2022-07-21T16:33:06.000+00:00"
+               }
+              }
+             ]
+            }
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "total": {
+             "type": "integer",
+             "example": 5,
+             "default": 0
+            },
+            "current_page_number": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "next_page": {
+             "type": "integer"
+            },
+            "previous_page": {
+             "type": "integer"
+            },
+            "start_count_on_page": {
+             "type": "integer",
+             "example": 1,
+             "default": 0
+            },
+            "end_count_on_page": {
+             "type": "integer",
+             "example": 5,
+             "default": 0
+            },
+            "streams": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string",
+                "example": "dss_demo_jeff"
+               },
+               "description": {
+                "type": "string",
+                "example": "Jeff's DSS Demo"
+               },
+               "oem_id": {
+                "type": "string",
+                "example": "0dfc7900"
+               },
+               "oem_model": {
+                "type": "string",
+                "example": "AylaShield"
+               },
+               "user_uuid": {
+                "type": "string",
+                "example": "1e51c3a0-80e1-11e6-be90-0ee51d704787"
+               },
+               "stream_type": {
+                "type": "string",
+                "example": "datapoint"
+               },
+               "destination_type": {
+                "type": "string",
+                "example": "kinesis"
+               },
+               "rule_uuid": {
+                "type": "string",
+                "example": "cbf0ca50-0912-11ed-af21-f91d8b768174"
+               },
+               "is_enabled": {
+                "type": "boolean",
+                "example": false,
+                "default": true
+               },
+               "filter": {
+                "type": "object",
+                "properties": {
+                 "property_name": {
+                  "type": "object",
+                  "properties": {
+                   "include": {
+                    "type": "array",
+                    "items": {
+                     "type": "string",
+                     "example": "Blue_LED"
+                    }
+                   }
+                  }
+                 }
+                }
+               },
+               "destination_metadata_details": {
+                "type": "object",
+                "properties": {
+                 "destination_uuid": {
+                  "type": "string",
+                  "example": "e613b29a-ccf4-46ce-b12f-db533f484a96"
+                 },
+                 "aws_access_key": {
+                  "type": "string",
+                  "example": "REDACTED_AWS_ACCESS_KEY_ID"
+                 },
+                 "aws_secret_key": {
+                  "type": "string",
+                  "example": "REDACTED_EXAMPLE_AWS_SECRET"
+                 },
+                 "aws_region": {
+                  "type": "string",
+                  "example": "us-east-1"
+                 },
+                 "arn": {
+                  "type": "string",
+                  "example": "arn:aws:kinesis:us-east-1:808871238399:stream/DSS_Test"
+                 },
+                 "server_side_encryption": {
+                  "type": "boolean",
+                  "example": false,
+                  "default": true
+                 },
+                 "kms_key_arn": {},
+                 "created_at": {
+                  "type": "string",
+                  "example": "2022-07-21T14:24:06.000+00:00"
+                 },
+                 "updated_at": {
+                  "type": "string",
+                  "example": "2022-07-21T16:33:06.000+00:00"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/get-data-streams-1.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "data-stream-service-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://message-dev.aylanetworks.com/dss/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/streams": {
+     "get": {
+      "summary": "Get datastream",
+      "description": "This API returns a single datastream created by OEM.",
+      "operationId": "get-data-streams-1",
+      "parameters": [
+       {
+        "name": "destination_type",
+        "in": "query",
+        "description": "Name of data streaming platform.",
+        "required": true,
+        "schema": {
+         "type": "string"
+        }
+       },
+       {
+        "name": "destination_uuid",
+        "in": "query",
+        "description": "Unique key of the stream.",
+        "required": true,
+        "schema": {
+         "type": "string"
+        }
+       }
+      ],
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": "{\n    \"name\": \"Test1246\",\n    \"description\": \"\",\n    \"oem_id\": \"0dfc7900\",\n    \"oem_model\": \"ledevb\",\n    \"user_uuid\": \"1234f1c2-12fb-12eb-bc1f-0a120ae90a12\",\n    \"stream_type\": \"datapoint\",\n    \"destination_type\": \"kinesis\",\n    \"rule_uuid\": \"122fa030-1234-11eb-84ed-09cc4a123456\",\n    \"is_enabled\": true,\n    \"destination_metadata_details\": {\n        \"destination_uuid\": \"xxxxxxxxxxx\",\n        \"aws_access_key\": \"xxxxxxxxxxxxxxxxxxxxx\",\n        \"aws_secret_key\": \"xxxxxxxxxxxxxxxxxxxxxxx\",\n        \"aws_region\": \"us-west-2\",\n        \"arn\": \"xxxxxxx\",\n        \"server_side_encryption\": false,\n        \"kms_key_arn\": null,\n        \"created_at\": \"2020-12-18T07:18:23.100+0000\",\n        \"updated_at\": \"2020-12-18T07:18:23.100+0000\"\n    }\n}"
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string",
+             "example": "Test1246"
+            },
+            "description": {
+             "type": "string",
+             "example": ""
+            },
+            "oem_id": {
+             "type": "string",
+             "example": "0dfc7900"
+            },
+            "oem_model": {
+             "type": "string",
+             "example": "ledevb"
+            },
+            "user_uuid": {
+             "type": "string",
+             "example": "1234f1c2-12fb-12eb-bc1f-0a120ae90a12"
+            },
+            "stream_type": {
+             "type": "string",
+             "example": "datapoint"
+            },
+            "destination_type": {
+             "type": "string",
+             "example": "kinesis"
+            },
+            "rule_uuid": {
+             "type": "string",
+             "example": "122fa030-1234-11eb-84ed-09cc4a123456"
+            },
+            "is_enabled": {
+             "type": "boolean",
+             "example": true,
+             "default": true
+            },
+            "destination_metadata_details": {
+             "type": "object",
+             "properties": {
+              "destination_uuid": {
+               "type": "string",
+               "example": "xxxxxxxxxxx"
+              },
+              "aws_access_key": {
+               "type": "string",
+               "example": "xxxxxxxxxxxxxxxxxxxxx"
+              },
+              "aws_secret_key": {
+               "type": "string",
+               "example": "xxxxxxxxxxxxxxxxxxxxxxx"
+              },
+              "aws_region": {
+               "type": "string",
+               "example": "us-west-2"
+              },
+              "arn": {
+               "type": "string",
+               "example": "xxxxxxx"
+              },
+              "server_side_encryption": {
+               "type": "boolean",
+               "example": false,
+               "default": true
+              },
+              "kms_key_arn": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "string",
+               "example": "2020-12-18T07:18:23.100+0000"
+              },
+              "updated_at": {
+               "type": "string",
+               "example": "2020-12-18T07:18:23.100+0000"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ },
+ {
+  "page": "https://docs.aylanetworks.com/reference/delete-data-stream.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "data-stream-service-v2",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://message-dev.aylanetworks.com/dss/v2/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-bearer-format": "",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/streams/{destination_uuid}": {
+     "delete": {
+      "summary": "Delete datastream",
+      "description": "This API deletes a single datastream created by OEM.",
+      "operationId": "delete-data-stream",
+      "parameters": [
+       {
+        "name": "destination_uuid",
+        "in": "path",
+        "description": "Unique key of the stream.",
+        "schema": {
+         "type": "string"
+        },
+        "required": true
+       }
+      ],
+      "responses": {
+       "204": {
+        "content": {},
+        "description": "No Content"
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       },
+       "403": {
+        "content": {},
+        "description": "Forbidden"
+       },
+       "404": {
+        "content": {},
+        "description": "Not Found"
+       },
+       "422": {
+        "content": {},
+        "description": "Unprocessable Entity"
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ }
+]

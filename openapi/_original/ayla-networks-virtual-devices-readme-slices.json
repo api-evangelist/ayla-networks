@@ -1,0 +1,111 @@
+[
+ {
+  "page": "https://docs.aylanetworks.com/reference/create-virtual-device.md",
+  "definition": {
+   "openapi": "3.1.0",
+   "info": {
+    "title": "virtual-devices",
+    "version": "1.0"
+   },
+   "servers": [
+    {
+     "url": "https://ads-dev.aylanetworks.com/deviceservice/v1/"
+    }
+   ],
+   "components": {
+    "securitySchemes": {
+     "sec0": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "x-default": "auth_token"
+     }
+    }
+   },
+   "security": [
+    {
+     "sec0": []
+    }
+   ],
+   "paths": {
+    "/virtual_devices.json": {
+     "post": {
+      "summary": "Create virtual device",
+      "description": "",
+      "operationId": "create-virtual-device",
+      "requestBody": {
+       "content": {
+        "application/json": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "oem": {
+            "type": "string",
+            "description": "Unique OEM ID. Mandatory if user is Ayla::Admin."
+           },
+           "product_name": {
+            "type": "string",
+            "description": "Name of your virtual devide."
+           },
+           "oem_model": {
+            "type": "string",
+            "description": "OEM model name."
+           }
+          },
+          "required": [
+           "product_name",
+           "oem_model"
+          ]
+         }
+        }
+       }
+      },
+      "responses": {
+       "200": {
+        "description": "OK",
+        "content": {
+         "application/json": {
+          "examples": {
+           "Result": {
+            "value": "{\n  \"device\": {\n    \"dsn\": \"VDb2893d480000200\"\n  }\n}"
+           }
+          },
+          "schema": {
+           "type": "object",
+           "properties": {
+            "device": {
+             "type": "object",
+             "properties": {
+              "dsn": {
+               "type": "string",
+               "example": "VDb2893d480000200"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       },
+       "400": {
+        "content": {},
+        "description": "Bad Request"
+       },
+       "401": {
+        "content": {},
+        "description": "Unauthorized"
+       }
+      },
+      "deprecated": false
+     }
+    }
+   },
+   "x-readme": {
+    "headers": [],
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   },
+   "x-readme-fauxas": true
+  }
+ }
+]
