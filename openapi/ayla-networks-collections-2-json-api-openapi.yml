@@ -1,0 +1,285 @@
+openapi: 3.2.0
+info:
+  title: groups-scenes Collections 2.json API
+  version: '1.0'
+servers:
+- url: https://gss-dev.aylanetworks.com/groupsceneservice/v1/
+security:
+- sec0: []
+tags:
+- name: Collections 2.json
+paths:
+  /collections_2.json:
+    post:
+      summary: Create group or scene
+      description: 'This API is used to create a group or scene.
+
+
+        Use the parameter "type" to specify whether you want to create a group or scene.
+
+        ("type": "GROUP" or "type": "SCENE").
+
+
+        The following section provides brief descriptions for a Group and a Scene:
+
+
+        **Group**: A group is a collection of devices that can be viewed and controlled as a single entity. The devices in a group are of a similar type, or have common attributes (e.g. On/Off) that can be controlled as a whole. Groups enable the users to perform a single action to a collection of devices at the same time.
+
+
+        **Scene**: A scene is a collection of devices with different actions/states. A scene allows us to perform various actions to different types of devices at the same time. When a scene is activated, a set of pre-defined actions are performed on all the devices associated with a scene. A scene is activated manually (tapping a button in the mobile app), or can be automated based on a schedule.
+
+
+        **NOTE**: In general, a group or scene is referred to as a collection.'
+      operationId: create-group-1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - type: object
+                  properties:
+                    collection_uuid:
+                      type: string
+                      example: f64ce632-xxxxx-b772-fdfd6de88f54
+                    name:
+                      type: string
+                      example: API Testing
+                    type:
+                      type: string
+                      example: GROUP
+                    devices:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          dsn:
+                            type: string
+                            example: AC000W000458392
+                          product_name:
+                            type: string
+                            example: Ayla Devkit
+                          oem_model:
+                            type: string
+                            example: AylaShield
+                          lan_enabled:
+                            type: boolean
+                            example: false
+                            default: true
+                          connected_at:
+                            type: string
+                            example: '2026-05-06T07:57:37Z'
+                          connection_status:
+                            type: string
+                            example: Offline
+                    child_collections:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          collection_uuid:
+                            type: string
+                            example: 0387b969-xxxx-a283-27c89cbfc55c
+                          name:
+                            type: string
+                            example: 8EMH5IIB
+                    custom_attributes:
+                      type: object
+                      properties: {}
+                    schedules:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+                  title: Group
+                - type: object
+                  properties:
+                    collection_uuid:
+                      type: string
+                    name:
+                      type: string
+                  required:
+                  - collection_uuid
+                  title: Scene
+              examples:
+                Created - Group:
+                  summary: Created - Group
+                  value:
+                    collection_uuid: f64ce632-xxxxx-b772-fdfd6de88f54
+                    name: API Testing
+                    type: GROUP
+                    devices:
+                    - dsn: AC000W000458392
+                      product_name: Ayla Devkit
+                      oem_model: AylaShield
+                      lan_enabled: false
+                      connected_at: '2026-05-06T07:57:37Z'
+                      connection_status: Offline
+                    - dsn: AC000W046761301
+                      product_name: Ayla Devkit
+                      oem_model: ledevb
+                      lan_enabled: false
+                      connected_at: '2026-05-06T07:44:46Z'
+                      connection_status: Offline
+                    child_collections:
+                    - collection_uuid: 0387b969-xxxx-a283-27c89cbfc55c
+                      name: 8EMH5IIB
+                    - collection_uuid: 414a2595-xxxx-b8c1-81cf80f4ba82
+                      name: CT90RV1T
+                    custom_attributes: {}
+                    schedules: []
+                Created - Scene:
+                  summary: Created - Scene
+                  value:
+                    collection_uuid: cc02b55e-xxxx-bac9-42c22f12ad4e
+                    name: Scene schedule testing
+                    type: SCENE
+                    is_active: true
+                    devices:
+                    - dsn: TESTDSN_3702488_002
+                      product_name: TESTDEVICE_002
+                      oem_model: ledevb-test
+                      lan_enabled: false
+                      connected_at: '2026-05-06T14:40:16Z'
+                      connection_status: Offline
+                      states:
+                      - property_name: integer_output_tp
+                        base_type: integer
+                        property_value: 1
+                    child_collections: []
+                    custom_attributes: {}
+                    schedule:
+                      end_date: '2026-12-27'
+                      days_of_week:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      months_of_year:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      start_time_each_day: '14:42:16'
+                      name: Trigger schedule test
+                      days_of_month:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      - 13
+                      - 14
+                      - 15
+                      - 16
+                      - 17
+                      - 18
+                      - 19
+                      - 20
+                      - 21
+                      - 22
+                      - 23
+                      - 24
+                      - 25
+                      - 26
+                      - 27
+                      - 28
+                      - 29
+                      - 30
+                      - 31
+                      active: true
+                      start_date: '2026-05-06'
+                      metadata: {}
+          description: Created
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      tags:
+      - Collections 2.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-countdown-timer.md
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-schedule.md
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-schedule_2.md
+  - https://docs.aylanetworks.com/reference/activate-scene-manually-tap-to-run.md
+  - https://docs.aylanetworks.com/reference/add-attributes-to-collection.md
+  - https://docs.aylanetworks.com/reference/add-devices-or-child-collections.md
+  - https://docs.aylanetworks.com/reference/create-group-1.md
+  - https://docs.aylanetworks.com/reference/create-group-or-scene-deprecated.md
+  - https://docs.aylanetworks.com/reference/delete-all-collections.md
+  - https://docs.aylanetworks.com/reference/delete-collection.md
+  - https://docs.aylanetworks.com/reference/delete-multiple-collections.md
+  - https://docs.aylanetworks.com/reference/delete-schedule.md
+  - https://docs.aylanetworks.com/reference/enable-disable-scene-automation.md
+  - https://docs.aylanetworks.com/reference/get-collections-by-dsn-and-type.md
+  - https://docs.aylanetworks.com/reference/get-last-posted-datapoints-for-a-collection.md
+  - https://docs.aylanetworks.com/reference/get-received-shares-1.md
+  - https://docs.aylanetworks.com/reference/get-shared-collections-owned-by-user.md
+  - https://docs.aylanetworks.com/reference/post-datapoints-to-collection.md
+  - https://docs.aylanetworks.com/reference/remove-custom-attributes.md
+  - https://docs.aylanetworks.com/reference/remove-devices.md
+  - https://docs.aylanetworks.com/reference/remove-specific-devices-or-child-collections.md
+  - https://docs.aylanetworks.com/reference/retrieve-collection-1.md
+  - https://docs.aylanetworks.com/reference/retrieve-collection-2.md
+  - https://docs.aylanetworks.com/reference/retrieve-collections.md
+  - https://docs.aylanetworks.com/reference/share-group-or-scene.md
+  - https://docs.aylanetworks.com/reference/stop-sharing-collection.md
+  - https://docs.aylanetworks.com/reference/update-collection-name-1.md
+  - https://docs.aylanetworks.com/reference/update-collection-name.md
+  - https://docs.aylanetworks.com/reference/update-custom-attributes.md
+  - https://docs.aylanetworks.com/reference/update-schedule.md
+  - https://docs.aylanetworks.com/reference/update-schedule_2.md
+  - https://docs.aylanetworks.com/reference/update-share-1.md
+  merge:
+    pages: 32
+    deduped: 31
+    conflicts_kept_first: 0

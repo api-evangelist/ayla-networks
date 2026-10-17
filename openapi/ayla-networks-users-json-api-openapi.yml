@@ -1,0 +1,417 @@
+openapi: 3.2.0
+info:
+  title: user-service Users.json API
+  version: '1.0'
+servers:
+- url: https://user-dev.aylanetworks.com/
+security:
+- sec0: []
+tags:
+- name: Users.json
+paths:
+  /api/v1/users.json:
+    delete:
+      summary: Delete user account
+      description: This API deletes the user account associated with the specified email.
+      operationId: delete-user-account
+      parameters:
+      - name: email
+        in: query
+        description: Email associated with user account to be deleted.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users.json
+  /users.json:
+    post:
+      summary: Create user account
+      description: This API creates a user account in the Ayla Public Account.
+      operationId: create-user-account
+      parameters:
+      - name: email_template_id
+        in: query
+        description: Custom template Id for confirmation email
+        schema:
+          type: string
+      - name: email_subject
+        in: query
+        description: Custom template subject line for confirmation email
+        schema:
+          type: string
+      - name: email_body_html
+        in: query
+        description: Custom template body text for confirmation email
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    email:
+                      type: string
+                      description: User email address.
+                    password:
+                      type: string
+                      description: User account password.
+                    firstname:
+                      type: string
+                      description: User firstname
+                    lastname:
+                      type: string
+                      description: User lastname
+                    application:
+                      properties:
+                        app_id:
+                          type: string
+                          description: Unique application identifier.
+                        app_secret:
+                          type: string
+                          description: Application secret string.
+                      required:
+                      - app_id
+                      - app_secret
+                      type: object
+                    country:
+                      type: string
+                      description: User country name.
+                    city:
+                      type: string
+                      description: User city name.
+                    street:
+                      type: string
+                      description: User street address.
+                    zip:
+                      type: string
+                      description: User zip code.
+                    phone_country_code:
+                      type: string
+                      description: User country phone code. It is **mandatory** when phone_number is sent.
+                    phone:
+                      type: string
+                      description: User phone number.
+                  required:
+                  - email
+                  - password
+                  - firstname
+                  - lastname
+                  - country
+                  - phone_country_code
+                  type: object
+                  description: user object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    admin: false
+                    alternate_email: null
+                    approved: false
+                    country: India
+                    created_at: '2026-04-28T07:20:53Z'
+                    email: aylaadminautomation@aylanetworks.com
+                    firstname: Aylaautomation
+                    id: 5485312
+                    lastname: Aylaautomation
+                    oem_approved: false
+                    origin_oem_id: 2
+                    phone_number: null
+                    primary_contact: email
+                    phone_country_code: '91'
+                    terms_accepted: false
+                    terms_accepted_at: '2026-04-28T07:20:53Z'
+                    updated_at: '2026-04-28T07:20:53Z'
+                    username: aylaadminautomation@aylanetworks.com
+                    uuid: cad7a1c2-42d2-11f1-ac12-42d2ce5bfb80
+                    dealers: []
+              schema:
+                type: object
+                properties:
+                  admin:
+                    type: boolean
+                    example: false
+                    default: true
+                  alternate_email:
+                    type: string
+                  approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  country:
+                    type: string
+                    example: India
+                  created_at:
+                    type: string
+                    example: '2026-04-28T07:20:53Z'
+                  email:
+                    type: string
+                    example: aylaadminautomation@aylanetworks.com
+                  firstname:
+                    type: string
+                    example: Aylaautomation
+                  id:
+                    type: integer
+                    example: 5485312
+                    default: 0
+                  lastname:
+                    type: string
+                    example: Aylaautomation
+                  oem_approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  origin_oem_id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  phone_number:
+                    type: number
+                  primary_contact:
+                    type: string
+                    example: email
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  terms_accepted:
+                    type: boolean
+                    example: false
+                    default: true
+                  terms_accepted_at:
+                    type: string
+                    example: '2026-04-28T07:20:53Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-28T07:20:53Z'
+                  username:
+                    type: string
+                    example: aylaadminautomation@aylanetworks.com
+                  uuid:
+                    type: string
+                    example: cad7a1c2-42d2-11f1-ac12-42d2ce5bfb80
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      security: []
+      tags:
+      - Users.json
+    put:
+      summary: Update user account
+      description: 'This API updates the user account information of the caller.
+
+
+        If changing password, include ```current_password``` and ```password```. Otherwise, include only the fields to update.'
+      operationId: update-user-account-1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    current_password:
+                      type: string
+                      description: Current user account password.
+                    password:
+                      type: string
+                      description: New user password that you want to create.
+                    email:
+                      type: string
+                      description: User email address.
+                    firstname:
+                      type: string
+                      description: User firstname
+                    lastname:
+                      type: string
+                      description: User lastname
+                    country:
+                      type: string
+                      description: User country name.
+                    city:
+                      type: string
+                      description: User city name.
+                    street:
+                      type: string
+                      description: User street address.
+                    zip:
+                      type: string
+                      description: User zip code.
+                    phone_country_code:
+                      type: string
+                      description: User country phone code. It is **mandatory** when phone_number is sent.
+                    phone:
+                      type: string
+                      description: User phone number.
+                  required:
+                  - current_password
+                  - password
+                  - email
+                  - firstname
+                  - lastname
+                  - country
+                  type: object
+                  description: User object.
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                No Content:
+                  summary: No Content
+                  value: '{}'
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users.json
+    delete:
+      summary: Delete user account
+      description: This API deletes the caller user account.
+      operationId: delete-user-account-1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/assign-label.md
+  - https://docs.aylanetworks.com/reference/assign-role.md
+  - https://docs.aylanetworks.com/reference/associate-role-user.md
+  - https://docs.aylanetworks.com/reference/configure-properties-based-on-role.md
+  - https://docs.aylanetworks.com/reference/confirm-user-account.md
+  - https://docs.aylanetworks.com/reference/create-associated-user.md
+  - https://docs.aylanetworks.com/reference/create-contact.md
+  - https://docs.aylanetworks.com/reference/create-dealer.md
+  - https://docs.aylanetworks.com/reference/create-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/create-role-user.md
+  - https://docs.aylanetworks.com/reference/create-role.md
+  - https://docs.aylanetworks.com/reference/create-share.md
+  - https://docs.aylanetworks.com/reference/create-user-account.md
+  - https://docs.aylanetworks.com/reference/create-user-contact.md
+  - https://docs.aylanetworks.com/reference/create-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/delete-contact.md
+  - https://docs.aylanetworks.com/reference/delete-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/delete-properties-by-roles.md
+  - https://docs.aylanetworks.com/reference/delete-share-by-user-id.md
+  - https://docs.aylanetworks.com/reference/delete-share.md
+  - https://docs.aylanetworks.com/reference/delete-user-account-1.md
+  - https://docs.aylanetworks.com/reference/delete-user-account.md
+  - https://docs.aylanetworks.com/reference/delete-user-contact.md
+  - https://docs.aylanetworks.com/reference/delete-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/disassociate-role-user.md
+  - https://docs.aylanetworks.com/reference/disassociate-user.md
+  - https://docs.aylanetworks.com/reference/edit-property-permissions.md
+  - https://docs.aylanetworks.com/reference/get-clients.md
+  - https://docs.aylanetworks.com/reference/get-contact-details.md
+  - https://docs.aylanetworks.com/reference/get-contacts.md
+  - https://docs.aylanetworks.com/reference/get-end-users.md
+  - https://docs.aylanetworks.com/reference/get-oem-users.md
+  - https://docs.aylanetworks.com/reference/get-oem.md
+  - https://docs.aylanetworks.com/reference/get-oems.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-oem-model-and-role.md
+  - https://docs.aylanetworks.com/reference/get-received-shares.md
+  - https://docs.aylanetworks.com/reference/get-role-users.md
+  - https://docs.aylanetworks.com/reference/get-share.md
+  - https://docs.aylanetworks.com/reference/get-shares.md
+  - https://docs.aylanetworks.com/reference/get-tokens.md
+  - https://docs.aylanetworks.com/reference/get-user-by-id.md
+  - https://docs.aylanetworks.com/reference/get-user-by-universal-user-id.md
+  - https://docs.aylanetworks.com/reference/get-user-contacts.md
+  - https://docs.aylanetworks.com/reference/get-user-metadata.md
+  - https://docs.aylanetworks.com/reference/get-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/get-user-profile-1.md
+  - https://docs.aylanetworks.com/reference/get-users-by-label.md
+  - https://docs.aylanetworks.com/reference/get-users-by-oem.md
+  - https://docs.aylanetworks.com/reference/get-users-by-role.md
+  - https://docs.aylanetworks.com/reference/login.md
+  - https://docs.aylanetworks.com/reference/refresh-token.md
+  - https://docs.aylanetworks.com/reference/reset-password.md
+  - https://docs.aylanetworks.com/reference/return-tokens.md
+  - https://docs.aylanetworks.com/reference/revoke-label.md
+  - https://docs.aylanetworks.com/reference/revoke-role.md
+  - https://docs.aylanetworks.com/reference/send-how-to-confirm.md
+  - https://docs.aylanetworks.com/reference/send-how-to-reset.md
+  - https://docs.aylanetworks.com/reference/update-contact.md
+  - https://docs.aylanetworks.com/reference/update-email.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration-1.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/update-share.md
+  - https://docs.aylanetworks.com/reference/update-sso-user.md
+  - https://docs.aylanetworks.com/reference/update-user-account-1.md
+  - https://docs.aylanetworks.com/reference/update-user-contact.md
+  - https://docs.aylanetworks.com/reference/update-user-metadatum.md
+  merge:
+    pages: 66
+    deduped: 65
+    conflicts_kept_first: 0

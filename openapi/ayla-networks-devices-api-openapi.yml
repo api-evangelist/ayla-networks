@@ -1,0 +1,4521 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Devices API
+  version: '1.0'
+  description: 'Operations tagged Devices across 2 of this provider''s published API definitions: ayla-networks-device-service-openapi.yml, ayla-networks-factory-proxy-service-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+- url: https://api-dev.aylanetworks.com/devicefactory/v1/
+security:
+- sec0: []
+tags:
+- name: Devices
+paths:
+  /devices/find_by_role_label.json:
+    get:
+      summary: Get associated devices by role
+      description: This API returns an array of device objects by role.
+      operationId: get-associated-devices-1
+      parameters:
+      - name: role
+        in: query
+        description: Role label name.
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: key
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: value
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - role_label:
+                      id: 9239
+                      role_name: EndUser
+                      description: end user
+                      label: {}
+                      role_label_hierarchies: []
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    role_label:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 9239
+                          default: 0
+                        role_name:
+                          type: string
+                          example: EndUser
+                        description:
+                          type: string
+                          example: end user
+                        label:
+                          type: object
+                          properties: {}
+                        role_label_hierarchies:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/find_by_user_email.json:
+    get:
+      summary: Get associated devices by email
+      description: 'This API returns an array of devices registered to the user account associated with the email specified in the query parameter. Here is an example of response data:
+
+
+        [
+
+        {
+
+        "device": {
+
+        "dsn": "AC000W000000001",
+
+        "id": 1234001
+
+        }
+
+        },
+
+        {
+
+        "device": {
+
+        "dsn": "AC000W000000002",
+
+        "id": 1234002
+
+        }
+
+        }
+
+        ]'
+      operationId: get-associated-devices-by-email
+      parameters:
+      - name: email
+        in: query
+        description: The email associated with a user account.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - device:
+                      id: 6246263
+                      dsn: AC000W031210552
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        dsn:
+                          type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/register.json:
+    get:
+      summary: Get registrable device
+      description: This API returns the device that matches the query parameters and is eligible for registration. If multiple devices match the query parameters, only the most recently connected device is returned.
+      operationId: get-registrable-device
+      parameters:
+      - name: ip
+        in: query
+        description: IP address.
+        schema:
+          type: string
+      - name: dsn
+        in: query
+        description: Must be an exact match. If specified, other parameters are ignored.
+        schema:
+          type: string
+      - name: regtype
+        in: query
+        description: 'Registration type: [Same-LAN, Button-Push, Dsn, Node]. <br>For <b>Same-LAN</b>(default) - device should not be already registered.<br>For <b>Button-Push</b> - button must have been pushed within the last 2 min.'
+        required: true
+        schema:
+          type: string
+      - name: time
+        in: query
+        description: Time span in minutes.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    device:
+                      dsn: AC000W0000048200
+                      lan_ip: 190.120.3.12
+                      model: AY001PRT2
+                      oem_model: AY001PRT2
+                      product_name: carrier 22
+                      connected_at: '2021-01-12T16:23:28Z'
+                      product_class: ''
+              schema:
+                type: object
+                properties:
+                  device:
+                    type: object
+                    properties:
+                      dsn:
+                        type: string
+                        example: AC000W0000048200
+                      lan_ip:
+                        type: string
+                        example: 190.120.3.12
+                      model:
+                        type: string
+                        example: AY001PRT2
+                      oem_model:
+                        type: string
+                        example: AY001PRT2
+                      product_name:
+                        type: string
+                        example: carrier 22
+                      connected_at:
+                        type: string
+                        example: '2021-01-12T16:23:28Z'
+                      product_class:
+                        type: string
+                        example: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/search.json:
+    get:
+      summary: Search devices
+      description: This API returns details of the devices matching the search criteria. The criteria can include device properties and values.
+      operationId: search-devices
+      parameters:
+      - name: property_name
+        in: query
+        description: Property name.
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: query
+        description: Property value.
+        required: true
+        schema:
+          type: string
+      - name: oem_id
+        in: query
+        description: Unique OEM identifier.
+        required: true
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model.
+        required: true
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: Maximum number of records per page.
+        schema:
+          type: string
+      - name: is_forward_page
+        in: query
+        description: For first page or next page requests, set to true.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    previous_page: null
+                    previous: null
+                    next_page: null
+                    is_forward: null
+                    next: null
+                    devices:
+                    - device:
+                        product_name: karpalo
+                        dsn: AC000W000000516
+                        sw_version: bc 2.3-eng 09/21/15 11:43:07 ID marko/0400e85 dev
+                        ip: 76.220.56.140
+                        connected_at: '2015-09-22T08:49:02Z'
+                        user_id: null
+                        user_uuid: null
+                        lat: '37.3688'
+                        lng: '-122.036'
+                        locality: '94087'
+                        homekit: null
+                        dealer: null
+                        facility_uuid: null
+                        manuf_model: USI-eval
+                        transport_type: http
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: number
+                  previous:
+                    type: number
+                  next_page:
+                    type: number
+                  is_forward:
+                    type: string
+                  next:
+                    type: string
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: karpalo
+                            dsn:
+                              type: string
+                              example: AC000W000000516
+                            sw_version:
+                              type: string
+                              example: bc 2.3-eng 09/21/15 11:43:07 ID marko/0400e85 dev
+                            ip:
+                              type: string
+                              example: 76.220.56.140
+                            connected_at:
+                              type: string
+                              example: '2015-09-22T08:49:02Z'
+                            user_id:
+                              type: string
+                            user_uuid:
+                              type: string
+                            lat:
+                              type: string
+                              example: '37.3688'
+                            lng:
+                              type: string
+                              example: '-122.036'
+                            locality:
+                              type: string
+                              example: '94087'
+                            homekit:
+                              type: string
+                            dealer:
+                              type: string
+                            facility_uuid:
+                              type: string
+                            manuf_model:
+                              type: string
+                              example: USI-eval
+                            transport_type:
+                              type: string
+                              example: http
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}.json:
+    delete:
+      summary: Unregister device
+      description: This API unregisters the specified device from the caller.
+      operationId: unregister-a-device
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    get:
+      summary: Get device by ID
+      description: This API returns information about the device specified by device ID (devId).
+      operationId: get-device-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    device:
+                      id: 6440993
+                      product_name: P09A camera
+                      model: AY001MRT1
+                      dsn: AC000W029118485
+                      oem: 0xxxxx0
+                      oem_model: null
+                      connect_path: null
+                      unique_hardware_id: null
+                      sw_version: unknown
+                      user_id: null
+                      user_uuid: null
+                      template_id: 625098
+                      mac: null
+                      imei: null
+                      ip: 34.162.36.218
+                      lan_ip: null
+                      ssid: null
+                      connected_at: '2026-08-20T06:56:05Z'
+                      key: 6440993
+                      product_class: ''
+                      has_properties: true
+                      lan_enabled: false
+                      connection_priority: []
+                      enable_ssl: null
+                      enable_ip_loc: true
+                      enable_wifi_loc: false
+                      ans_enabled: false
+                      ans_server: ans-dev.aylanetworks.com
+                      log_enabled: true
+                      registered: false
+                      connection_status: Online
+                      registration_type: Dsn
+                      transport_type: mqtt
+                      lat: '39.9625'
+                      lng: '-83.0061'
+                      locality: '43215'
+                      homekit: null
+                      enable_setup_loc: true
+                      force_location: false
+                      module_updated_at: null
+                      registrable: true
+                      regtoken: fxxxd5
+                      device_type: Gateway
+                      provisional: true
+                      gateway_type: Generic
+                      nodes: []
+                      activated_at: '2023-11-26T12:18:12Z'
+                      setup_token: null
+                      created_at: '2023-11-26T12:18:11Z'
+                      last_get_at: '2026-08-20T06:56:05Z'
+                      address: null
+                      dealer: null
+                      facility_uuid: null
+              schema:
+                type: object
+                properties:
+                  device:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 6440993
+                        default: 0
+                      product_name:
+                        type: string
+                        example: P09A camera
+                      model:
+                        type: string
+                        example: AY001MRT1
+                      dsn:
+                        type: string
+                        example: AC000W029118485
+                      oem:
+                        type: string
+                        example: 0xxxxx0
+                      oem_model:
+                        type: string
+                      connect_path:
+                        type: string
+                      unique_hardware_id:
+                        type: string
+                      sw_version:
+                        type: string
+                        example: unknown
+                      user_id:
+                        type: string
+                      user_uuid:
+                        type: string
+                      template_id:
+                        type: integer
+                        example: 625098
+                        default: 0
+                      mac:
+                        type: string
+                      imei:
+                        type: string
+                      ip:
+                        type: string
+                        example: 34.162.36.218
+                      lan_ip:
+                        type: string
+                      ssid:
+                        type: string
+                      connected_at:
+                        type: string
+                        example: '2026-08-20T06:56:05Z'
+                      key:
+                        type: integer
+                        example: 6440993
+                        default: 0
+                      product_class:
+                        type: string
+                        example: ''
+                      has_properties:
+                        type: boolean
+                        example: true
+                        default: true
+                      lan_enabled:
+                        type: boolean
+                        example: false
+                        default: true
+                      connection_priority:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      enable_ssl:
+                        type: string
+                      enable_ip_loc:
+                        type: boolean
+                        example: true
+                        default: true
+                      enable_wifi_loc:
+                        type: boolean
+                        example: false
+                        default: true
+                      ans_enabled:
+                        type: boolean
+                        example: false
+                        default: true
+                      ans_server:
+                        type: string
+                        example: ans-dev.aylanetworks.com
+                      log_enabled:
+                        type: boolean
+                        example: true
+                        default: true
+                      registered:
+                        type: boolean
+                        example: false
+                        default: true
+                      connection_status:
+                        type: string
+                        example: Online
+                      registration_type:
+                        type: string
+                        example: Dsn
+                      transport_type:
+                        type: string
+                        example: mqtt
+                      lat:
+                        type: string
+                        example: '39.9625'
+                      lng:
+                        type: string
+                        example: '-83.0061'
+                      locality:
+                        type: string
+                        example: '43215'
+                      homekit:
+                        type: string
+                      enable_setup_loc:
+                        type: boolean
+                        example: true
+                        default: true
+                      force_location:
+                        type: boolean
+                        example: false
+                        default: true
+                      module_updated_at:
+                        type: string
+                      registrable:
+                        type: boolean
+                        example: true
+                        default: true
+                      regtoken:
+                        type: string
+                        example: fxxxd5
+                      device_type:
+                        type: string
+                        example: Gateway
+                      provisional:
+                        type: boolean
+                        example: true
+                        default: true
+                      gateway_type:
+                        type: string
+                        example: Generic
+                      nodes:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      activated_at:
+                        type: string
+                        example: '2023-11-26T12:18:12Z'
+                      setup_token:
+                        type: string
+                      created_at:
+                        type: string
+                        example: '2023-11-26T12:18:11Z'
+                      last_get_at:
+                        type: string
+                        example: '2026-08-20T06:56:05Z'
+                      address:
+                        type: string
+                      dealer:
+                        type: string
+                      facility_uuid:
+                        type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      tags:
+      - Devices
+    put:
+      summary: Rename device by ID
+      description: This API renames a device.
+      operationId: rename-device-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                device:
+                  properties:
+                    product_name:
+                      type: string
+                      description: Product name.
+                  required:
+                  - product_name
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  summary: OK
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/addr.json:
+    put:
+      summary: Update device address
+      description: This API updates the physical address of the device.
+      operationId: update-device-address
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                addr:
+                  properties:
+                    street:
+                      type: string
+                      description: Street name.
+                    city:
+                      type: string
+                      description: City name.
+                    state:
+                      type: string
+                      description: State name.
+                    country:
+                      type: string
+                      description: Country name.
+                    zip:
+                      type: integer
+                      description: Area zip code. (Max. 9 digits).
+                      format: int32
+                  required: []
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n\t\"addr\":{\n\t\t\"city”:“Sunnyvale”\n\t\t\"country”:”USA”\n\t\t\"state”:“CA”\n\t\t\"street”:”6 W. California Ave”\n\t\t\"zip”:”94086”\n\t}\n}"
+              schema:
+                type: object
+                properties:
+                  addr:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                        example: 6 W. California Ave
+                      city:
+                        type: string
+                        example: Sunnyvale
+                      state:
+                        type: string
+                        example: CA
+                      country:
+                        type: string
+                        example: USA
+                      zip:
+                        type: number
+                        example: '94086'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    get:
+      summary: Get device address
+      description: This API returns the physical address of the specified device.
+      operationId: get-device-address
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n\t\"addr\":{\n\t\t\"city”:“Sunnyvale”\n\t\t\"country”:”USA”\n\t\t\"state”:“CA”\n\t\t\"street”:”6 W. California Ave”\n\t\t\"zip”:”94086”\n\t}\n}"
+              schema:
+                type: object
+                properties:
+                  addr:
+                    type: object
+                    properties:
+                      street:
+                        type: string
+                        example: 6California Ave
+                      city:
+                        type: string
+                        example: Sunnyvale
+                      state:
+                        type: string
+                        example: CA
+                      country:
+                        type: string
+                        example: USA
+                      zip:
+                        type: number
+                        example: '94086'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    delete:
+      summary: Delete device address
+      description: This API removes the physical address details of the device.
+      operationId: delete-device-address
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/cmds/factory_reset.json:
+    put:
+      summary: Factory reset device
+      description: This API resets device settings to factory defaults.
+      operationId: factory-reset-device-id114
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/connection_history/page/{page_no}/limit/{per_page}/field/{field_name}/order/{order_by}.json:
+    get:
+      summary: Get connection history
+      description: This API is used to get the connection status history for a given device.
+      operationId: get-connection-history
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: page_no
+        in: path
+        description: Page number
+        schema:
+          type: integer
+          format: int32
+        required: true
+      - name: per_page
+        in: path
+        description: Number of entries(records) in a page.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      - name: field_name
+        in: path
+        description: It can be either "event_time" or "status". The mentioned field name is used to order the result.
+        schema:
+          type: string
+        required: true
+      - name: order_by
+        in: path
+        description: It can be either "desc" or "asc".
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"connection_history\": {\n      \"event_time\": \"2022-01-03T08:30:22Z\",\n      \"status\": \"Initializing\"\n    }\n  },\n  {\n    \"connection_history\": {\n      \"event_time\": \"2022-01-03T08:30:22Z\",\n      \"status\": \"Online\"\n    }\n  },\n  {\n    \"connection_history\": {\n      \"event_time\": \"2022-01-03T10:23:52Z\",\n      \"status\": \"Offline\"\n    }\n  },\n  {\n    \"connection_history\": {\n      \"event_time\": \"2022-01-03T10:25:48Z\",\n      \"status\": \"Initializing\"\n    }\n  },\n  {\n    \"connection_history\": {\n      \"event_time\": \"2022-01-03T10:25:49Z\",\n      \"status\": \"Online\"\n    }\n  }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    connection_history:
+                      type: object
+                      properties:
+                        event_time:
+                          type: string
+                          example: '2022-01-03T08:30:22Z'
+                        status:
+                          type: string
+                          example: Initializing
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/identify.json:
+    put:
+      summary: Identify Zigbee node
+      description: This API sends a command to the specified Zigbee node (in a Gateway), setting the node to ON or OFF for the specified number of seconds.
+      operationId: identify-zigbee-node-id115
+      parameters:
+      - name: devId
+        in: path
+        description: Device ID of Zigbee node.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  type: string
+                  description: Specifies whether to turn the device on or off.
+                  default: 'On'
+                time:
+                  type: integer
+                  description: Specifies a delay in seconds before turning the device on/off.
+                  default: 60
+                  format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: On_0x00158D0000658577
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: On_0x00158D0000658577
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '405':
+          content: {}
+          description: Method Not Allowed
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/locations.json:
+    post:
+      summary: Update device location
+      description: This API updates device location. Passing lat=0 and long=0 is acceptable.
+      operationId: update-device-location-id116
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                location:
+                  properties:
+                    lat:
+                      type: number
+                      description: Latitude.
+                      format: double
+                    long:
+                      type: number
+                      description: Longitude.
+                      format: double
+                  required:
+                  - lat
+                  - long
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    location:
+                      id: 25653853
+                      device_id: 6592588
+                      provider: user-based
+                      lat: '12.9753'
+                      long: '77.591'
+                      ip: 49.249.189.54
+                      wifi_scan: null
+                      created_at: '2026-04-15T06:03:25Z'
+                      updated_at: '2026-04-15T06:03:25Z'
+                      ap_ssid: Cloud%20Team-2.4GHz
+                      locality: null
+                      zipcode: null
+                      country_code: null
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 25653853
+                        default: 0
+                      device_id:
+                        type: integer
+                        example: 6592588
+                        default: 0
+                      provider:
+                        type: string
+                        example: user-based
+                      lat:
+                        type: string
+                        example: '12.9753'
+                      long:
+                        type: string
+                        example: '77.591'
+                      ip:
+                        type: string
+                        example: 49.249.189.54
+                      wifi_scan:
+                        type: string
+                      created_at:
+                        type: string
+                        example: '2026-04-15T06:03:25Z'
+                      updated_at:
+                        type: string
+                        example: '2026-04-15T06:03:25Z'
+                      ap_ssid:
+                        type: string
+                        example: Cloud%20Team-2.4GHz
+                      locality:
+                        type: string
+                      zipcode:
+                        type: number
+                      country_code:
+                        type: number
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/nodes.json:
+    get:
+      summary: Get nodes by device ID
+      description: This API returns an array of nodes associated with the specified gateway.
+      operationId: get-nodes-by-device-id-id117
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - in: query
+        name: all_nodes
+        schema:
+          type: boolean
+          default: 'true'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - device:
+                      product_name: VR00ZN000009654
+                      model: Smart_Plug
+                      dsn: VR00ZN000009654
+                      oem_model: zigbee1
+                      user_id: 2986
+                      user_uuid: 18dde000-828d-11e5-9609-0ee0c870bcec
+                      template_id: null
+                      mac: '0x00158D00006F8565'
+                      lan_ip: null
+                      connected_at: '2017-05-16T21:28:03Z'
+                      key: 99571
+                      registered: true
+                      lan_enabled: false
+                      connection_priority: []
+                      has_properties: true
+                      product_class: ''
+                      connection_status: Offline
+                      power: 1
+                      ntwkaddr: '0x964D'
+                      address: null
+                      device_type: Node
+                      gateway_dsn: AC000W000134493
+                      node_type: Zigbee
+                      properties:
+                      - type: Property
+                        name: 1_dev_id
+                        base_type: string
+                        read_only: true
+                        direction: output
+                        scope: oem
+                        data_updated_at: 'null'
+                        key: 3436879
+                        device_key: 99571
+                        product_name: null
+                        track_only_changes: false
+                        display_name: 1_dev_id
+                        host_sw_version: false
+                        time_series: false
+                        derived: false
+                        app_type: null
+                        recipe: null
+                        value: null
+                        generated_from: null
+                        generated_at: null
+                        denied_roles: []
+                        ack_enabled: false
+                        retention_days: 90
+                        passthrough: false
+                      facility_uuid: null
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device:
+                      type: object
+                      properties:
+                        product_name:
+                          type: string
+                          example: VR00ZN000009654
+                        model:
+                          type: string
+                          example: Smart_Plug
+                        dsn:
+                          type: string
+                          example: VR00ZN000009654
+                        oem_model:
+                          type: string
+                          example: zigbee1
+                        user_id:
+                          type: integer
+                          example: 2986
+                          default: 0
+                        user_uuid:
+                          type: string
+                          example: 18dde000-828d-11e5-9609-0ee0c870bcec
+                        template_id:
+                          type: string
+                        mac:
+                          type: string
+                          example: '0x00158D00006F8565'
+                        lan_ip:
+                          type: string
+                        connected_at:
+                          type: string
+                          example: '2017-05-16T21:28:03Z'
+                        key:
+                          type: integer
+                          example: 99571
+                          default: 0
+                        registered:
+                          type: boolean
+                          example: true
+                          default: true
+                        lan_enabled:
+                          type: boolean
+                          example: false
+                          default: true
+                        connection_priority:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        has_properties:
+                          type: boolean
+                          example: true
+                          default: true
+                        product_class:
+                          type: string
+                          example: ''
+                        connection_status:
+                          type: string
+                          example: Offline
+                        power:
+                          type: integer
+                          example: 1
+                          default: 0
+                        ntwkaddr:
+                          type: string
+                          example: '0x964D'
+                        address:
+                          type: string
+                        device_type:
+                          type: string
+                          example: Node
+                        gateway_dsn:
+                          type: string
+                          example: AC000W000134493
+                        node_type:
+                          type: string
+                          example: Zigbee
+                        properties:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              type:
+                                type: string
+                                example: Property
+                              name:
+                                type: string
+                                example: 1_dev_id
+                              base_type:
+                                type: string
+                                example: string
+                              read_only:
+                                type: boolean
+                                example: true
+                                default: true
+                              direction:
+                                type: string
+                                example: output
+                              scope:
+                                type: string
+                                example: oem
+                              data_updated_at:
+                                type: string
+                                example: 'null'
+                              key:
+                                type: integer
+                                example: 3436879
+                                default: 0
+                              device_key:
+                                type: integer
+                                example: 99571
+                                default: 0
+                              product_name: {}
+                              track_only_changes:
+                                type: boolean
+                                example: false
+                                default: true
+                              display_name:
+                                type: string
+                                example: 1_dev_id
+                              host_sw_version:
+                                type: boolean
+                                example: false
+                                default: true
+                              time_series:
+                                type: boolean
+                                example: false
+                                default: true
+                              derived:
+                                type: boolean
+                                example: false
+                                default: true
+                              app_type: {}
+                              recipe: {}
+                              value: {}
+                              generated_from: {}
+                              generated_at: {}
+                              denied_roles:
+                                type: array
+                                items:
+                                  type: object
+                                  properties: {}
+                              ack_enabled:
+                                type: boolean
+                                example: false
+                                default: true
+                              retention_days:
+                                type: integer
+                                example: 90
+                                default: 0
+                              passthrough:
+                                type: boolean
+                                example: false
+                                default: true
+                        facility_uuid:
+                          type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/notifications.json:
+    post:
+      summary: Create notification
+      description: This API creates a notification, and associates it with the specified device.
+      operationId: create-a-notification
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notification:
+                  properties:
+                    url:
+                      type: string
+                      description: URL to which property value is forwarded. **Mandatory** for on_connect and ip_change.
+                    username:
+                      type: string
+                      description: The username for basic authorization.
+                    password:
+                      type: string
+                      description: Password for basic authorization.
+                    notification_type:
+                      type: string
+                      description: on_connect, ip_change, on_connection_lost, on_connection_restore.
+                    message:
+                      type: string
+                      description: Message to be sent with notification.
+                    threshold:
+                      type: integer
+                      description: Represents duration (in seconds) the condition must be active before notification sent. **Mandatory** for on_connection_lost and on_connection_restore.
+                      format: int32
+                    device_nickname:
+                      type: string
+                      description: User-friendly nickname for the associated device.
+                    active:
+                      type: boolean
+                      description: false if the notification is to be created inactive. Default value if true.
+                  required:
+                  - url
+                  - notification_type
+                  - threshold
+                  type: object
+              required:
+              - notification
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notification:
+                      id: 14516297
+                      url: http://www.aylanetworks.com
+                      username: aylaun
+                      password: aylapw
+                      notification_type: ip_change
+                      message: IP Change
+                      threshold: 0
+                      device_key: 5462379
+                      device_nickname: null
+                      user_id: 3637421
+                      user_uuid: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset: true
+                      active: true
+              schema:
+                type: object
+                properties:
+                  notification:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 14516297
+                        default: 0
+                      url:
+                        type: string
+                        example: http://www.aylanetworks.com
+                      username:
+                        type: string
+                        example: aylaun
+                      password:
+                        type: string
+                        example: aylapw
+                      notification_type:
+                        type: string
+                        example: ip_change
+                      message:
+                        type: string
+                        example: IP Change
+                      threshold:
+                        type: integer
+                        example: 0
+                        default: 0
+                      device_key:
+                        type: integer
+                        example: 5462379
+                        default: 0
+                      device_nickname:
+                        type: string
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      user_uuid:
+                        type: string
+                        example: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset:
+                        type: boolean
+                        example: true
+                        default: true
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    get:
+      summary: Get notifications
+      description: This API returns an array of notifications created by the caller on the specified device.
+      operationId: get-notifications
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"notification\": {\n      \"id\": 14516296,\n      \"url\": \"http://www.aylanetworks.com\",\n      \"username\": \"aylaun\",\n      \"password\": \"aylapw\",\n      \"notification_type\": \"ip_change\",\n      \"message\": \"[Device Notification] \",\n      \"threshold\": 0,\n      \"device_key\": 5462379,\n      \"device_nickname\": null,\n      \"user_id\": 3637421,\n      \"user_uuid\": \"4563f1c2-22fb-22eb-bc1f-0a222ae90a86\",\n      \"asset\": true,\n      \"active\": true\n    }\n  }\n{\n  ...\n  }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    notification:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 14516296
+                          default: 0
+                        url:
+                          type: string
+                          example: http://www.aylanetworks.com
+                        username:
+                          type: string
+                          example: aylaun
+                        password:
+                          type: string
+                          example: aylapw
+                        notification_type:
+                          type: string
+                          example: ip_change
+                        message:
+                          type: string
+                          example: '[Device Notification] '
+                        threshold:
+                          type: integer
+                          example: 0
+                          default: 0
+                        device_key:
+                          type: integer
+                          example: 5462379
+                          default: 0
+                        device_nickname:
+                          type: string
+                        user_id:
+                          type: integer
+                          example: 3637421
+                          default: 0
+                        user_uuid:
+                          type: string
+                          example: 4563f1c2-22fb-22eb-bc1f-0a222ae90a86
+                        asset:
+                          type: boolean
+                          example: true
+                          default: true
+                        active:
+                          type: boolean
+                          example: true
+                          default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/notifications/all.json:
+    get:
+      summary: Get all notifications
+      description: This API returns an array of notifications created by anyone on the specified device.
+      operationId: get-all-notifications
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"notification\": {\n      \"id\": 14516296,\n      \"url\": \"http://www.aylanetworks.com\",\n      \"username\": \"aylaun\",\n      \"password\": \"aylapw\",\n      \"notification_type\": \"ip_change\",\n      \"message\": \"[Device Notification] \",\n      \"threshold\": 0,\n      \"device_key\": 5462379,\n      \"device_nickname\": null,\n      \"user_id\": 3637421,\n      \"user_uuid\": \"6024f1c2-38fb-11eb-bc1f-0a580ae90a86\",\n      \"asset\": true,\n      \"active\": true\n    }\n  }\n{...}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    notification:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 14516296
+                          default: 0
+                        url:
+                          type: string
+                          example: http://www.aylanetworks.com
+                        username:
+                          type: string
+                          example: aylaun
+                        password:
+                          type: string
+                          example: aylapw
+                        notification_type:
+                          type: string
+                          example: ip_change
+                        message:
+                          type: string
+                          example: '[Device Notification] '
+                        threshold:
+                          type: integer
+                          example: 0
+                          default: 0
+                        device_key:
+                          type: integer
+                          example: 5462379
+                          default: 0
+                        device_nickname:
+                          type: string
+                        user_id:
+                          type: integer
+                          example: 3637421
+                          default: 0
+                        user_uuid:
+                          type: string
+                          example: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                        asset:
+                          type: boolean
+                          example: true
+                          default: true
+                        active:
+                          type: boolean
+                          example: true
+                          default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/properties.json:
+    get:
+      summary: Get properties by device ID
+      description: This API returns an array of properties for the specified device.
+      operationId: get-properties-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"property\": {\n      \"type\": \"Property\",\n      \"name\": \"Blue_LED\",\n      \"base_type\": \"boolean\",\n      \"read_only\": false,\n      \"direction\": \"input\",\n      \"scope\": \"user\",\n      \"data_updated_at\": \"2026-04-15T09:08:02Z\",\n      \"key\": 35679994,\n      \"device_key\": 6592588,\n      \"product_name\": \"demo\",\n      \"track_only_changes\": false,\n      \"display_name\": \"Blue_LED\",\n      \"host_sw_version\": false,\n      \"time_series\": false,\n      \"derived\": false,\n      \"app_type\": null,\n      \"recipe\": null,\n      \"value\": 1,\n      \"generated_from\": null,\n      \"generated_at\": null,\n      \"denied_roles\": [],\n      \"ack_enabled\": false,\n      \"retention_days\": 30,\n      \"passthrough\": false\n    }\n  },\n\t1:{...}\n\t2:{...}\n\t3:{...}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    property:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          example: Property
+                        name:
+                          type: string
+                          example: Blue_LED
+                        base_type:
+                          type: string
+                          example: boolean
+                        read_only:
+                          type: boolean
+                          example: false
+                          default: true
+                        direction:
+                          type: string
+                          example: input
+                        scope:
+                          type: string
+                          example: user
+                        data_updated_at:
+                          type: string
+                          example: '2026-04-15T09:08:02Z'
+                        key:
+                          type: integer
+                          example: 35679994
+                          default: 0
+                        device_key:
+                          type: integer
+                          example: 6592588
+                          default: 0
+                        product_name:
+                          type: string
+                          example: demo
+                        track_only_changes:
+                          type: boolean
+                          example: false
+                          default: true
+                        display_name:
+                          type: string
+                          example: Blue_LED
+                        host_sw_version:
+                          type: boolean
+                          example: false
+                          default: true
+                        time_series:
+                          type: boolean
+                          example: false
+                          default: true
+                        derived:
+                          type: boolean
+                          example: false
+                          default: true
+                        app_type:
+                          type: string
+                        recipe:
+                          type: string
+                        value:
+                          type: integer
+                          example: 1
+                          default: 0
+                        generated_from:
+                          type: string
+                        generated_at:
+                          type: string
+                        denied_roles:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        ack_enabled:
+                          type: boolean
+                          example: false
+                          default: true
+                        retention_days:
+                          type: integer
+                          example: 30
+                          default: 0
+                        passthrough:
+                          type: boolean
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/properties/{propName}.json:
+    get:
+      summary: Get property by device ID
+      description: This API returns a property for the specified device.
+      operationId: gets-property-by-device-di
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: propName
+        in: path
+        description: Device property name.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    property:
+                      type: Property
+                      name: Blue_LED
+                      base_type: boolean
+                      read_only: false
+                      direction: input
+                      scope: user
+                      data_updated_at: '2026-04-15T09:08:02Z'
+                      key: 35679994
+                      device_key: 6592588
+                      product_name: demo
+                      track_only_changes: false
+                      display_name: Blue_LED
+                      host_sw_version: false
+                      time_series: false
+                      derived: false
+                      app_type: null
+                      recipe: null
+                      value: 1
+                      generated_from: null
+                      generated_at: null
+                      denied_roles: []
+                      ack_enabled: false
+                      retention_days: 30
+                      passthrough: false
+              schema:
+                type: object
+                properties:
+                  property:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: Property
+                      name:
+                        type: string
+                        example: Blue_LED
+                      base_type:
+                        type: string
+                        example: boolean
+                      read_only:
+                        type: boolean
+                        example: false
+                        default: true
+                      direction:
+                        type: string
+                        example: input
+                      scope:
+                        type: string
+                        example: user
+                      data_updated_at:
+                        type: string
+                        example: '2026-04-15T09:08:02Z'
+                      key:
+                        type: integer
+                        example: 35679994
+                        default: 0
+                      device_key:
+                        type: integer
+                        example: 6592588
+                        default: 0
+                      product_name:
+                        type: string
+                        example: demo
+                      track_only_changes:
+                        type: boolean
+                        example: false
+                        default: true
+                      display_name:
+                        type: string
+                        example: Blue_LED
+                      host_sw_version:
+                        type: boolean
+                        example: false
+                        default: true
+                      time_series:
+                        type: boolean
+                        example: false
+                        default: true
+                      derived:
+                        type: boolean
+                        example: false
+                        default: true
+                      app_type:
+                        type: string
+                      recipe:
+                        type: string
+                      value:
+                        type: integer
+                        example: 1
+                        default: 0
+                      generated_from:
+                        type: string
+                      generated_at:
+                        type: string
+                      denied_roles:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      ack_enabled:
+                        type: boolean
+                        example: false
+                        default: true
+                      retention_days:
+                        type: integer
+                        example: 30
+                        default: 0
+                      passthrough:
+                        type: boolean
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/properties/{propName}/datapoints.json:
+    post:
+      summary: Create datapoint by device ID
+      description: 'This API creates a datapoint for the specified property.
+
+
+        Body parameter Description:
+
+        - datapoint: An object containing the following parameters:
+
+        - value: Datapoint value (Mandatory).
+
+        - metadata: Each datapoint may also contain a "metadata" field containing key/value pairs (Optional). Maximum 10 metadata entries per datapoint are supported.'
+      operationId: create-a-datapoint-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: propName
+        in: path
+        description: Device property name.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datapoint:
+                  type: object
+                  description: Datapoint payload for the item.
+                  properties:
+                    value:
+                      type: string
+                      description: Datapoint value. The accepted format depends on the property's base type.
+                    metadata:
+                      type: object
+                      description: The metadata associated with the datapoint.
+                      properties:
+                        key1:
+                          type: string
+                          description: The key-value pairs containing additional information associated with the datapoint.
+                        key2:
+                          type: string
+                          description: The key-value pairs containing additional information associated with the datapoint.
+                        key3:
+                          type: string
+                          description: The key-value pairs containing additional information associated with the datapoint.
+                        key4:
+                          type: string
+                          description: The key-value pairs containing additional information associated with the datapoint.
+                        key5:
+                          type: string
+                          description: The key-value pairs containing additional information associated with the datapoint.
+                  required:
+                  - value
+              required:
+              - datapoint
+            examples:
+              Example:
+                summary: Example
+                value:
+                  datapoint:
+                    value: '0'
+                    metadata:
+                      key1: '1'
+                      key2: '123'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datapoint:
+                    type: object
+                    properties:
+                      updated_at:
+                        type: string
+                        example: '2026-04-15T07:16:54Z'
+                      created_at:
+                        type: string
+                        example: '2026-04-15T07:16:54Z'
+                      echo:
+                        type: boolean
+                        example: false
+                        default: true
+                      metadata:
+                        type: object
+                        properties:
+                          key1:
+                            type: string
+                            example: '1'
+                          key2:
+                            type: string
+                            example: '123'
+                      generated_at:
+                        type: string
+                      generated_from:
+                        type: string
+                      value:
+                        type: integer
+                        example: 0
+                        default: 0
+              examples:
+                Created:
+                  summary: Created
+                  value:
+                    datapoint:
+                      updated_at: '2026-04-15T07:16:54Z'
+                      created_at: '2026-04-15T07:16:54Z'
+                      echo: false
+                      metadata:
+                        key1: '1'
+                        key2: '123'
+                      generated_at: null
+                      generated_from: null
+                      value: 0
+          description: Created
+        '202':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Accepted- For Native MQTT Devices:
+                  summary: Accepted- For Native MQTT Devices
+                  value: 'Datapoint accepted but queued for delivery to the device (device currently online, delivered asynchronously) '
+          description: Accepted
+        '206':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Partial Content:
+                  summary: Partial Content
+                  value: "The batch contains a combination of successful and failed datapoints. \nReview the status field for each item to determine its individual result."
+          description: Partial Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/properties/{propName}/datapoints/{dpId}.json:
+    get:
+      summary: Get datapoint by device ID
+      description: 'This API returns a datapoint value.
+
+        To fetch datapoint value in Base64 encoded format, use the "encoding" query parameter.'
+      operationId: get-datapoint-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: propName
+        in: path
+        description: Device property name.
+        schema:
+          type: string
+        required: true
+      - name: dpId
+        in: path
+        description: Datapoint identifier.
+        schema:
+          type: string
+        required: true
+      - name: encoding
+        in: query
+        description: To get datapoint value in Base64 encoded format, enter "base64". Keep the field empty to get the datapoint value without Base64 encoding.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Without Base64 encoding:
+                  value: "{\n  \"datapoint\": {\n    \"updated_at\": \"2022-02-18T18:27:00Z\",\n    \"created_at\": \"2022-02-18T18:27:00Z\",\n    \"echo\": true,\n    \"metadata\": {},\n    \"generated_at\": null,\n    \"generated_from\": \"AYLA::device\",\n    \"value\": 30,\n    \"created_at_from_device\": null\n  }\n}"
+                With Base64 encoding:
+                  value: "{\n  \"datapoint\": {\n    \"updated_at\": \"2022-02-18T18:27:00Z\",\n    \"created_at\": \"2022-02-18T18:27:00Z\",\n    \"echo\": true,\n    \"metadata\": {},\n    \"generated_at\": null,\n    \"generated_from\": \"AYLA::device\",\n    \"value\": \"MzA=\\n\",\n    \"created_at_from_device\": null\n  }\n}"
+              schema:
+                oneOf:
+                - title: Without Base64 encoding
+                  type: object
+                  properties:
+                    datapoint:
+                      type: object
+                      properties:
+                        updated_at:
+                          type: string
+                          example: '2022-02-18T18:27:00Z'
+                        created_at:
+                          type: string
+                          example: '2022-02-18T18:27:00Z'
+                        echo:
+                          type: boolean
+                          example: true
+                          default: true
+                        metadata:
+                          type: object
+                          properties: {}
+                        generated_at: {}
+                        generated_from:
+                          type: string
+                          example: AYLA::device
+                        value:
+                          type: integer
+                          example: 30
+                          default: 0
+                        created_at_from_device: {}
+                - title: With Base64 encoding
+                  type: object
+                  properties:
+                    datapoint:
+                      type: object
+                      properties:
+                        updated_at:
+                          type: string
+                          example: '2022-02-18T18:27:00Z'
+                        created_at:
+                          type: string
+                          example: '2022-02-18T18:27:00Z'
+                        echo:
+                          type: boolean
+                          example: true
+                          default: true
+                        metadata:
+                          type: object
+                          properties: {}
+                        generated_at: {}
+                        generated_from:
+                          type: string
+                          example: AYLA::device
+                        value:
+                          type: string
+                          example: 'MzA=
+
+                            '
+                        created_at_from_device: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/registration_window.json:
+    post:
+      summary: Open registration window
+      description: 'This API opens and polls the registration window (only applies to Zigbee gateways).
+
+
+        ```duration``` is the time in seconds to complete this API (the duration for which the registration window is open). The default is 200 seconds. Use 0 value to close the registration immediately.'
+      operationId: gets-datapoint-by-device-id
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                duration:
+                  type: integer
+                  format: int32
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                No Content:
+                  summary: No Content
+                  value: '{}'
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '405':
+          content: {}
+          description: Method Not Allowed
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/role_labels.json:
+    post:
+      summary: Enable role on device
+      description: Enables a role on a device. On success, the device accepts a user with that role.
+      operationId: enable-role-on-device
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role_label:
+                  properties:
+                    role_name:
+                      type: string
+                      description: Role name.
+                    description:
+                      type: string
+                      description: Brief description of the role.
+                  required:
+                  - role_name
+                  type: object
+      responses:
+        '201':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    role_label:
+                      id: 9239
+                      role_name: EndUser
+                      description: end user
+                      key: null
+                      value: null
+                      role_label_hierarchies: []
+              schema:
+                type: object
+                properties:
+                  role_label:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 9239
+                        default: 0
+                      role_name:
+                        type: string
+                        example: EndUser
+                      description:
+                        type: string
+                        example: end user
+                      key:
+                        type: string
+                      value:
+                        type: string
+                      role_label_hierarchies:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    get:
+      summary: Get device role labels
+      description: This API returns an array of enabled roles for the device.
+      operationId: get-device-role-label
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - role_label:
+                      id: 9239
+                      role_name: EndUser
+                      description: end user
+                      label: {}
+                      role_label_hierarchies: []
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    role_label:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 9239
+                          default: 0
+                        role_name:
+                          type: string
+                          example: EndUser
+                        description:
+                          type: string
+                          example: end user
+                        label:
+                          type: object
+                          properties: {}
+                        role_label_hierarchies:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/role_labels/associate.json:
+    put:
+      summary: Associate role user
+      description: This API associates/tags a role label to the given device.
+      operationId: associate-a-role-label
+      parameters:
+      - name: devId
+        in: path
+        description: Device ID.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role_name
+              properties:
+                role_name:
+                  type: string
+                  description: Role name.
+                label:
+                  properties:
+                    key:
+                      type: string
+                      description: Label key name.
+                    value:
+                      type: string
+                      description: Value of the label key.
+                  required:
+                  - key
+                  - value
+                  type: object
+                  description: 'Note: Passing this parameter is mandatory.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    role_label:
+                      id: 9239
+                      role_name: EndUser
+                      description: end user
+                      key: null
+                      value: null
+                      role_label_hierarchies: []
+              schema:
+                type: object
+                properties:
+                  role_label:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 9239
+                        default: 0
+                      role_name:
+                        type: string
+                        example: EndUser
+                      description:
+                        type: string
+                        example: end user
+                      key:
+                        type: string
+                      value:
+                        type: string
+                      role_label_hierarchies:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/role_labels/disassociate.json:
+    put:
+      summary: Disassociate a role label to a device
+      description: This API disassociates a role label to a device.
+      operationId: disassociate-a-role-label-to-a-device
+      parameters:
+      - name: devId
+        in: path
+        description: Device ID.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role_name
+              properties:
+                role_name:
+                  type: string
+                  description: Role name.
+                label:
+                  properties:
+                    key:
+                      type: string
+                      description: Label key value.
+                  required:
+                  - key
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    role_label:
+                      id: 9239
+                      role_name: EndUser
+                      description: end user
+                      key: null
+                      value: null
+                      role_label_hierarchies: []
+              schema:
+                type: object
+                properties:
+                  role_label:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 9239
+                        default: 0
+                      role_name:
+                        type: string
+                        example: EndUser
+                      description:
+                        type: string
+                        example: end user
+                      key:
+                        type: string
+                      value:
+                        type: string
+                      role_label_hierarchies:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/schedules.json:
+    post:
+      summary: Create a schedule
+      description: This API creates a schedule.
+      operationId: create-a-schedule
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule:
+                  properties:
+                    active:
+                      type: boolean
+                      description: This parameter is used to pause or resume the schedule.
+                      default: true
+                    day_occur_of_month:
+                      type: array
+                      description: Array of Occurence  [1,2,3,4,5,6]. Day occurrence of month. For example, 1st Sunday or 2nd Sunday of month. As a special case, 6 means “last occurrence of the day in the month”.
+                      items:
+                        type: integer
+                        format: int32
+                    days_of_month:
+                      type: array
+                      description: Array of day(s) [1,2,3,4,5,6,7, 8 9....31], with 1 referring to 1st day of month, and so on. If this field is empty, the default is every day.
+                      items:
+                        type: integer
+                        format: int32
+                    days_of_week:
+                      type: array
+                      description: Array of day(s)  [1,2,3,4,5,6,7], with 1 referring to Sunday and so on. If this field is empty, the default is every day.
+                      items:
+                        type: integer
+                        format: int32
+                    direction:
+                      type: string
+                      description: Indicates whether the schedule is “input” or “output” (“to device” or “from device”).
+                    display_name:
+                      type: string
+                      description: Display name of the schedule.
+                    duration:
+                      type: string
+                      description: Schedule duration in seconds.
+                    end_date:
+                      type: string
+                      description: Day when you want the schedule to stop running.
+                      format: date
+                    end_time_each_day:
+                      type: string
+                      description: End time in local time. Follow the 24 hour format (hh:mm:ss).
+                      format: date
+                    fixed_actions:
+                      type: boolean
+                      description: Indicates whether the schedule has fixed actions.
+                    interval:
+                      type: string
+                      description: Interval in seconds.
+                    months_of_year:
+                      type: array
+                      description: Array of month(s) [1,2,3,4,...12], with 1 referring to Jan. If this field is empty, the default is every month.
+                      items:
+                        type: integer
+                        format: int32
+                    name:
+                      type: string
+                      description: Schedule name.
+                    start_date:
+                      type: string
+                      description: Day from when you want to start the schedule.
+                      format: date-time
+                    start_time_each_day:
+                      type: string
+                      description: Schedule start time in local time. Follow the 24 hour format (hh:mm:ss).
+                      default: ''
+                    time_before_end:
+                      type: string
+                      description: Time before schedule end in local time. Follow the 24 hour format (hh:mm:ss).
+                    utc:
+                      type: string
+                      description: Indicates the schedule to be set with UTC time zone.
+                      default: 'false'
+                    version:
+                      type: string
+                      description: Schedule version.
+                  required:
+                  - direction
+                  - name
+                  - start_time_each_day
+                  type: object
+                schedule_actions:
+                  properties:
+                    name:
+                      type: string
+                      description: Associated property name.
+                    base_type:
+                      type: string
+                      description: Associated property base type.
+                    in_range:
+                      type: boolean
+                      description: The point at which to fire the action. In Range, At Start, or At End.
+                    at_start:
+                      type: boolean
+                      description: The point at which to fire the action.  In Range, At Start, or At End.
+                    at_end:
+                      type: boolean
+                      description: The point at which to fire the action.  In Range, At Start, or At End.
+                    active:
+                      type: boolean
+                      description: True if this action is currently active.
+                      default: true
+                    key:
+                      type: string
+                      description: The key assigned by the cloud.
+                    value:
+                      type: string
+                      description: Property value when an event fires.
+                  required:
+                  - name
+                  - base_type
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    schedule:
+                      active: true
+                      day_occur_of_month:
+                      - 1
+                      days_of_month:
+                      - 1
+                      days_of_week:
+                      - 1
+                      device_id: 6592588
+                      direction: input
+                      display_name: schedule1
+                      duration: null
+                      end_date: ''
+                      end_time_each_day: ''
+                      fixed_actions: false
+                      interval: null
+                      months_of_year:
+                      - 1
+                      name: schedule1
+                      start_date: ''
+                      start_time_each_day: '21:00:00'
+                      time_before_end: null
+                      utc: false
+                      version: '1'
+                      key: 36250927
+                      metadata:
+                        sunrise_sunset: true
+                      schedule_actions: []
+              schema:
+                type: object
+                properties:
+                  schedule:
+                    type: object
+                    properties:
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+                      day_occur_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_week:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      device_id:
+                        type: integer
+                        example: 6592588
+                        default: 0
+                      direction:
+                        type: string
+                        example: input
+                      display_name:
+                        type: string
+                        example: schedule1
+                      duration:
+                        type: string
+                      end_date:
+                        type: string
+                        example: ''
+                      end_time_each_day:
+                        type: string
+                        example: ''
+                      fixed_actions:
+                        type: boolean
+                        example: false
+                        default: true
+                      interval:
+                        type: string
+                      months_of_year:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      name:
+                        type: string
+                        example: schedule1
+                      start_date:
+                        type: string
+                        example: ''
+                      start_time_each_day:
+                        type: string
+                        example: '21:00:00'
+                      time_before_end:
+                        type: string
+                      utc:
+                        type: boolean
+                        example: false
+                        default: true
+                      version:
+                        type: string
+                        example: '1'
+                      key:
+                        type: integer
+                        example: 36250927
+                        default: 0
+                      metadata:
+                        type: object
+                        properties:
+                          sunrise_sunset:
+                            type: boolean
+                            example: true
+                            default: true
+                      schedule_actions:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    get:
+      summary: Get schedules by Device ID
+      description: This API returns an array of schedules for the specified device.
+      operationId: get-schedules
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"schedule\": {\n      \"active\": true,\n      \"day_occur_of_month\": [\n        1\n      ],\n      \"days_of_month\": [\n        1\n      ],\n      \"days_of_week\": [\n        1\n      ],\n      \"device_id\": 6592588,\n      \"direction\": \"input\",\n      \"display_name\": \"schedule1\",\n      \"duration\": null,\n      \"end_date\": \"\",\n      \"end_time_each_day\": \"\",\n      \"fixed_actions\": false,\n      \"interval\": null,\n      \"months_of_year\": [\n        1\n      ],\n      \"name\": \"schedule1\",\n      \"start_date\": \"\",\n      \"start_time_each_day\": \"21:00:00\",\n      \"time_before_end\": null,\n      \"utc\": false,\n      \"version\": \"1\",\n      \"key\": 36250927,\n      \"metadata\": {\n        \"sunrise_sunset\": true\n      },\n      \"schedule_actions\": []\n    }\n  },\n{...}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    schedule:
+                      type: object
+                      properties:
+                        active:
+                          type: boolean
+                          example: true
+                          default: true
+                        day_occur_of_month:
+                          type: array
+                          items:
+                            type: integer
+                            example: 1
+                            default: 0
+                        days_of_month:
+                          type: array
+                          items:
+                            type: integer
+                            example: 1
+                            default: 0
+                        days_of_week:
+                          type: array
+                          items:
+                            type: integer
+                            example: 1
+                            default: 0
+                        device_id:
+                          type: integer
+                          example: 6592588
+                          default: 0
+                        direction:
+                          type: string
+                          example: input
+                        display_name:
+                          type: string
+                          example: schedule1
+                        duration:
+                          type: string
+                        end_date:
+                          type: string
+                          example: ''
+                        end_time_each_day:
+                          type: string
+                          example: ''
+                        fixed_actions:
+                          type: boolean
+                          example: false
+                          default: true
+                        interval:
+                          type: string
+                        months_of_year:
+                          type: array
+                          items:
+                            type: integer
+                            example: 1
+                            default: 0
+                        name:
+                          type: string
+                          example: schedule1
+                        start_date:
+                          type: string
+                          example: ''
+                        start_time_each_day:
+                          type: string
+                          example: '21:00:00'
+                        time_before_end:
+                          type: string
+                        utc:
+                          type: boolean
+                          example: false
+                          default: true
+                        version:
+                          type: string
+                          example: '1'
+                        key:
+                          type: integer
+                          example: 36250927
+                          default: 0
+                        metadata:
+                          type: object
+                          properties:
+                            sunrise_sunset:
+                              type: boolean
+                              example: true
+                              default: true
+                        schedule_actions:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/schedules/find_by_name.json:
+    get:
+      summary: Get schedule by name
+      description: This API returns a schedule (by name) associated with the specified device.
+      operationId: get-a-schedule-by-name
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: name
+        in: query
+        description: Schedule name.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    schedule:
+                      active: true
+                      day_occur_of_month:
+                      - 1
+                      days_of_month:
+                      - 1
+                      days_of_week:
+                      - 1
+                      device_id: 6592588
+                      direction: input
+                      display_name: schedule1
+                      duration: null
+                      end_date: ''
+                      end_time_each_day: ''
+                      fixed_actions: false
+                      interval: null
+                      months_of_year:
+                      - 1
+                      name: schedule1
+                      start_date: ''
+                      start_time_each_day: '21:00:00'
+                      time_before_end: null
+                      utc: false
+                      version: '1'
+                      key: 36250927
+                      metadata:
+                        sunrise_sunset: true
+                      schedule_actions: []
+              schema:
+                type: object
+                properties:
+                  schedule:
+                    type: object
+                    properties:
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+                      day_occur_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_week:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      device_id:
+                        type: integer
+                        example: 6592588
+                        default: 0
+                      direction:
+                        type: string
+                        example: input
+                      display_name:
+                        type: string
+                        example: schedule1
+                      duration:
+                        type: string
+                      end_date:
+                        type: string
+                        example: ''
+                      end_time_each_day:
+                        type: string
+                        example: ''
+                      fixed_actions:
+                        type: boolean
+                        example: false
+                        default: true
+                      interval:
+                        type: string
+                      months_of_year:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      name:
+                        type: string
+                        example: schedule1
+                      start_date:
+                        type: string
+                        example: ''
+                      start_time_each_day:
+                        type: string
+                        example: '21:00:00'
+                      time_before_end:
+                        type: string
+                      utc:
+                        type: boolean
+                        example: false
+                        default: true
+                      version:
+                        type: string
+                        example: '1'
+                      key:
+                        type: integer
+                        example: 36250927
+                        default: 0
+                      metadata:
+                        type: object
+                        properties:
+                          sunrise_sunset:
+                            type: boolean
+                            example: true
+                            default: true
+                      schedule_actions:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/schedules/{scheduleId}.json:
+    put:
+      summary: Update schedule
+      description: This API updates a schedule.
+      operationId: update-schedule1
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: scheduleId
+        in: path
+        description: Unique schedule identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schedule:
+                  properties:
+                    active:
+                      type: boolean
+                      description: This parameter is used to pause or resume the schedule.
+                      default: true
+                    day_occur_of_month:
+                      type: array
+                      description: Array of Occurence  [1,2,3,4,5,6]. Day occurrence of month. For example, 1st Sunday or 2nd Sunday of month. As a special case, 6 means “last occurrence of the day in the month”.
+                      items:
+                        type: integer
+                        format: int32
+                    days_of_month:
+                      type: array
+                      description: Array of day(s) [1,2,3,4,5,6,7, 8 9....31], with 1 referring to 1st day of month, and so on. If this field is empty, the default is every day.
+                      items:
+                        type: integer
+                        format: int32
+                    days_of_week:
+                      type: array
+                      description: Array of day(s)  [1,2,3,4,5,6,7], with 1 referring to Sunday and so on. If this field is empty, the default is every day.
+                      items:
+                        type: integer
+                        format: int32
+                    direction:
+                      type: string
+                      description: Indicates whether the schedule is “input” or “output” (“to device” or “from device”).
+                    display_name:
+                      type: string
+                      description: Display name of the schedule.
+                    duration:
+                      type: string
+                      description: Schedule duration in seconds.
+                    end_date:
+                      type: string
+                      description: Day when you want the schedule to stop running.
+                      format: date
+                    end_time_each_day:
+                      type: string
+                      description: End time in local time. Follow the 24 hour format (hh:mm:ss).
+                      format: date
+                    fixed_actions:
+                      type: boolean
+                      description: Indicates whether the schedule has fixed actions.
+                    interval:
+                      type: string
+                      description: Interval in seconds.
+                    months_of_year:
+                      type: array
+                      description: Array of month(s) [1,2,3,4,...12], with 1 referring to Jan. If this field is empty, the default is every month.
+                      items:
+                        type: integer
+                        format: int32
+                    name:
+                      type: string
+                      description: Schedule name.
+                    start_date:
+                      type: string
+                      description: Day from when you want to start the schedule.
+                      format: date
+                    start_time_each_day:
+                      type: string
+                      description: Schedule start time in local time. Follow the 24 hour format (hh:mm:ss).
+                    time_before_end:
+                      type: string
+                      description: Time before schedule end in local time. Follow the 24 hour format (hh:mm:ss).
+                    utc:
+                      type: string
+                      description: Indicates the schedule to be set with UTC time zone.
+                      default: 'false'
+                    version:
+                      type: string
+                      description: Schedule version.
+                  required:
+                  - direction
+                  - name
+                  - start_time_each_day
+                  type: object
+                schedule_actions:
+                  properties:
+                    name:
+                      type: string
+                      description: Associated property name.
+                    base_type:
+                      type: string
+                      description: Associated property base type.
+                    in_range:
+                      type: boolean
+                      description: The point at which to fire the action. In Range, At Start, or At End.
+                    at_start:
+                      type: boolean
+                      description: The point at which to fire the action.  In Range, At Start, or At End.
+                    at_end:
+                      type: boolean
+                      description: The point at which to fire the action.  In Range, At Start, or At End.
+                    active:
+                      type: boolean
+                      description: True if this action is currently active.
+                      default: true
+                    key:
+                      type: string
+                      description: The key assigned by the cloud.
+                    value:
+                      type: string
+                      description: Property value when an event fires.
+                  required:
+                  - name
+                  - base_type
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    schedule:
+                      active: true
+                      day_occur_of_month:
+                      - 1
+                      days_of_month:
+                      - 1
+                      days_of_week:
+                      - 1
+                      device_id: 6592588
+                      direction: input
+                      display_name: schedule1
+                      duration: null
+                      end_date: ''
+                      end_time_each_day: ''
+                      fixed_actions: false
+                      interval: null
+                      months_of_year:
+                      - 1
+                      name: schedule1
+                      start_date: ''
+                      start_time_each_day: '21:00:00'
+                      time_before_end: null
+                      utc: false
+                      version: '1'
+                      key: 36250927
+                      metadata:
+                        sunrise_sunset: true
+                      schedule_actions: []
+              schema:
+                type: object
+                properties:
+                  schedule:
+                    type: object
+                    properties:
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+                      day_occur_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_month:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      days_of_week:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      device_id:
+                        type: integer
+                        example: 6592588
+                        default: 0
+                      direction:
+                        type: string
+                        example: input
+                      display_name:
+                        type: string
+                        example: schedule1
+                      duration:
+                        type: string
+                      end_date:
+                        type: string
+                        example: ''
+                      end_time_each_day:
+                        type: string
+                        example: ''
+                      fixed_actions:
+                        type: boolean
+                        example: false
+                        default: true
+                      interval:
+                        type: string
+                      months_of_year:
+                        type: array
+                        items:
+                          type: integer
+                          example: 1
+                          default: 0
+                      name:
+                        type: string
+                        example: schedule1
+                      start_date:
+                        type: string
+                        example: ''
+                      start_time_each_day:
+                        type: string
+                        example: '21:00:00'
+                      time_before_end:
+                        type: string
+                      utc:
+                        type: boolean
+                        example: false
+                        default: true
+                      version:
+                        type: string
+                        example: '1'
+                      key:
+                        type: integer
+                        example: 36250927
+                        default: 0
+                      metadata:
+                        type: object
+                        properties:
+                          sunrise_sunset:
+                            type: boolean
+                            example: true
+                            default: true
+                      schedule_actions:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devId}/unregister.json:
+    put:
+      summary: Unregister device from user
+      description: This API unregisters the specified device from the current owner.
+      operationId: unregister-device
+      parameters:
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devid}/cmds.json:
+    get:
+      summary: Get commands by DeviceID
+      description: This API is used to fetch commands data of a device.
+      operationId: get-commands
+      parameters:
+      - name: devid
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      - name: all
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - cmd:
+                      id: 19672591
+                      cmd_type: command
+                      resource: lanip.json
+                      uri: /lan/fetched.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:24:52Z'
+                      updated_at: '2026-04-08T06:24:52Z'
+                      data:
+                        lanip:
+                          status: enable
+                          lanip_key: FBbdEqsAxBU0jTFnu/z9hRB4WK2rYA==
+                          lanip_key_id: 14880
+                          keep_alive: 30
+                          auto_sync: 1
+                          connections:
+                          - BLE
+                          - LAN
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: lan_enable
+                  - cmd:
+                      id: 19672592
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:24:52Z'
+                      updated_at: '2026-04-08T06:24:52Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 0
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672598
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:27:27Z'
+                      updated_at: '2026-04-08T06:27:27Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 1
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672599
+                      cmd_type: command
+                      resource: lanip.json
+                      uri: /lan/fetched.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:30:23Z'
+                      updated_at: '2026-04-08T06:30:23Z'
+                      data:
+                        lanip:
+                          status: enable
+                          lanip_key: lPIcTw33ravZGeAvtENBSAHorkzWoQ==
+                          lanip_key_id: 64224
+                          keep_alive: 30
+                          auto_sync: 1
+                          connections:
+                          - BLE
+                          - LAN
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: lan_enable
+                  - cmd:
+                      id: 19672600
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:30:23Z'
+                      updated_at: '2026-04-08T06:30:23Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 0
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672603
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:31:21Z'
+                      updated_at: '2026-04-08T06:31:21Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 1
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672604
+                      cmd_type: command
+                      resource: lanip.json
+                      uri: /lan/fetched.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:35:43Z'
+                      updated_at: '2026-04-08T06:35:43Z'
+                      data:
+                        lanip:
+                          status: enable
+                          lanip_key: w17A/+vKzJw/tZHwnuHcs/zvYzVHrw==
+                          lanip_key_id: 3643
+                          keep_alive: 30
+                          auto_sync: 1
+                          connections:
+                          - BLE
+                          - LAN
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: lan_enable
+                  - cmd:
+                      id: 19672605
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:35:43Z'
+                      updated_at: '2026-04-08T06:35:43Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 0
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672614
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T06:36:57Z'
+                      updated_at: '2026-04-08T06:36:57Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 1
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672818
+                      cmd_type: command
+                      resource: lanip.json
+                      uri: /lan/fetched.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T08:49:18Z'
+                      updated_at: '2026-04-08T08:49:18Z'
+                      data:
+                        lanip:
+                          status: enable
+                          lanip_key: sw8Xv+/aX858FV38hQDt3BPuPuukXA==
+                          lanip_key_id: 2058
+                          keep_alive: 30
+                          auto_sync: 1
+                          connections:
+                          - BLE
+                          - LAN
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: lan_enable
+                  - cmd:
+                      id: 19672819
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T08:49:18Z'
+                      updated_at: '2026-04-08T08:49:18Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 0
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19672821
+                      cmd_type: registration
+                      resource: registration.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-08T08:49:18Z'
+                      updated_at: '2026-04-08T08:49:18Z'
+                      data:
+                        registration:
+                          dsn: AC000W033160358
+                          status: 2
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: device_register
+                  - cmd:
+                      id: 19683272
+                      cmd_type: cmd
+                      resource: config.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-15T06:03:26Z'
+                      updated_at: '2026-04-15T06:03:26Z'
+                      data:
+                        config:
+                        - name: sys/timezone
+                          val: 330
+                        - name: sys/dst_valid
+                          val: 0
+                        - name: sys/dst_active
+                          val: 0
+                        - name: sys/dst_change
+                          val: 0
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: timezone
+                  - cmd:
+                      id: 19683273
+                      cmd_type: cmd
+                      resource: config.json
+                      uri: /cmd_post_process.json
+                      method: PUT
+                      device_id: 6592588
+                      ack: false
+                      created_at: '2026-04-15T06:03:26Z'
+                      updated_at: '2026-04-15T06:03:26Z'
+                      data:
+                        config:
+                        - name: sched/locale/n/1
+                          val: AQAAQwBGAEkASwBMAE0ATABLAEgARQBCAD4AOgA1ADAALAAnACMAIAAcABoAGAAXABYAFgAXABkAGgAcAB4AIAAiACMAJAAlACYAJgAnACcAJwAnACcAJwAoACkAKwAtADAAMwA3ADsAPgBC
+                        - name: sched/locale/n/2
+                          val: AgAC7ALwAvQC+AL8Av8DAwMFAwcDCQMLAwsDDAMNAw0DDgMOAw8DEAMRAxIDFAMWAxgDGgMcAx4DHwMgAyADIAMeAxwDGgMWAxIDDgMJAwUDAAL7AvYC8QLtAuoC5wLlAuQC5ALlAuYC6QLs
+                      fetched_at: null
+                      acked_at: null
+                      ack_status: null
+                      name: sunrise_sunset
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cmd:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 19672591
+                          default: 0
+                        cmd_type:
+                          type: string
+                          example: command
+                        resource:
+                          type: string
+                          example: lanip.json
+                        uri:
+                          type: string
+                          example: /lan/fetched.json
+                        method:
+                          type: string
+                          example: PUT
+                        device_id:
+                          type: integer
+                          example: 6592588
+                          default: 0
+                        ack:
+                          type: boolean
+                          example: false
+                          default: true
+                        created_at:
+                          type: string
+                          example: '2026-04-08T06:24:52Z'
+                        updated_at:
+                          type: string
+                          example: '2026-04-08T06:24:52Z'
+                        data:
+                          type: object
+                          properties:
+                            lanip:
+                              type: object
+                              properties:
+                                status:
+                                  type: string
+                                  example: enable
+                                lanip_key:
+                                  type: string
+                                  example: FBbdEqsAxBU0jTFnu/z9hRB4WK2rYA==
+                                lanip_key_id:
+                                  type: integer
+                                  example: 14880
+                                  default: 0
+                                keep_alive:
+                                  type: integer
+                                  example: 30
+                                  default: 0
+                                auto_sync:
+                                  type: integer
+                                  example: 1
+                                  default: 0
+                                connections:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: BLE
+                        fetched_at:
+                          type: string
+                        acked_at:
+                          type: string
+                        ack_status:
+                          type: string
+                        name:
+                          type: string
+                          example: lan_enable
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{devid}/lan.json:
+    get:
+      summary: Get LAN data
+      description: This API is used to fetch LAN data.
+      operationId: get-lan-data
+      parameters:
+      - name: devid
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"lanip\": {\n    \"lanip_key_id\": 32813,\n    \"lanip_key\": \"dD3fFO+8N9elhrwEsUEbD4K7j5aZxQ==\",\n    \"keep_alive\": 30,\n    \"auto_sync\": 1,\n    \"status\": \"enable\"\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  lanip:
+                    type: object
+                    properties:
+                      lanip_key_id:
+                        type: integer
+                        example: 32813
+                        default: 0
+                      lanip_key:
+                        type: string
+                        example: dD3fFO+8N9elhrwEsUEbD4K7j5aZxQ==
+                      keep_alive:
+                        type: integer
+                        example: 30
+                        default: 0
+                      auto_sync:
+                        type: integer
+                        example: 1
+                        default: 0
+                      status:
+                        type: string
+                        example: enable
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{dsn}/register.json:
+    put:
+      summary: Register device to user
+      description: This API registers the specified device to the specified user.
+      operationId: register-device-to-user
+      parameters:
+      - name: dsn
+        in: path
+        description: Unique device serial number.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_uuid
+              properties:
+                user_uuid:
+                  type: string
+                  description: Unique user identifier.
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '409':
+          content: {}
+          description: Conflict
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/{dsn}/transfer.json:
+    put:
+      summary: Transfer registration
+      description: This API transfers registration from the caller to the specified user.
+      operationId: transfer-registration
+      parameters:
+      - name: dsn
+        in: path
+        description: Unique device serial number.
+        schema:
+          type: string
+        required: true
+      - name: target
+        in: query
+        description: Target email address.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    device:
+                      product_name: AC000W000340317
+                      model: AY001MTC1
+                      dsn: AC000W000340317
+                      oem_model: AylaShield
+                      sw_version: bc 2.11.4 05/13/25 03:33:02 ID 0520f59
+                      template_id: 43441
+                      mac: 60f189dd6651
+                      unique_hardware_id: null
+                      hwsig: 002b001c-3235470b-35383434
+                      lan_ip: 192.168.30.210
+                      connected_at: '2026-04-13T20:02:03Z'
+                      key: 6613724
+                      lan_enabled: true
+                      connection_priority:
+                      - LAN
+                      has_properties: true
+                      product_class: demo
+                      connection_status: Offline
+                      lat: '43.6514'
+                      lng: '-79.9143'
+                      locality: L7G
+                      device_type: Wifi
+                      dealer: null
+                      facility_uuid: null
+                      manuf_model: LBWA1ZVYDZ-BTEMP-AYLA
+                  summary: OK
+              schema:
+                type: object
+                properties:
+                  device:
+                    type: object
+                    properties:
+                      product_name:
+                        type: string
+                        example: AC000W000340317
+                      model:
+                        type: string
+                        example: AY001MTC1
+                      dsn:
+                        type: string
+                        example: AC000W000340317
+                      oem_model:
+                        type: string
+                        example: AylaShield
+                      sw_version:
+                        type: string
+                        example: bc 2.11.4 05/13/25 03:33:02 ID 0520f59
+                      template_id:
+                        type: integer
+                        example: 43441
+                        default: 0
+                      mac:
+                        type: string
+                        example: 60f189dd6651
+                      unique_hardware_id:
+                        type: string
+                      hwsig:
+                        type: string
+                        example: 002b001c-3235470b-35383434
+                      lan_ip:
+                        type: string
+                        example: 192.168.30.210
+                      connected_at:
+                        type: string
+                        example: '2026-04-13T20:02:03Z'
+                      key:
+                        type: integer
+                        example: 6613724
+                        default: 0
+                      lan_enabled:
+                        type: boolean
+                        example: true
+                        default: true
+                      connection_priority:
+                        type: array
+                        items:
+                          type: string
+                          example: LAN
+                      has_properties:
+                        type: boolean
+                        example: true
+                        default: true
+                      product_class:
+                        type: string
+                        example: demo
+                      connection_status:
+                        type: string
+                        example: Offline
+                      lat:
+                        type: string
+                        example: '43.6514'
+                      lng:
+                        type: string
+                        example: '-79.9143'
+                      locality:
+                        type: string
+                        example: L7G
+                      device_type:
+                        type: string
+                        example: Wifi
+                      dealer:
+                        type: string
+                      facility_uuid:
+                        type: string
+                      manuf_model:
+                        type: string
+                        example: LBWA1ZVYDZ-BTEMP-AYLA
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /devices/reserve.json:
+    post:
+      summary: Reserve DSNs
+      description: 'This API reserves a range of DSNs. It is intended for module and gateway manufacturers, but not for module-based product manufacturers. The caller must be a member of the ```OEM::SoftwareOEMManufacturer```, ```OEM::Admin```, or ```Ayla::Admin``` role.
+
+
+        The response data is an array of objects. Each object contains a device field:
+
+
+        | Name | Type | Description |
+
+        |--|--|--|
+
+        | device | object | Device objects |
+
+
+        The Device object contains the following fields:
+
+
+        | Name | Type | Example |
+
+        |--|--|--|
+
+        | dsn | string | AC000W123456789 |
+
+        | public_key | string | -----BEGIN RSA PUBLIC KEY-----MIIBC...AQAB-----END RSA PUBLIC KEY----- |'
+      operationId: reserve-dsns
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - model
+              - count
+              - reserve_oem
+              properties:
+                model:
+                  type: string
+                  description: The ```model``` field specifies the module model name (e.g. AY001MTP1 ) not the ```oem_model``` name (e.g. ledevb). A device reports the module model name to the Ayla Device Service (ADS) at connection time.
+                count:
+                  type: integer
+                  description: Specifies the number of DSNs to reserve.
+                  format: int32
+                reserve_oem:
+                  type: string
+                  description: Specifies the oem id.
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dsn:
+                          type: string
+                          example: AC000W048698393
+                        public_key:
+                          type: string
+                          example: '-----BEGIN RSA PUBLIC KEY-----
+
+                            xxxxxxxxxZrSc95QnbLwUwUtBv
+
+                            KBt0w1GSv4+ZqzXWHlA8miO48UMC9OcraIlBEFRBnNjQUhrknYFGcTxlz7n+yF1tPxj9IY+Q9mvg
+
+                            LEC/y6AK5KTgzBhz5ctd7VqN8EqodN/T1h2vgdZ11OSwh4sui6qcyMvmXjgufnxX/vZPyufGaq9n
+
+                            6QaS4JFrxAPtel1rA3zpHKv3+z9fC+1FuzJx1Bpl7shZxVAnLJAt/t6MVE2fXJOAhMxElJhnGoX9
+
+                            Ww+25ROeN7606Co87IkkYE/Rz//PkN4DUHnkxxxxxxxxB
+
+                            -----END RSA PUBLIC KEY-----'
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    devices:
+                    - dsn: AC000W048698393
+                      public_key: '-----BEGIN RSA PUBLIC KEY-----
+
+                        xxxxxxxxxZrSc95QnbLwUwUtBv
+
+                        KBt0w1GSv4+ZqzXWHlA8miO48UMC9OcraIlBEFRBnNjQUhrknYFGcTxlz7n+yF1tPxj9IY+Q9mvg
+
+                        LEC/y6AK5KTgzBhz5ctd7VqN8EqodN/T1h2vgdZ11OSwh4sui6qcyMvmXjgufnxX/vZPyufGaq9n
+
+                        6QaS4JFrxAPtel1rA3zpHKv3+z9fC+1FuzJx1Bpl7shZxVAnLJAt/t6MVE2fXJOAhMxElJhnGoX9
+
+                        Ww+25ROeN7606Co87IkkYE/Rz//PkN4DUHnkxxxxxxxxB
+
+                        -----END RSA PUBLIC KEY-----'
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://api-dev.aylanetworks.com/devicefactory/v1/
+  /devices/{dsn}/manufacture.json:
+    put:
+      summary: Update device manufacturer info
+      description: 'This API updates a device with manufacturer information. The caller must be a member of the ```OEM::Admin``` role with ```module_manufacturer=true``` in the OEM Profile.
+
+
+        The response data object has one field named device containing a Device object:
+
+
+        | Name | Type | Description |
+
+        |--|--|--|
+
+        | device | object | Device object |
+
+
+        This Device object contains the following fields:
+
+
+        | Name | Type | Example |
+
+        |--|--|--|
+
+        | dsn | string | AC000W123456789 |
+
+        | model | string | AY001MVM2 |
+
+        | mac | string | 001122aabbcc |
+
+        | hwsig | string | hwsig_5NU41 |
+
+        | odm | string | odm_123 |
+
+        | manuf_model | string | mfg_model_HdsbL |
+
+        | manuf_sn | string | 16428876609579218157072732 |
+
+        | module_sw_version | string | mfg_sw_version_1468 |
+
+        | oem_host_version | string | 2.0 |
+
+        | wifi_setup_key | string | abcde |
+
+        | ads_connect_flag | integer | null |
+
+        |dom_at | string | 2018-12-30T14:11:10Z |'
+      operationId: update-devices-manufacturer-info
+      parameters:
+      - name: dsn
+        in: path
+        description: Unique device serial number.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - model
+              - mac
+              - hwsig
+              - hom_at
+              properties:
+                model:
+                  type: string
+                  description: Model name.
+                mac:
+                  type: string
+                  description: Mac address.
+                hwsig:
+                  type: string
+                  description: String uniquely identifying the hardware.
+                hom_at:
+                  type: string
+                  description: 'Represents date of manufacture. Example format: 2021/01/01 10:50:33 UTC.'
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://api-dev.aylanetworks.com/devicefactory/v1/
+  /devices/{dsn}/provision.json:
+    put:
+      summary: Update device OEM
+      description: 'This API updates a device with OEM information. The caller must be a member of the ```OEM::SoftwareOEMManufacturer``` role.
+
+
+        The response data object has one field named ```device``` containing a ```Device``` object:
+
+
+        | Name | Type | Description |
+
+        |--|--|--|
+
+        | device | object | Device object |
+
+
+        This Device object contains the following fields:
+
+
+        | Name | Type | Example |
+
+        |--|--|--|
+
+        | dsn | string | AC000W123456789 |
+
+        | model | string | AY001MVM2 |
+
+        | oem | string | 1234abcd |
+
+        | mac | string | 001122aabbcc |
+
+        | hwsig | string | hwsig_5NU41 |
+
+        | odm | string | odm_123 |
+
+        | manuf_model | string | mfg_model_HdsbL |
+
+        | manuf_sn | string | 16428876609579218157072732 |
+
+        | module_sw_version | string | mfg_sw_version_1468 |
+
+        | oem_host_version | string | 2.0 |
+
+        | wifi_setup_key | string | abcde |
+
+        | ads_connect_flag | integer | null |
+
+        | dom_at | string | 2018-12-30T14:11:10Z |'
+      operationId: update-device-oem
+      parameters:
+      - name: dsn
+        in: path
+        description: Unique device serial number.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - model
+              - Mac
+              - manuf_model
+              - hwsig
+              - oem_model
+              - module_sw_version
+              - dom_at
+              - oem_host_version
+              properties:
+                model:
+                  type: string
+                  description: model name
+                Mac:
+                  type: string
+                  description: MAC address.
+                manuf_model:
+                  type: string
+                  description: manufacturer model name.
+                hwsig:
+                  type: string
+                  description: String uniquely identifying the hardware.
+                oem_model:
+                  type: string
+                  description: OEM model name.
+                module_sw_version:
+                  type: string
+                  description: Module software version.
+                dom_at:
+                  type: string
+                  description: 'Date of manufacture. Example format: 2021/01/01 10:50:33 UTC'
+                oem_host_version:
+                  type: string
+                  description: OEM host version.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            text/plain:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Devices
+    servers:
+    - url: https://api-dev.aylanetworks.com/devicefactory/v1/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-device-service-openapi.yml
+- ayla-networks-factory-proxy-service-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

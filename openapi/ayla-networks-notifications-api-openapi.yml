@@ -1,0 +1,826 @@
+openapi: 3.2.0
+info:
+  title: device-service Notifications API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Notifications
+paths:
+  /notifications/{notId}.json:
+    get:
+      summary: Get notification
+      description: This API returns the specified notification.
+      operationId: get-notification
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notification:
+                      id: 14516297
+                      url: http://www.aylanetworks.com
+                      username: aylaun
+                      password: aylapw
+                      notification_type: ip_change
+                      message: IP Change
+                      threshold: 0
+                      device_key: 5462379
+                      device_nickname: null
+                      user_id: 3637421
+                      user_uuid: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset: true
+                      active: true
+              schema:
+                type: object
+                properties:
+                  notification:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 14516297
+                        default: 0
+                      url:
+                        type: string
+                        example: http://www.aylanetworks.com
+                      username:
+                        type: string
+                        example: aylaun
+                      password:
+                        type: string
+                        example: aylapw
+                      notification_type:
+                        type: string
+                        example: ip_change
+                      message:
+                        type: string
+                        example: IP Change
+                      threshold:
+                        type: integer
+                        example: 0
+                        default: 0
+                      device_key:
+                        type: integer
+                        example: 5462379
+                        default: 0
+                      device_nickname:
+                        type: string
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      user_uuid:
+                        type: string
+                        example: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset:
+                        type: boolean
+                        example: true
+                        default: true
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Notifications
+    put:
+      summary: Update notification
+      description: 'This API updates the specified notification.
+
+
+        See createNotifications for field descriptions. Include only the fields to update in the request data object.'
+      operationId: update-notification
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notification:
+                  properties:
+                    url:
+                      type: string
+                      description: Complete URL to which the property value must be forwarded. **Mandatory** only for on_connect and ip_change types
+                    username:
+                      type: string
+                      description: Username for basic auth if required for the service.
+                    password:
+                      type: string
+                      description: Password for basic auth required for the service.
+                    notification_type:
+                      type: string
+                      description: 'One of the following strings: “on_connect”, “ip_change”, “on_connection_lost”, “on_connection_restore".'
+                    message:
+                      type: string
+                      description: Custom message for this notification type.
+                    threshold:
+                      type: integer
+                      description: number of seconds for which the condition must be active before notification is sent. Minimum is 300 seconds.<br> **Mandatory** for on_connection_lost and on_connection_restore types.
+                      format: int32
+                    device_nickname:
+                      type: string
+                      description: User friendly device name.
+                  type: object
+            examples: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notification:
+                      id: 14516296
+                      url: http://www.aylanetworks.com
+                      username: aylaun
+                      password: aylapw
+                      notification_type: ip_change
+                      message: '[Device Notification] '
+                      threshold: 0
+                      device_key: 5462379
+                      device_nickname: null
+                      user_id: 3637421
+                      user_uuid: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset: true
+                      active: true
+              schema:
+                type: object
+                properties:
+                  notification:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 14516296
+                        default: 0
+                      url:
+                        type: string
+                        example: http://www.aylanetworks.com
+                      username:
+                        type: string
+                        example: aylaun
+                      password:
+                        type: string
+                        example: aylapw
+                      notification_type:
+                        type: string
+                        example: ip_change
+                      message:
+                        type: string
+                        example: '[Device Notification] '
+                      threshold:
+                        type: integer
+                        example: 0
+                        default: 0
+                      device_key:
+                        type: integer
+                        example: 5462379
+                        default: 0
+                      device_nickname:
+                        type: string
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      user_uuid:
+                        type: string
+                        example: 6024f1c2-38fb-11eb-bc1f-0a580ae90a86
+                      asset:
+                        type: boolean
+                        example: true
+                        default: true
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+        '401':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Unauthorized:
+                  summary: Unauthorized
+                  value: '{}'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Forbidden:
+                  summary: Forbidden
+                  value: '{}'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Not Found:
+                  summary: Not Found
+                  value: '{}'
+          description: Not Found
+        '422':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                Unprocessable Entity:
+                  summary: Unprocessable Entity
+                  value: '{}'
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Notifications
+    delete:
+      summary: Delete notification
+      description: This API deletes the specified notification.
+      operationId: delete-notification
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Notifications
+  /notifications/{notId}/notification_apps.json:
+    post:
+      summary: Create notification app
+      description: 'This API creates a notification app associated with the specified notification.
+
+
+        | Name | Type | Description |
+
+        |--|--|--|
+
+        | app_type | string (255 chars) | Type of notification. The API supports the following request data objects: ```email```, ```sms```, ```push_ios```, ```push_android```, ```push_android_fcm```, ```push_baidu```. |
+
+        | nickname | string (255 chars) | User-friendly notification name |
+
+        | username | string (255 chars) | Used as greeting in notification |
+
+        | email | string (255 chars) | Destination email address |
+
+        | email_template_id | string (255 chars) | Custom email template id |
+
+        | email_subject | string (255 chars) | Email subject line for email template |
+
+        | email_body_html | string (10000 characters) | Email body for email template |
+
+        | message | string (10000 characters) | Additional text for the notification |
+
+        | country_code | string (255 chars) | Country code for phone number |
+
+        | phone_number | string (255 chars) | 10 digit phone number |
+
+        | registration_id | integer | Registration ID linking phone/tablet to notification service |
+
+        | application_id | integer | Application ID linking phone/tablet to notification service |
+
+        | channel_id | string (255 chars) | Channel ID linking phone/tablet to Baidu notification service |
+
+        | push_sound |string (255 chars) | Sound file name (mp3) associated with this notification |
+
+        | push_mdata | string (255 chars) | Additional details or key-value pairs |
+
+        | data | string (255 chars) | Additional details or key-value pairs |'
+      operationId: create-notification-app
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "//Example response for email notification\n{\n  \"notification_app\": {\n    \"id\": 7,\n    \"notification_id\": 15000005,\n    \"app_type\": \"email\",\n    \"nickname\": \"test\",\n    \"notification_app_parameters\": {\n      \"username\": \"abc\",\n      \"email\": \"abc@aylanetworks.com\"\n    }\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  notification_app:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 7
+                        default: 0
+                      notification_id:
+                        type: integer
+                        example: 15000005
+                        default: 0
+                      app_type:
+                        type: string
+                        example: email
+                      nickname:
+                        type: string
+                        example: test
+                      notification_app_parameters:
+                        type: object
+                        properties:
+                          username:
+                            type: string
+                            example: abc
+                          email:
+                            type: string
+                            example: abc@aylanetworks.com
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Notifications
+    get:
+      summary: Get notification apps
+      description: This API returns an array of notification apps associated with the specified notification regardless of who created the apps.
+      operationId: get-notification-app
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"notification_app\": {\n      \"id\": 14916607,\n      \"notification_id\": 14516296,\n      \"app_type\": \"email\",\n      \"nickname\": \"emailnote\",\n      \"notification_app_parameters\": {\n        \"username\": \"aylaun\",\n        \"email\": \"aylatest@aylan\",\n        \"contact_id\": \"533064\"\n      }\n    }\n  }\n{\n\t\"notification_app\":{...}\n\t}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    notification_app:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 14916607
+                          default: 0
+                        notification_id:
+                          type: integer
+                          example: 14516296
+                          default: 0
+                        app_type:
+                          type: string
+                          example: email
+                        nickname:
+                          type: string
+                          example: emailnote
+                        notification_app_parameters:
+                          type: object
+                          properties:
+                            username:
+                              type: string
+                              example: aylaun
+                            email:
+                              type: string
+                              example: aylatest@aylan
+                            contact_id:
+                              type: string
+                              example: '533064'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Notifications
+  /notifications/{notId}/notification_apps/{notAppId}.json:
+    put:
+      summary: Update notification app
+      description: This API updates the specific notification application.
+      operationId: create-notification-app1
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      - name: notAppId
+        in: path
+        description: Unique notification app identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notification_app:
+                      id: 14957709
+                      notification_id: 14562675
+                      app_type: email
+                      nickname: user friendly app name
+                      notification_app_parameters:
+                        username: app username
+                        email: valid email
+                        email_template_id: Unique template ID
+                        email_subject: test
+                        email_body_html: test
+                        message: test
+              schema:
+                type: object
+                properties:
+                  notification_app:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 14957709
+                        default: 0
+                      notification_id:
+                        type: integer
+                        example: 14562675
+                        default: 0
+                      app_type:
+                        type: string
+                        example: email
+                      nickname:
+                        type: string
+                        example: user friendly app name
+                      notification_app_parameters:
+                        type: object
+                        properties:
+                          username:
+                            type: string
+                            example: app username
+                          email:
+                            type: string
+                            example: valid email
+                          email_template_id:
+                            type: string
+                            example: Unique template ID
+                          email_subject:
+                            type: string
+                            example: test
+                          email_body_html:
+                            type: string
+                            example: test
+                          message:
+                            type: string
+                            example: test
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Notifications
+    get:
+      summary: Get notification app
+      description: This API returns the specific notification application.
+      operationId: get-notification-by-id-1
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      - name: notAppId
+        in: path
+        description: Unique notification app identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    notification_app:
+                      id: 14916607
+                      notification_id: 14516296
+                      app_type: email
+                      nickname: emailnote
+                      notification_app_parameters:
+                        username: aylaun
+                        email: aylatest@aylan
+                        contact_id: '533064'
+              schema:
+                type: object
+                properties:
+                  notification_app:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 14916607
+                        default: 0
+                      notification_id:
+                        type: integer
+                        example: 14516296
+                        default: 0
+                      app_type:
+                        type: string
+                        example: email
+                      nickname:
+                        type: string
+                        example: emailnote
+                      notification_app_parameters:
+                        type: object
+                        properties:
+                          username:
+                            type: string
+                            example: aylaun
+                          email:
+                            type: string
+                            example: aylatest@aylan
+                          contact_id:
+                            type: string
+                            example: '533064'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Notifications
+    delete:
+      summary: Delete notification app
+      description: This API deletes the specified notification app.
+      operationId: delete-notification-by-id
+      parameters:
+      - name: notId
+        in: path
+        description: Unique notification identifier.
+        schema:
+          type: string
+        required: true
+      - name: notAppId
+        in: path
+        description: Unique notification app identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Notifications
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

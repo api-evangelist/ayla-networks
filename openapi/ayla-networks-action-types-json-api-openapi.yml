@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  title: rule-service Action Types.json API
+  version: '1.0'
+servers:
+- url: https://rulesservice-dev.aylanetworks.com/rulesservice/v1/
+security:
+- sec0: []
+tags:
+- name: Action Types.json
+paths:
+  /action_types.json:
+    get:
+      summary: Get action types
+      description: 'This API returns an array of available action types. Examples include the following:
+
+
+        | Action | Description |
+
+        |--|--|
+
+        | DATAPOINT | action to create a datapoint |
+
+        | EMAIL | action to send an email |
+
+        | SMS | action to send and SMS |
+
+        | SUBSCRIPTION | action to associate with a subscription rule
+
+        | DIAGNOSTIC | action to set diagnostic state |
+
+        | URL | action to call a URL |
+
+        | AMS_EMAIL | action to call AMS with send EMAIL request |
+
+        | AMS_SMS | action to call AMS with send SMS request |
+
+        | DATASTREAM | action to stream data pipeline events to AWS Kinesis destination. |
+
+        | DATASTREAM_EVENTHUB | action to stream data pipeline events to Azure Event Hub destination |
+
+        | AMS_FCM | action to call AMS with send FCM request |
+
+        | AMS_APNS | action to call AMS with send APNS request |
+
+        | AMS_PUSH | action to call AMS with send PUSH request |'
+      operationId: get-action-types
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    action_types:
+                    - uuid: 225b0b40-848c-11e8-9ec7-69820acd43da
+                      name: DATAPOINT
+                      description: action to create a datapoint
+                      is_enabled: true
+                      created_at: '2018-07-10T21:56:44.148Z'
+                      updated_at: '2022-07-12T08:49:42.006Z'
+                      updated_by: 11111111-1111-1111-1111-111111111111
+                    - uuid: 2285ebd0-848c-11e8-9ec7-69820acd43da
+                      name: EMAIL
+                      description: action to send an email
+                      is_enabled: true
+                      created_at: '2018-07-10T21:56:44.429Z'
+                      updated_at: '2022-07-12T08:49:42.088Z'
+                      updated_by: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+              schema:
+                type: object
+                properties:
+                  action_types:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        uuid:
+                          type: string
+                          example: 225b0b40-848c-11e8-9ec7-69820acd43da
+                        name:
+                          type: string
+                          example: DATAPOINT
+                        description:
+                          type: string
+                          example: action to create a datapoint
+                        is_enabled:
+                          type: boolean
+                          example: true
+                          default: true
+                        created_at:
+                          type: string
+                          example: '2018-07-10T21:56:44.148Z'
+                        updated_at:
+                          type: string
+                          example: '2022-07-12T08:49:42.006Z'
+                        updated_by:
+                          type: string
+                          example: 11111111-1111-1111-1111-111111111111
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+      deprecated: false
+      tags:
+      - Action Types.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-action.md
+  - https://docs.aylanetworks.com/reference/create-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/create-rule.md
+  - https://docs.aylanetworks.com/reference/create-rules-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-action.md
+  - https://docs.aylanetworks.com/reference/delete-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-rule-1.md
+  - https://docs.aylanetworks.com/reference/delete-rule-action.md
+  - https://docs.aylanetworks.com/reference/delete-rule-actions-by-dsn.md
+  - https://docs.aylanetworks.com/reference/delete-rule.md
+  - https://docs.aylanetworks.com/reference/delete-rules-actions-by-dsn-user-uuid.md
+  - https://docs.aylanetworks.com/reference/get-action-types.md
+  - https://docs.aylanetworks.com/reference/get-action.md
+  - https://docs.aylanetworks.com/reference/get-actions.md
+  - https://docs.aylanetworks.com/reference/get-diagnostic-states.md
+  - https://docs.aylanetworks.com/reference/get-rule-actions.md
+  - https://docs.aylanetworks.com/reference/get-rule-devices.md
+  - https://docs.aylanetworks.com/reference/get-rule.md
+  - https://docs.aylanetworks.com/reference/get-rules.md
+  - https://docs.aylanetworks.com/reference/update-an-action.md
+  - https://docs.aylanetworks.com/reference/update-rule.md
+  merge:
+    pages: 21
+    deduped: 20
+    conflicts_kept_first: 0

@@ -1,0 +1,766 @@
+openapi: 3.2.0
+info:
+  title: device-service Groups API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Groups
+paths:
+  /groups/{groupId}.json:
+    get:
+      summary: Get group
+      description: This API returns the specified group.
+      operationId: get-group-by-id
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    group:
+                      name: testdocument1
+                      key: 28241
+                      device_count: 3
+                      devices:
+                      - product_name: Ayla FastTrack Color Bulb
+                        dsn: AC000W027329350
+                        oem_model: bulb-color-dev
+                        key: 6027778
+                        product_class: null
+                        connection_status: Offline
+                      - product_name: ESP32 demo
+                        dsn: AC000W030149446
+                        oem_model: AylaShield
+                        key: 6374901
+                        product_class: demo
+                        connection_status: Offline
+                      - product_name: Ayla Shield
+                        dsn: AC000W000340317
+                        oem_model: AylaShield
+                        key: 6613724
+                        product_class: demo
+                        connection_status: Offline
+              schema:
+                type: object
+                properties:
+                  group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: testdocument1
+                      key:
+                        type: integer
+                        example: 28241
+                        default: 0
+                      device_count:
+                        type: integer
+                        example: 3
+                        default: 0
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: Ayla FastTrack Color Bulb
+                            dsn:
+                              type: string
+                              example: AC000W027329350
+                            oem_model:
+                              type: string
+                              example: bulb-color-dev
+                            key:
+                              type: integer
+                              example: 6027778
+                              default: 0
+                            product_class:
+                              type: string
+                            connection_status:
+                              type: string
+                              example: Offline
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+    put:
+      summary: Rename group
+      description: This API renames the specified group.
+      operationId: rename-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group:
+                  properties:
+                    name:
+                      type: string
+                      description: Group name.
+                  required:
+                  - name
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    group:
+                      name: testing
+                      key: 28238
+                      device_count: 1
+                      devices:
+                      - product_name: ESP32 demo
+                        dsn: AC000W034505639
+                        oem_model: demo-esp32
+                        key: 7533917
+                        product_class: demo
+                        connection_status: Offline
+              schema:
+                type: object
+                properties:
+                  group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: testing
+                      key:
+                        type: integer
+                        example: 28238
+                        default: 0
+                      device_count:
+                        type: integer
+                        example: 1
+                        default: 0
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: ESP32 demo
+                            dsn:
+                              type: string
+                              example: AC000W034505639
+                            oem_model:
+                              type: string
+                              example: demo-esp32
+                            key:
+                              type: integer
+                              example: 7533917
+                              default: 0
+                            product_class:
+                              type: string
+                              example: demo
+                            connection_status:
+                              type: string
+                              example: Offline
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+    delete:
+      summary: Delete group by ID
+      description: This API deletes the specified group.
+      operationId: delete-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device_id:
+                      type: integer
+                      example: 573994
+                      default: 0
+                    prop_id:
+                      type: integer
+                      example: 38462928
+                      default: 0
+                    prop_value:
+                      type: integer
+                      example: 1
+                      default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+  /groups/{groupId}/batched_datapoints.json:
+    post:
+      summary: Create datapoints in group
+      description: This API updates the values of the specified properties for all the devices in the specified device group.
+      operationId: create-datapoints-in-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - device_id: 6374901
+                    prop_id: 29963843
+                    prop_value: 100
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device_id:
+                      type: integer
+                      example: 536728
+                      default: 0
+                    prop_name:
+                      type: string
+                      example: test1
+                    prop_value:
+                      type: integer
+                      example: 234
+                      default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Groups
+  /groups/{groupId}/datapoints.json:
+    post:
+      summary: Create datapoint in group
+      description: This API updates the value of a single property for all the devices in the specified device group.
+      operationId: create-datapoints-in-group-1
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n\t{\n\t\t\"device_id\":536728,\n\t\t\"prop_name\":\"string_input_tp_1\",\n\t\t\"prop_value\": 0\n\t}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    device_id:
+                      type: integer
+                      example: 536728
+                      default: 0
+                    prop_name:
+                      type: string
+                      example: string_input_tp_1
+                    prop_value:
+                      type: integer
+                      example: 0
+                      default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Groups
+    get:
+      summary: Get datapoints in group
+      description: This API returns an array of datapoints for the specified properties of all devices in the specified device group.
+      operationId: get-datapoints-in-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      - name: property_names
+        in: query
+        description: Property names.
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{ \n  \"datapoints\": { \n    \"devices\": { \n      \"device\": [ \n        { \n          \"id\": 183750, \n          \"properties\": { \n            \"property\": [ \n              { \n                \"id\": 9744633, \n                \"name\": \"Blue_LED\", \n                \"value\": 0 \n              }, \n              { \n                \"id\": 9744637, \n                \"name\": \"Green_LED\", \n                \"value\": 1 \n              } \n            ] \n          } \n        }, \n        { \n          \"id\": 183751, \n          \"properties\": { \n            \"property\": [ \n              { \n                \"id\": 5393459, \n                \"name\": \"Blue_LED\", \n                \"value\": 0 \n              }, \n              { \n                \"id\": 5393463, \n                \"name\": \"Green_LED\", \n                \"value\": 1 \n              } \n            ] \n          } \n        } \n      ] \n    } \n  } \n}\n"
+              schema:
+                type: object
+                properties:
+                  datapoints:
+                    type: object
+                    properties:
+                      devices:
+                        type: object
+                        properties:
+                          device:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                id:
+                                  type: integer
+                                  example: 183750
+                                  default: 0
+                                properties:
+                                  type: object
+                                  properties:
+                                    property:
+                                      type: array
+                                      items:
+                                        type: object
+                                        properties:
+                                          id:
+                                            type: integer
+                                            example: 9744633
+                                            default: 0
+                                          name:
+                                            type: string
+                                            example: Blue_LED
+                                          value:
+                                            type: integer
+                                            example: 0
+                                            default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+  /groups/{groupId}/devices.json:
+    post:
+      summary: Add device to group
+      description: This API adds a device to a group.
+      operationId: add-device-to-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.  (Group key value)
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - device_id
+              properties:
+                device_id:
+                  type: integer
+                  description: Device ID.
+                  format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    group:
+                      name: testdocument1
+                      key: 28241
+                      device_count: 3
+                      devices:
+                      - product_name: Ayla FastTrack Color Bulb
+                        dsn: AC000W027329350
+                        oem_model: bulb-color-dev
+                        key: 6027778
+                        product_class: null
+                        connection_status: Offline
+                      - product_name: ESP32 demo
+                        dsn: AC000W030149446
+                        oem_model: AylaShield
+                        key: 6374901
+                        product_class: demo
+                        connection_status: Offline
+                      - product_name: Ayla Shield
+                        dsn: AC000W000340317
+                        oem_model: AylaShield
+                        key: 6613724
+                        product_class: demo
+                        connection_status: Offline
+              schema:
+                type: object
+                properties:
+                  group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: testdocument1
+                      key:
+                        type: integer
+                        example: 28241
+                        default: 0
+                      device_count:
+                        type: integer
+                        example: 3
+                        default: 0
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: Ayla FastTrack Color Bulb
+                            dsn:
+                              type: string
+                              example: AC000W027329350
+                            oem_model:
+                              type: string
+                              example: bulb-color-dev
+                            key:
+                              type: integer
+                              example: 6027778
+                              default: 0
+                            product_class:
+                              type: string
+                            connection_status:
+                              type: string
+                              example: Offline
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+  /groups/{groupId}/devices/{devId}.json:
+    delete:
+      summary: Remove device from group
+      description: This API removes a device from a group.
+      operationId: remove-device-from-group
+      parameters:
+      - name: groupId
+        in: path
+        description: Unique group identifier.
+        schema:
+          type: string
+        required: true
+      - name: devId
+        in: path
+        description: Unique device identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    group:
+                      name: testdocument1
+                      key: 28241
+                      device_count: 2
+                      devices:
+                      - product_name: ESP32 demo
+                        dsn: AC000W030149446
+                        oem_model: AylaShield
+                        key: 6374901
+                        product_class: demo
+                        connection_status: Offline
+                      - product_name: Ayla Shield
+                        dsn: AC000W000340317
+                        oem_model: AylaShield
+                        key: 6613724
+                        product_class: demo
+                        connection_status: Offline
+              schema:
+                type: object
+                properties:
+                  group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: testdocument1
+                      key:
+                        type: integer
+                        example: 28241
+                        default: 0
+                      device_count:
+                        type: integer
+                        example: 2
+                        default: 0
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: ESP32 demo
+                            dsn:
+                              type: string
+                              example: AC000W030149446
+                            oem_model:
+                              type: string
+                              example: AylaShield
+                            key:
+                              type: integer
+                              example: 6374901
+                              default: 0
+                            product_class:
+                              type: string
+                              example: demo
+                            connection_status:
+                              type: string
+                              example: Offline
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Groups
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

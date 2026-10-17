@@ -1,0 +1,557 @@
+openapi: 3.2.0
+info:
+  title: message-service Destinations API
+  version: '1.0'
+servers:
+- url: https://message-dev.aylanetworks.com/messageservice/v1/
+security:
+- sec0: []
+tags:
+- name: Destinations
+paths:
+  /destinations/bulk:
+    delete:
+      summary: Delete destinations in bulk
+      description: This API deletes destinations in bulk.
+      operationId: delete-destinations-in-bulk
+      parameters:
+      - name: destination_uuids
+        in: query
+        description: Array of destination identifiers.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Destinations
+  /destinations/bulk.json:
+    post:
+      summary: Create destinations in bulk
+      description: 'This API creates new destinations in bulk. The destination types supported are:
+
+        email, SMS, and PUSH.
+
+
+        Parameters for **email** type:
+
+        - **type**: Type of destination. (*Mandatory*)
+
+        - **body**: Email body. (*Optional if messge_template_id is passed, otherwise mandatory *)
+
+        - **message_template_id**: Unique ID of the template using which email will be shown to end-user. (*Optional if body is passed, otherwise Mandatory *)
+
+        - **deliver_to**: Email address of target user. (*Mandatory*)
+
+        - **title**: Subject of email.
+
+        - **provider**: Service provider (smtp).
+
+        - **user_message**: Message that will be tied to email.
+
+        - **user_name**: Name of the user.
+
+
+        Parameters for **SMS** type: (*all the parameters are mandatory*)
+
+        - **type**: Type of destination.
+
+        - **body**: SMS body.
+
+        - **country_code**: Country specific code. Example:- +91
+
+        - **deliver_to**: Phone number of target user.
+
+        - **title**: Subject of email.
+
+        - **provider**: Service provider (twilio, yunpian).
+
+
+        Parameters for **PUSH** type:
+
+        - **type**: Type of destination. (*Mandatory*)
+
+        - **app_id**: app_id of the app on which notification will be send. (*Mandatory*)
+
+        - **body**: Body will be tied to notification. (*Mandatory*)
+
+        - **deliver_to**: Device token on which notification will be send. (*Mandatory*)
+
+        - **meta_data**: Additional information about notification.
+
+        - **provider**: Service provider (fcm, apns).
+
+        - **sound**: Sound which will be played along with notification on the device.
+
+        - **title**: Heading that will be shown with notification.'
+      operationId: create-destinations-in-bulk
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    destination:
+                    - destination:
+                        uuid: 0a173fb9-813c-4367-8ea2-91988d3cdd81
+                        body: Your downstairs leak detector at 1234 Ayla Avenue has a low battery
+                        deliver_to: stalinkalimuthu13@gmail.com
+                        title: Hello Ayla User
+                        message_template_id: TestTemplateId
+                        oem_id: 0dfc7900
+                        provider: smtp
+                        rule_uuid: null
+                        action_uuid: null
+                        dsn: null
+                        user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        user_message: Hello Ayla User
+                        user_name: Methew Hedan
+                        repeat_freq: 30
+                        created_at: '2026-05-12T06:52:45Z'
+                        updated_at: '2026-05-12T06:52:45Z'
+                        created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        type: email
+                        contact_id: 123
+                        facility_uuid: ''
+                    - destination:
+                        uuid: ffa6ef8c-3cb3-40ad-a019-134acfd0b9bb
+                        body: Your downstairs leak detector at 1234 Ayla Avenue has a low battery
+                        deliver_to: stalinkalimuthu13@gmail.com
+                        title: Hello Ayla User
+                        message_template_id: TestTemplateId
+                        oem_id: 0dfc7900
+                        provider: smtp
+                        rule_uuid: null
+                        action_uuid: null
+                        dsn: null
+                        user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        user_message: Hello Ayla User
+                        user_name: Methew Hedan
+                        repeat_freq: 30
+                        created_at: '2026-05-12T07:40:19Z'
+                        updated_at: '2026-05-12T07:40:19Z'
+                        created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        type: email
+                        contact_id: null
+                        facility_uuid: ''
+              schema:
+                type: object
+                properties:
+                  destination:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        destination:
+                          type: object
+                          properties:
+                            uuid:
+                              type: string
+                              example: 0a173fb9-813c-4367-8ea2-91988d3cdd81
+                            body:
+                              type: string
+                              example: Your downstairs leak detector at 1234 Ayla Avenue has a low battery
+                            deliver_to:
+                              type: string
+                              example: stalinkalimuthu13@gmail.com
+                            title:
+                              type: string
+                              example: Hello Ayla User
+                            message_template_id:
+                              type: string
+                              example: TestTemplateId
+                            oem_id:
+                              type: string
+                              example: 0dfc7900
+                            provider:
+                              type: string
+                              example: smtp
+                            rule_uuid:
+                              type: string
+                            action_uuid:
+                              type: string
+                            dsn:
+                              type: string
+                            user_uuid:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            user_message:
+                              type: string
+                              example: Hello Ayla User
+                            user_name:
+                              type: string
+                              example: Methew Hedan
+                            repeat_freq:
+                              type: integer
+                              example: 30
+                              default: 0
+                            created_at:
+                              type: string
+                              example: '2026-05-12T06:52:45Z'
+                            updated_at:
+                              type: string
+                              example: '2026-05-12T06:52:45Z'
+                            created_by:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            updated_by:
+                              type: string
+                              example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                            type:
+                              type: string
+                              example: email
+                            contact_id:
+                              type: integer
+                              example: 123
+                              default: 0
+                            facility_uuid:
+                              type: string
+                              example: ''
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Destinations
+  /destinations/{destinationUuid}:
+    delete:
+      summary: Delete destination
+      description: This API deletes a destination.
+      operationId: delete-destination
+      parameters:
+      - name: destinationUuid
+        in: path
+        description: Unique destination uuid
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Destinations
+    get:
+      summary: Get destination
+      description: This API returns the specified message destination.
+      operationId: get-destination
+      parameters:
+      - name: destinationUuid
+        in: path
+        description: Unique destination uuid.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    destination:
+                      uuid: ffa6ef8c-3cb3-40ad-a019-134acfd0b9bb
+                      body: Your downstairs leak detector at 1234 Ayla Avenue has a low battery
+                      deliver_to: stalinkalimuthu13@gmail.com
+                      title: Hello Ayla User
+                      message_template_id: TestTemplateId
+                      oem_id: 0dfc7900
+                      provider: smtp
+                      rule_uuid: null
+                      action_uuid: null
+                      dsn: null
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_message: Hello Ayla User
+                      user_name: Methew Hedan
+                      repeat_freq: 30
+                      created_at: '2026-05-12T07:40:19Z'
+                      updated_at: '2026-05-12T07:40:19Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type: email
+                      contact_id: null
+                      facility_uuid: ''
+              schema:
+                type: object
+                properties:
+                  destination:
+                    type: object
+                    properties:
+                      uuid:
+                        type: string
+                        example: ffa6ef8c-3cb3-40ad-a019-134acfd0b9bb
+                      body:
+                        type: string
+                        example: Your downstairs leak detector at 1234 Ayla Avenue has a low battery
+                      deliver_to:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      title:
+                        type: string
+                        example: Hello Ayla User
+                      message_template_id:
+                        type: string
+                        example: TestTemplateId
+                      oem_id:
+                        type: string
+                        example: 0dfc7900
+                      provider:
+                        type: string
+                        example: smtp
+                      rule_uuid:
+                        type: string
+                      action_uuid:
+                        type: string
+                      dsn:
+                        type: string
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_message:
+                        type: string
+                        example: Hello Ayla User
+                      user_name:
+                        type: string
+                        example: Methew Hedan
+                      repeat_freq:
+                        type: integer
+                        example: 30
+                        default: 0
+                      created_at:
+                        type: string
+                        example: '2026-05-12T07:40:19Z'
+                      updated_at:
+                        type: string
+                        example: '2026-05-12T07:40:19Z'
+                      created_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type:
+                        type: string
+                        example: email
+                      contact_id:
+                        type: string
+                      facility_uuid:
+                        type: string
+                        example: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Destinations
+    put:
+      summary: Update destination
+      description: This API updates the specified message destination.
+      operationId: update-destination1
+      parameters:
+      - name: destinationUuid
+        in: path
+        description: Unique destination identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  description: Request body.
+                  format: json
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  destination:
+                    type: object
+                    properties:
+                      uuid:
+                        type: string
+                        example: 5a8911cf-a96d-4ff0-a3dd-005f34bd3ac6
+                      body:
+                        type: string
+                        example: Testing api
+                      deliver_to:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      title:
+                        type: string
+                        example: Hello Ayla User
+                      message_template_id:
+                        type: string
+                        example: TestTemplateId
+                      oem_id:
+                        type: string
+                        example: 0dfc7900
+                      provider:
+                        type: string
+                        example: smtp
+                      rule_uuid:
+                        type: string
+                      action_uuid:
+                        type: string
+                      dsn:
+                        type: string
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_message:
+                        type: string
+                        example: Hello Ayla User
+                      user_name:
+                        type: string
+                        example: Methew Hedan
+                      repeat_freq:
+                        type: string
+                      created_at:
+                        type: string
+                        example: '2026-05-13T08:30:35Z'
+                      updated_at:
+                        type: string
+                        example: '2026-05-13T10:16:50Z'
+                      created_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type:
+                        type: string
+                        example: email
+                      contact_id:
+                        type: string
+                      facility_uuid:
+                        type: string
+                        example: ''
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    destination:
+                      uuid: 5a8911cf-a96d-4ff0-a3dd-005f34bd3ac6
+                      body: Testing api
+                      deliver_to: stalinkalimuthu13@gmail.com
+                      title: Hello Ayla User
+                      message_template_id: TestTemplateId
+                      oem_id: 0dfc7900
+                      provider: smtp
+                      rule_uuid: null
+                      action_uuid: null
+                      dsn: null
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_message: Hello Ayla User
+                      user_name: Methew Hedan
+                      repeat_freq: null
+                      created_at: '2026-05-13T08:30:35Z'
+                      updated_at: '2026-05-13T10:16:50Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type: email
+                      contact_id: null
+                      facility_uuid: ''
+          description: OK
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Destinations
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-destination.md
+  - https://docs.aylanetworks.com/reference/create-destinations-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-destination.md
+  - https://docs.aylanetworks.com/reference/delete-destinations-in-bulk.md
+  - https://docs.aylanetworks.com/reference/get-destination.md
+  - https://docs.aylanetworks.com/reference/get-destinations.md
+  - https://docs.aylanetworks.com/reference/update-destination1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

@@ -1,0 +1,296 @@
+openapi: 3.2.0
+info:
+  title: iot-command-center Otas API
+  version: '1.0'
+servers:
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+security:
+- sec0: []
+tags:
+- name: Otas
+paths:
+  /otas:
+    get:
+      summary: Get OTAs
+      description: This API gets the list of OTAs.
+      operationId: get-otas
+      parameters:
+      - name: oem
+        in: query
+        description: 'OEM name. NOTE: This field is required if type=host.'
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Type can be Module or Host.
+        required: true
+        schema:
+          type: string
+      - name: model
+        in: query
+        description: Model name.
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM Model name.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Page number.
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: per_page
+        in: query
+        description: Number of items to be displayed per page.
+        schema:
+          type: integer
+          format: int32
+      - name: order_by
+        in: query
+        description: 'For Module OTA: order_by can be status, model, version, started_on, or stopped_on <br>For Host OTA: order_by can be status, from_host_img_version, version started_on, or stopped_on<br>Default: order_by is ID.'
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: Ascending (asc) or descending (desc).
+        schema:
+          type: string
+          default: Descending
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 335
+                    default: 0
+                  otas:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 10368
+                          default: 0
+                        type:
+                          type: string
+                          example: module
+                        oem:
+                          type: string
+                          example: 0dfc7900
+                        model:
+                          type: string
+                          example: AY001MTC1
+                        version:
+                          type: string
+                          example: 2.5-beta
+                        description:
+                          type: string
+                          example: 2.5-beta from 2.4.7-beta
+                        command:
+                          type: string
+                        intelligent:
+                          type: boolean
+                          example: false
+                          default: true
+                        pending:
+                          type: integer
+                          example: 0
+                          default: 0
+                        errors:
+                          type: integer
+                          example: 0
+                          default: 0
+                        succeed:
+                          type: integer
+                          example: 0
+                          default: 0
+                        status:
+                          type: string
+                          example: INITIALIZED
+                        homekit:
+                          type: boolean
+                          example: false
+                          default: true
+                        from_host_img_version:
+                          type: string
+                        lan_ota:
+                          type: boolean
+                          example: false
+                          default: true
+                        started_on:
+                          type: string
+                          example: 1975/01/01 00:00:00
+                        stopped_on:
+                          type: string
+                          example: 1975/01/01 00:00:00
+                        base_mod_img_model:
+                          type: string
+                        base_mod_img_version:
+                          type: string
+                        from_mod_img_version:
+                          type: string
+                        created_at:
+                          type: string
+                          example: 2018/12/18 18:34:07
+                        updated_at:
+                          type: string
+                          example: 1975/01/01 00:00:00
+                        oem_model:
+                          type: string
+                        is_online:
+                          type: string
+                        is_registered:
+                          type: string
+                        filter_id:
+                          type: string
+                        job_id:
+                          type: string
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    total: 335
+                    otas:
+                    - id: 10368
+                      type: module
+                      oem: 0dfc7900
+                      model: AY001MTC1
+                      version: 2.5-beta
+                      description: 2.5-beta from 2.4.7-beta
+                      command: null
+                      intelligent: false
+                      pending: 0
+                      errors: 0
+                      succeed: 0
+                      status: INITIALIZED
+                      homekit: false
+                      from_host_img_version: null
+                      lan_ota: false
+                      started_on: 1975/01/01 00:00:00
+                      stopped_on: 1975/01/01 00:00:00
+                      base_mod_img_model: null
+                      base_mod_img_version: null
+                      from_mod_img_version: null
+                      created_at: 2018/12/18 18:34:07
+                      updated_at: 1975/01/01 00:00:00
+                      oem_model: null
+                      is_online: null
+                      is_registered: null
+                      filter_id: null
+                      job_id: null
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Otas
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/cancel-job.md
+  - https://docs.aylanetworks.com/reference/copy-filter.md
+  - https://docs.aylanetworks.com/reference/copy-job.md
+  - https://docs.aylanetworks.com/reference/create-file-record-1.md
+  - https://docs.aylanetworks.com/reference/create-file-record.md
+  - https://docs.aylanetworks.com/reference/create-filter.md
+  - https://docs.aylanetworks.com/reference/create-job-schedule.md
+  - https://docs.aylanetworks.com/reference/create-job.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs-batch.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs.md
+  - https://docs.aylanetworks.com/reference/delete-file-record.md
+  - https://docs.aylanetworks.com/reference/delete-filter.md
+  - https://docs.aylanetworks.com/reference/delete-job-schedule.md
+  - https://docs.aylanetworks.com/reference/delete-job.md
+  - https://docs.aylanetworks.com/reference/download-file-record.md
+  - https://docs.aylanetworks.com/reference/download-job-report.md
+  - https://docs.aylanetworks.com/reference/edit-schedule.md
+  - https://docs.aylanetworks.com/reference/export-dsn.md
+  - https://docs.aylanetworks.com/reference/get-all-tasks.md
+  - https://docs.aylanetworks.com/reference/get-device-jobs.md
+  - https://docs.aylanetworks.com/reference/get-device-snapshot.md
+  - https://docs.aylanetworks.com/reference/get-device-status.md
+  - https://docs.aylanetworks.com/reference/get-devices-by-filter.md
+  - https://docs.aylanetworks.com/reference/get-file-record.md
+  - https://docs.aylanetworks.com/reference/get-filter.md
+  - https://docs.aylanetworks.com/reference/get-filters.md
+  - https://docs.aylanetworks.com/reference/get-job-report-details.md
+  - https://docs.aylanetworks.com/reference/get-job.md
+  - https://docs.aylanetworks.com/reference/get-jobs.md
+  - https://docs.aylanetworks.com/reference/get-ota-action.md
+  - https://docs.aylanetworks.com/reference/get-otas.md
+  - https://docs.aylanetworks.com/reference/get-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/get-schedule.md
+  - https://docs.aylanetworks.com/reference/get-user-consent.md
+  - https://docs.aylanetworks.com/reference/post-icc-express-job.md
+  - https://docs.aylanetworks.com/reference/preview-filter.md
+  - https://docs.aylanetworks.com/reference/refresh-device-list.md
+  - https://docs.aylanetworks.com/reference/remove-ota-command.md
+  - https://docs.aylanetworks.com/reference/retry-selected-devices.md
+  - https://docs.aylanetworks.com/reference/search-jobs.md
+  - https://docs.aylanetworks.com/reference/set-file-property-1.md
+  - https://docs.aylanetworks.com/reference/set-file-property.md
+  - https://docs.aylanetworks.com/reference/set-ota-action.md
+  - https://docs.aylanetworks.com/reference/set-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/start-job.md
+  - https://docs.aylanetworks.com/reference/start-ota.md
+  - https://docs.aylanetworks.com/reference/stop-ota.md
+  - https://docs.aylanetworks.com/reference/update-file-transfer-record.md
+  - https://docs.aylanetworks.com/reference/update-filter.md
+  - https://docs.aylanetworks.com/reference/update-job-1.md
+  - https://docs.aylanetworks.com/reference/update-ota-job-by-job-id.md
+  - https://docs.aylanetworks.com/reference/upload-file.md
+  merge:
+    pages: 52
+    deduped: 51
+    conflicts_kept_first: 0

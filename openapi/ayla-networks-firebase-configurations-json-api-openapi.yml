@@ -1,0 +1,422 @@
+openapi: 3.2.0
+info:
+  title: user-service Firebase Configurations.json API
+  version: '1.0'
+servers:
+- url: https://user-dev.aylanetworks.com/
+security:
+- sec0: []
+tags:
+- name: Firebase Configurations.json
+paths:
+  /firebase_configurations.json:
+    post:
+      summary: Create Firebase configuration (Deprecated)
+      description: This API is used to create Firebase configuration.
+      operationId: create-firebase-configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - api_key
+              - url_prefix
+              - app_id
+              properties:
+                apn:
+                  type: string
+                  description: Android Package Name that you get after registering on firebase console. Optional for iOS
+                ibi:
+                  type: string
+                  description: iOS Bundle ID that you get after registering on firebase console.
+                api_key:
+                  type: string
+                  description: API Key for the app.
+                url_prefix:
+                  type: string
+                  description: URL prefix of the dynamic link.
+                app_id:
+                  type: string
+                  description: Ayla application ID.
+                oem_id:
+                  type: string
+                  description: If "oem_id" is not provided, the current user oem will be considered.
+                isi:
+                  type: string
+                  description: Your application's App Store ID (iPhone app store id).
+            examples:
+              Example response:
+                value:
+                  uuid: e4e9a33c-gh36-19eh-2927-6527as251722
+                  api_key: REDACTED_GOOGLE_API_KEY
+                  apn: com.example.android
+                  ibi: com.example.ios
+                  link: https://aylanetworks.page.link
+                  app_name: SmartTouch
+                  isi: 1523593852
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Firebase Configurations.json
+    put:
+      summary: Update Firebase configuration (Deprecated)
+      description: This API is used to update Firebase configuration.
+      operationId: update-firebase-configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - uuid
+              properties:
+                uuid:
+                  type: string
+                  description: Unique identifier of a combination of app_id and oem_id.
+                apn:
+                  type: string
+                  description: Android Package Name that you get after registering on firebase console. Optional for iOS
+                ibi:
+                  type: string
+                  description: iOS Bundle ID that you get after registering on firebase console.
+                api_key:
+                  type: string
+                  description: API Key for the app.
+                url_prefix:
+                  type: string
+                  description: URL prefix of the dynamic link.
+                isi:
+                  type: string
+                  description: Your application's App Store ID (iPhone app store id).
+            examples:
+              Example response:
+                value:
+                  uuid: e4e9a33c-gh36-19eh-2927-6527as251722
+                  api_key: REDACTED_GOOGLE_API_KEY
+                  apn: com.example.android
+                  ibi: com.example.ios
+                  link: https://aylanetworks.page.link
+                  app_name: SmartTouch
+                  isi: 1523593852
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Firebase Configurations.json
+    delete:
+      summary: Delete Firebase configuration (Deprecated)
+      description: This API is used to delete Firebase configuration.
+      operationId: delete-firebase-configuration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - uuid
+              properties:
+                uuid:
+                  type: string
+                  description: Unique identifier of a combination of app_id and oem_id.
+      responses:
+        '204':
+          description: '204'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Firebase Configurations.json
+    get:
+      summary: Get Firebase configuration (Deprecated)
+      description: This API is used to fetch Firebase configurations.
+      operationId: update-firebase-configuration-1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                api_key:
+                  type: array
+                  description: An array of API Keys.
+                  items:
+                    type: string
+                app_id:
+                  type: array
+                  description: An array of Ayla app IDs.
+                  items:
+                    type: string
+                oem_id:
+                  type: array
+                  description: An array of OEM IDs. This is only for Ayla::Admin.
+                  items:
+                    type: string
+                paginated:
+                  type: boolean
+                  description: true or 1 means results will be paginated.
+                page:
+                  type: integer
+                  description: Page number.
+                  format: int32
+                per_page:
+                  type: integer
+                  description: Maximum number of records per page.
+                  format: int32
+            examples:
+              Example response with pagination:
+                value:
+                  previous_page: null
+                  next_page: null
+                  current_page_number: 1
+                  start_count_on_page: 1
+                  end_count_on_page: 2
+                  total: 2
+                  firebase_configurations:
+                  - uuid: e4e9a33c-gh36-19eh-2927-6527as251722
+                    api_key: REDACTED_GOOGLE_API_KEY
+                    apn: com.example.android
+                    ibi: com.example.ios
+                    link: https://aylanetworks.page.link
+                    app_name: SmartTouch
+                    isi: 1523593852
+                  - uuid: a39a22c-fh36-20eh-1029-7267as2738322
+                    api_key: AIdjsaHsluhO9IYDdDuWDjIGeGCHiuJNUMiinOP
+                    apn: com.example.android
+                    ibi: com.example.ios
+                    link: https://aylanetworks.page.link
+                    app_name: TestApp
+                    isi: 1625592828
+              Example response without pagination:
+                value:
+                - uuid: e4e9a33c-gh36-19eh-2927-6527as251722
+                  api_key: REDACTED_GOOGLE_API_KEY
+                  apn: com.example.android
+                  ibi: com.example.ios
+                  link: https://aylanetworks.page.link
+                  app_name: SmartTouch
+                  isi: 1523593852
+                - uuid: a39a22c-fh36-20eh-1029-7267as2738322
+                  api_key: AIdjsaHsluhO9IYDdDuWDjIGeGCHiuJNUMiinOP
+                  apn: com.example.android
+                  ibi: com.example.ios
+                  link: https://aylanetworks.page.link
+                  app_name: TestApp
+                  isi: 1625592828
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Firebase Configurations.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/assign-label.md
+  - https://docs.aylanetworks.com/reference/assign-role.md
+  - https://docs.aylanetworks.com/reference/associate-role-user.md
+  - https://docs.aylanetworks.com/reference/configure-properties-based-on-role.md
+  - https://docs.aylanetworks.com/reference/confirm-user-account.md
+  - https://docs.aylanetworks.com/reference/create-associated-user.md
+  - https://docs.aylanetworks.com/reference/create-contact.md
+  - https://docs.aylanetworks.com/reference/create-dealer.md
+  - https://docs.aylanetworks.com/reference/create-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/create-role-user.md
+  - https://docs.aylanetworks.com/reference/create-role.md
+  - https://docs.aylanetworks.com/reference/create-share.md
+  - https://docs.aylanetworks.com/reference/create-user-account.md
+  - https://docs.aylanetworks.com/reference/create-user-contact.md
+  - https://docs.aylanetworks.com/reference/create-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/delete-contact.md
+  - https://docs.aylanetworks.com/reference/delete-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/delete-properties-by-roles.md
+  - https://docs.aylanetworks.com/reference/delete-share-by-user-id.md
+  - https://docs.aylanetworks.com/reference/delete-share.md
+  - https://docs.aylanetworks.com/reference/delete-user-account-1.md
+  - https://docs.aylanetworks.com/reference/delete-user-account.md
+  - https://docs.aylanetworks.com/reference/delete-user-contact.md
+  - https://docs.aylanetworks.com/reference/delete-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/disassociate-role-user.md
+  - https://docs.aylanetworks.com/reference/disassociate-user.md
+  - https://docs.aylanetworks.com/reference/edit-property-permissions.md
+  - https://docs.aylanetworks.com/reference/get-clients.md
+  - https://docs.aylanetworks.com/reference/get-contact-details.md
+  - https://docs.aylanetworks.com/reference/get-contacts.md
+  - https://docs.aylanetworks.com/reference/get-end-users.md
+  - https://docs.aylanetworks.com/reference/get-oem-users.md
+  - https://docs.aylanetworks.com/reference/get-oem.md
+  - https://docs.aylanetworks.com/reference/get-oems.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-oem-model-and-role.md
+  - https://docs.aylanetworks.com/reference/get-received-shares.md
+  - https://docs.aylanetworks.com/reference/get-role-users.md
+  - https://docs.aylanetworks.com/reference/get-share.md
+  - https://docs.aylanetworks.com/reference/get-shares.md
+  - https://docs.aylanetworks.com/reference/get-tokens.md
+  - https://docs.aylanetworks.com/reference/get-user-by-id.md
+  - https://docs.aylanetworks.com/reference/get-user-by-universal-user-id.md
+  - https://docs.aylanetworks.com/reference/get-user-contacts.md
+  - https://docs.aylanetworks.com/reference/get-user-metadata.md
+  - https://docs.aylanetworks.com/reference/get-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/get-user-profile-1.md
+  - https://docs.aylanetworks.com/reference/get-users-by-label.md
+  - https://docs.aylanetworks.com/reference/get-users-by-oem.md
+  - https://docs.aylanetworks.com/reference/get-users-by-role.md
+  - https://docs.aylanetworks.com/reference/login.md
+  - https://docs.aylanetworks.com/reference/refresh-token.md
+  - https://docs.aylanetworks.com/reference/reset-password.md
+  - https://docs.aylanetworks.com/reference/return-tokens.md
+  - https://docs.aylanetworks.com/reference/revoke-label.md
+  - https://docs.aylanetworks.com/reference/revoke-role.md
+  - https://docs.aylanetworks.com/reference/send-how-to-confirm.md
+  - https://docs.aylanetworks.com/reference/send-how-to-reset.md
+  - https://docs.aylanetworks.com/reference/update-contact.md
+  - https://docs.aylanetworks.com/reference/update-email.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration-1.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/update-share.md
+  - https://docs.aylanetworks.com/reference/update-sso-user.md
+  - https://docs.aylanetworks.com/reference/update-user-account-1.md
+  - https://docs.aylanetworks.com/reference/update-user-contact.md
+  - https://docs.aylanetworks.com/reference/update-user-metadatum.md
+  merge:
+    pages: 66
+    deduped: 65
+    conflicts_kept_first: 0

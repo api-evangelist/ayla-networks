@@ -1,0 +1,120 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Reportsdata API
+  version: '1.0'
+  description: 'Operations tagged Reportsdata across 3 of this provider''s published API definitions: ayla-networks-contracts-service-openapi.yml, ayla-networks-metering-service-openapi.yml, ayla-networks-reports-service-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://acsb-dev.aylanetworks.com/contractservice/api/v1/
+- url: https://metering-dev.aylanetworks.com/metering/api/v1/
+- url: https://arsb-dev.aylanetworks.com/reportingservice/api/v1/
+security:
+- sec0: []
+tags:
+- name: Reportsdata
+paths:
+  /reportsdata:
+    get:
+      summary: Get billing transaction count (Contracts Service)
+      description: 'This API fetches billing transaction count.
+
+
+        NOTE: Billing transaction count can be accessed using the metering service too. Please ensure you use the appropriate service API to get transaction count.'
+      operationId: get-contract-data
+      parameters:
+      - name: report_name
+        in: query
+        description: Name of the report you want to fetch.
+        required: true
+        schema:
+          type: string
+      - name: aggregate_by
+        in: query
+        description: 'The value can be any one of the following: “day“, “month”, “week”, or “year”. The default value is "month".'
+        schema:
+          type: string
+          default: month
+      - name: start_date
+        in: query
+        description: Start date and end date provide duration range to be considered for fetching contract data.
+        required: true
+        schema:
+          type: string
+      - name: end_date
+        in: query
+        description: Start date and end date provide duration range to be considered for fetching contract data.
+        required: true
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model name.
+        schema:
+          type: string
+      - name: region_name
+        in: query
+        description: Name of the region for which you want to fetch the data.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '[{"total":"122"}]'
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    total:
+                      type: string
+                      example: '122'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Reportsdata
+    servers:
+    - url: https://acsb-dev.aylanetworks.com/contractservice/api/v1/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-contracts-service-openapi.yml
+- ayla-networks-metering-service-openapi.yml
+- ayla-networks-reports-service-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

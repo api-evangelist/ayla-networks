@@ -1,0 +1,839 @@
+openapi: 3.2.0
+info:
+  title: device-service Triggers API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Triggers
+paths:
+  /triggers/all/by_user.json:
+    get:
+      summary: Get device triggers
+      description: This API returns an array of all property triggers associated with all devices registered to, or shared with, the caller.
+      operationId: get-timezone
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"trigger\": {\n      \"key\": 12867849,\n      \"property_key\": 35679994,\n      \"property_name\": \"Blue_LED\",\n      \"trigger_type\": \"always\",\n      \"compare_type\": \"=\",\n      \"value\": null,\n      \"device_nickname\": \"ESP32 demo\",\n      \"property_nickname\": \"Blue_LED\",\n      \"base_type\": \"boolean\",\n      \"period\": \"always\",\n      \"asset\": true,\n      \"active\": true,\n      \"user_uuid\": \"63d92ce0-0118-11e6-9b1b-0ab3f06930bb\",\n      \"user_id\": 101010,\n      \"triggered_at\": \"2026-04-16T05:39:30Z\"\n    }\n  },\n{...}\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    trigger:
+                      type: object
+                      properties:
+                        key:
+                          type: integer
+                          example: 12867849
+                          default: 0
+                        property_key:
+                          type: integer
+                          example: 35679994
+                          default: 0
+                        property_name:
+                          type: string
+                          example: Blue_LED
+                        trigger_type:
+                          type: string
+                          example: always
+                        compare_type:
+                          type: string
+                          example: '='
+                        value:
+                          type: string
+                        device_nickname:
+                          type: string
+                          example: ESP32 demo
+                        property_nickname:
+                          type: string
+                          example: Blue_LED
+                        base_type:
+                          type: string
+                          example: boolean
+                        period:
+                          type: string
+                          example: always
+                        asset:
+                          type: boolean
+                          example: true
+                          default: true
+                        active:
+                          type: boolean
+                          example: true
+                          default: true
+                        user_uuid:
+                          type: string
+                          example: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+                        user_id:
+                          type: integer
+                          example: 101010
+                          default: 0
+                        triggered_at:
+                          type: string
+                          example: '2026-04-16T05:39:30Z'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Triggers
+  /triggers/{trigId}.json:
+    put:
+      summary: Update trigger
+      description: This API updates the specified property trigger. Include only the key/value pairs you want to modify.
+      operationId: update-trigger1
+      parameters:
+      - name: trigId
+        in: path
+        description: Unique trigger Identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trigger:
+                  properties:
+                    device_nickname:
+                      type: string
+                      description: A user friendly name for the device.
+                    property_nickname:
+                      type: string
+                      description: A user friendly name for the property.
+                    compare_type:
+                      type: string
+                      description: 'Specified only for compare-absolute or compare-service trigger types.  Value can be one of the following strings: ==, >, <, >=, or <=.'
+                    trigger_type:
+                      type: string
+                      description: 'One of the following strings:<br>  - “always”: trigger fires on every datapoint.<br>  - “compare_absolute”: compares to a value specified in the trigger.<br>  - “on_change”: trigger fires on any change to property value.'
+                    value:
+                      type: string
+                      description: Value used in the compare-absolute trigger type.
+                    active:
+                      type: boolean
+                      description: '"false" in case the trigger has to be deactivated.'
+                      default: true
+                  required: []
+                  type: object
+                trigger_apps:
+                  properties:
+                    name:
+                      type: string
+                      description: 'Name of the trigger application: email, sms, forward, push_ios, push_android, or push_android_fcm.'
+                    nickname:
+                      type: string
+                      description: User friendly application name.
+                    username:
+                      type: string
+                      description: For email, it is used as a greeting.  It is not used for sms.
+                    ' repeat_freq':
+                      type: integer
+                      description: Repeat interval in seconds.
+                      format: int32
+                    param1:
+                      type: string
+                      description: Application dependent.
+                    param2:
+                      type: string
+                      description: Application dependent.
+                    param3:
+                      type: string
+                      description: Application dependent.
+                    param4:
+                      type: string
+                      description: Application dependent.
+                    param5:
+                      type: string
+                      description: Application dependent.
+                    ' contact_id':
+                      type: string
+                      description: Ayla contact id of sender. See the getContact API.
+                    ' push_sound':
+                      type: string
+                      description: mps sound file name
+                    ' push_mdata':
+                      type: string
+                      description: 'metadata key/value pairs: "key1:value1, key2:value2".'
+                    ' email_template_id':
+                      type: string
+                      description: ID of custom email template.
+                    ' email_subject':
+                      type: string
+                      description: Email subject line.
+                    email_body_html:
+                      type: string
+                      description: Email body with template tags.
+                    requires_acceptance:
+                      type: boolean
+                      description: true=enables acceptance flow for SMS applications.
+                      default: false
+                    asset:
+                      type: boolean
+                      description: false if the case is a device level trigger, not a user’s asset.
+                      default: true
+                  required: []
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    trigger:
+                      key: 12867849
+                      property_key: 35679994
+                      property_name: Blue_LED
+                      trigger_type: on_change
+                      compare_type: '>'
+                      value: null
+                      trigger_apps: []
+                      device_nickname: ESP32 demo
+                      property_nickname: Blue_LED
+                      base_type: boolean
+                      period: always
+                      asset: true
+                      active: false
+                      user_uuid: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+                      user_id: 101010
+                      triggered_at: '2026-04-16T05:39:30Z'
+              schema:
+                type: object
+                properties:
+                  trigger:
+                    type: object
+                    properties:
+                      key:
+                        type: integer
+                        example: 12867849
+                        default: 0
+                      property_key:
+                        type: integer
+                        example: 35679994
+                        default: 0
+                      property_name:
+                        type: string
+                        example: Blue_LED
+                      trigger_type:
+                        type: string
+                        example: on_change
+                      compare_type:
+                        type: string
+                        example: '>'
+                      value:
+                        type: string
+                      trigger_apps:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      device_nickname:
+                        type: string
+                        example: ESP32 demo
+                      property_nickname:
+                        type: string
+                        example: Blue_LED
+                      base_type:
+                        type: string
+                        example: boolean
+                      period:
+                        type: string
+                        example: always
+                      asset:
+                        type: boolean
+                        example: true
+                        default: true
+                      active:
+                        type: boolean
+                        example: false
+                        default: true
+                      user_uuid:
+                        type: string
+                        example: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+                      user_id:
+                        type: integer
+                        example: 101010
+                        default: 0
+                      triggered_at:
+                        type: string
+                        example: '2026-04-16T05:39:30Z'
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Triggers
+    get:
+      summary: Get trigger
+      description: This API returns the specified trigger.
+      operationId: get-trigger-by-id
+      parameters:
+      - name: trigId
+        in: path
+        description: Unique trigger Identifier
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    trigger:
+                      key: 12867849
+                      property_key: 35679994
+                      property_name: Blue_LED
+                      trigger_type: always
+                      compare_type: '='
+                      value: null
+                      device_nickname: ESP32 demo
+                      property_nickname: Blue_LED
+                      base_type: boolean
+                      period: always
+                      asset: true
+                      active: true
+                      user_uuid: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+                      user_id: 101010
+                      triggered_at: '2026-04-16T05:39:30Z'
+              schema:
+                type: object
+                properties:
+                  trigger:
+                    type: object
+                    properties:
+                      key:
+                        type: integer
+                        example: 12867849
+                        default: 0
+                      property_key:
+                        type: integer
+                        example: 35679994
+                        default: 0
+                      property_name:
+                        type: string
+                        example: Blue_LED
+                      trigger_type:
+                        type: string
+                        example: always
+                      compare_type:
+                        type: string
+                        example: '='
+                      value:
+                        type: string
+                      device_nickname:
+                        type: string
+                        example: ESP32 demo
+                      property_nickname:
+                        type: string
+                        example: Blue_LED
+                      base_type:
+                        type: string
+                        example: boolean
+                      period:
+                        type: string
+                        example: always
+                      asset:
+                        type: boolean
+                        example: true
+                        default: true
+                      active:
+                        type: boolean
+                        example: true
+                        default: true
+                      user_uuid:
+                        type: string
+                        example: 63d92ce0-0118-11e6-9b1b-0ab3f06930bb
+                      user_id:
+                        type: integer
+                        example: 101010
+                        default: 0
+                      triggered_at:
+                        type: string
+                        example: '2026-04-16T05:39:30Z'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Triggers
+    delete:
+      summary: Delete trigger
+      description: This API deletes the specified property trigger.
+      operationId: delete-trigger-by-id
+      parameters:
+      - name: trigId
+        in: path
+        description: Unique trigger Identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Triggers
+  /triggers/{trigId}/trigger_apps.json:
+    post:
+      summary: Create trigger app
+      description: 'This API creates a trigger app associated with the specified trigger. The API supports the following request data objects: ```email```, ```sms```, ```forward```, ``` push_ios```, ```push_android```, and ```push_baidu```. See the request examples below.
+
+
+        Note on ```forward```: A forwarding trigger app posts json-formatted device, property, and custom data to the given REST API endpoint. The request data object sent to the specified endpoint resembles the following:
+
+
+        {
+
+        "device": {
+
+        "dsn": "AC000W000000001",
+
+        "product_name": "Device 1"
+
+        },
+
+        "property": {
+
+        "name": "my_prop",
+
+        "base_type": "integer",
+
+        "value": "25",
+
+        "data_updated_at": "2019-09-20T19:02:04Z"
+
+        },
+
+        "data": "custom text"
+
+        }
+
+
+        | Name | Type | Description |
+
+        |--|--|--|
+
+        | name | string (255 chars) |email, sms, forward, push_ios, push_android, push_baidu |
+
+        | nickname | string (255 chars) | Name of Trigger App |
+
+        | username | string (255 chars) | email greeting |
+
+        | repeat_freq | integer (default=30) | repeat interval in seconds |
+
+        | param1 | string (255 chars) | name-dependent |
+
+        | param2 | string (255 chars) | name-dependent |
+
+        | param3 | string (255 chars) | name-dependent |
+
+        | param4 | string (255 chars) | name-dependent |
+
+        | param5 | string (255 chars) | name-dependent |
+
+        | contact_id | integer | Ayla contact id of sender. See the getContact API. |
+
+        | push_sound | string (255 chars) | mps sound file name |
+
+        | push_mdata | string (255 chars) | metadata key/value pairs: "key1:value1, key2:value2" |
+
+        | email_template_id | string (255 chars) | ID of custom email template |
+
+        | email_subject | string (255 chars) | Email subject line |
+
+        | email_body_html | string (255 chars) | Email body with template tags |
+
+        | requires_acceptance | boolean (default=false) | true=enables acceptance flow for SMS applications |'
+      operationId: create-trigger-1
+      parameters:
+      - name: trigId
+        in: path
+        description: Unique trigger Identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              email - request data:
+                value:
+                  trigger_app:
+                    name: email
+                    username: test
+                    repeat_freq: '60'
+                    param1: test12@ayla.com
+                    param3: test
+                    email_template_id: test
+                    email_subject: test
+                    email_body_html: test
+              forward - request data:
+                value:
+                  trigger_app:
+                    name: forward
+                    nickname: Name of Trigger App
+                    repeat_freq: 0
+                    param1: ''
+                    param2: REST API endpoint for POST method
+                    param3: username for POST basic auth
+                    param4: password for POST basic auth
+                    param5: custom data to send
+              push_ios - request data:
+                value:
+                  trigger_app:
+                    name: push_ios
+                    nickname: Name of Trigger App
+                    repeat_freq: 0
+                    param1: registration ID from Apple without dashes or spaces
+                    param2: key assigned to PERM
+                    param3: optional message (max 100 chars)
+                    push_sound: mp3 file name (max 50 chars)
+                    push_mdata: metadata key/value pairs (max 50 chars)
+              push_android - request data:
+                value:
+                  trigger_app:
+                    name: push_android
+                    nickname: Name of Trigger App
+                    repeat_freq: 0
+                    param1: registration ID from Google
+                    param3: optional message (max 100 chars)
+                    push_sound: mp3 file name (max 50 chars)
+                    push_mdata: metadata key/value pairs (max 50 chars)
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "//Example response for email\n{\n  \"trigger_app\": {\n    \"key\": 5022163,\n    \"name\": \"email\",\n    \"username\": \"test\",\n    \"nickname\": null,\n    \"trigger_key\": 12867849,\n    \"contact_id\": null,\n    \"repeat_freq\": \"60\",\n    \"push_sound\": null,\n    \"push_mdata\": null,\n    \"email_template_id\": \"test\",\n    \"email_subject\": \"test\",\n    \"email_body_html\": \"test\",\n    \"param1\": \"test12@ayla.com\",\n    \"param2\": null,\n    \"param3\": \"test\",\n    \"param4\": null,\n    \"param5\": null\n  }\n}"
+              schema:
+                type: object
+                properties:
+                  trigger_app:
+                    type: object
+                    properties:
+                      key:
+                        type: integer
+                        example: 5022163
+                        default: 0
+                      name:
+                        type: string
+                        example: email
+                      username:
+                        type: string
+                        example: test
+                      nickname:
+                        type: string
+                      trigger_key:
+                        type: integer
+                        example: 12867849
+                        default: 0
+                      contact_id:
+                        type: string
+                      repeat_freq:
+                        type: string
+                        example: '60'
+                      push_sound:
+                        type: string
+                      push_mdata:
+                        type: string
+                      email_template_id:
+                        type: string
+                        example: test
+                      email_subject:
+                        type: string
+                        example: test
+                      email_body_html:
+                        type: string
+                        example: test
+                      param1:
+                        type: string
+                        example: test12@ayla.com
+                      param2:
+                        type: string
+                      param3:
+                        type: string
+                        example: test
+                      param4:
+                        type: string
+                      param5:
+                        type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Triggers
+    get:
+      summary: Get trigger apps
+      description: This API returns an array of trigger apps for the specified trigger.
+      operationId: get-trigger-apps
+      parameters:
+      - name: trigId
+        in: path
+        description: Unique trigger Identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - trigger_app:
+                      key: 5022163
+                      name: email
+                      username: test
+                      nickname: null
+                      trigger_key: 12867849
+                      contact_id: null
+                      repeat_freq: '60'
+                      push_sound: null
+                      push_mdata: null
+                      email_template_id: test
+                      email_subject: test
+                      email_body_html: test
+                      param1: test12@ayla.com
+                      param2: null
+                      param3: test
+                      param4: null
+                      param5: null
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    trigger_app:
+                      type: object
+                      properties:
+                        key:
+                          type: integer
+                          example: 5022163
+                          default: 0
+                        name:
+                          type: string
+                          example: email
+                        username:
+                          type: string
+                          example: test
+                        nickname:
+                          type: string
+                        trigger_key:
+                          type: integer
+                          example: 12867849
+                          default: 0
+                        contact_id:
+                          type: string
+                        repeat_freq:
+                          type: string
+                          example: '60'
+                        push_sound:
+                          type: string
+                        push_mdata:
+                          type: string
+                        email_template_id:
+                          type: string
+                          example: test
+                        email_subject:
+                          type: string
+                          example: test
+                        email_body_html:
+                          type: string
+                          example: test
+                        param1:
+                          type: string
+                          example: test12@ayla.com
+                        param2:
+                          type: string
+                        param3:
+                          type: string
+                          example: test
+                        param4:
+                          type: string
+                        param5:
+                          type: string
+      deprecated: false
+      tags:
+      - Triggers
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

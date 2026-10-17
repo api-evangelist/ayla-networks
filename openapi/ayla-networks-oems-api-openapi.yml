@@ -1,0 +1,2435 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Oems API
+  version: '1.0'
+  description: 'Operations tagged Oems across 3 of this provider''s published API definitions: ayla-networks-dealer-service-openapi.yml, ayla-networks-iot-command-center-openapi.yml, ayla-networks-user-service-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://user-dev.aylanetworks.com/
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+security:
+- sec0: []
+tags:
+- name: Oems
+paths:
+  /api/v1/oems/{oem_id}/dealers.json:
+    get:
+      summary: Get dealers
+      description: 'This API fetches the list of dealers associated with the specified OEM.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read'
+      operationId: get-dealers
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID to find the OEM and fetch the list of dealers.
+        schema:
+          type: string
+        required: true
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                With Pagination:
+                  value:
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 3
+                    total: 3
+                    dealers:
+                    - name: Test Dealer
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: xxxxxxxxxxx
+                    - name: Test Dealer2
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: 43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5
+                    - name: Dealer53
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: 3cxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f
+                Without Pagination:
+                  value: "[\n    {\n      \"name\": \"Test Dealer\",\n      \"oem_id\": xxxxx8,\n      \"state\": \"Karnataka\",\n      \"uuid\": “2exxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86\"\n    },\n    {\n      \"name\": \"Test Dealer2\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5\"\n    },\n    {\n      \"name\": \"Dealer53\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"3cxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f\"\n    }\n]"
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 3
+                    default: 0
+                  total:
+                    type: integer
+                    example: 3
+                    default: 0
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Test Dealer
+                        oem_id:
+                          type: string
+                          example: xxxxx8
+                        state:
+                          type: string
+                          example: Karnataka
+                        uuid:
+                          type: string
+                          example: xxxxxxxxxxx
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    post:
+      summary: Create dealer
+      description: 'This API creates a dealer.
+
+        Access permission: Ayla::Admin and OEM::Admin.
+
+        For more information on dealer, please refer Dealer user.'
+      operationId: create-dealer
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID. Used to identify the OEM to which the new dealer is created.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dealer:
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the dealer.
+                    email:
+                      type: string
+                      description: Email address of the dealer.
+                    street:
+                      type: string
+                      description: Street name of the dealer.
+                    city:
+                      type: string
+                      description: City of the dealer.
+                    state:
+                      type: string
+                      description: State name.
+                    zip:
+                      type: string
+                      description: Address zip code.
+                    country:
+                      type: string
+                      description: Dealer's country name.
+                    phone_country_code:
+                      type: string
+                      description: Country code for the dealer's phone number.
+                    phone:
+                      type: string
+                      description: Dealer's phone number.
+                  required:
+                  - name
+                  - email
+                  - street
+                  - phone_country_code
+                  - phone
+                  type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    city: Bengaluru
+                    country: India
+                    email: dealer53@aylanetworks.com
+                    name: Dealer53
+                    oem_id: 6xxxx
+                    phone: 90xxxxxxx9
+                    phone_country_code: '+91'
+                    street: Kadubeesanahalli
+                    state: Karnataka
+                    uuid: 3cxxxxxx-0dee-xxxx-xxxx-fxxxxxxxe681f
+                    zip: '560103'
+              schema:
+                type: object
+                properties:
+                  city:
+                    type: string
+                    example: Bengaluru
+                  country:
+                    type: string
+                    example: India
+                  email:
+                    type: string
+                    example: dealer53@aylanetworks.com
+                  name:
+                    type: string
+                    example: Dealer53
+                  oem_id:
+                    type: string
+                    example: 6xxxx
+                  phone:
+                    type: string
+                    example: 90xxxxxxx9
+                  phone_country_code:
+                    type: string
+                    example: '+91'
+                  street:
+                    type: string
+                    example: Kadubeesanahalli
+                  state:
+                    type: string
+                    example: Karnataka
+                  uuid:
+                    type: string
+                    example: 3cxxxxxx-0dee-xxxx-xxxx-fxxxxxxxe681f
+                  zip:
+                    type: string
+                    example: '560103'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oem_id}/dealers/dealer_roles.json:
+    get:
+      summary: Get dealer roles
+      description: 'This API fetches the role(s) of the dealer(s) for the specified OEM.
+
+        Access Control:
+
+
+        Ayla::Admin - read
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read
+
+
+        OEM::Staff - read'
+      operationId: get-dealer-roles
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n  {\n    \"role_name\": \"Dealer::Admin\"\n  },\n  {\n    \"role_name\": \"Dealer::Manager\"\n  },\n  {\n    \"role_name\": \"Dealer::Staff\"\n  },\n  {\n    \"role_name\": \"Dealer::Supervisor\"\n  }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    role_name:
+                      type: string
+                      example: Dealer::Admin
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oem_id}/dealers/{dealer_uuid}.json:
+    put:
+      summary: Update dealer
+      description: 'This API updates details of a dealer.
+
+        Access Control:
+
+
+        Ayla::Admin
+
+
+        OEM::Admin'
+      operationId: update-dealer
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer you want to update.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dealer:
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the dealer.
+                    email:
+                      type: string
+                      description: Email address of the dealer.
+                    state:
+                      type: string
+                      description: Dealer's state.
+                    street:
+                      type: string
+                      description: Street address of the dealer.
+                    city:
+                      type: string
+                      description: City of the dealer.
+                    zip:
+                      type: string
+                      description: Address zipcode.
+                    country:
+                      type: string
+                      description: Dealer's country.
+                    phone:
+                      type: string
+                      description: Phone number of the dealer.
+                    phone_country_code:
+                      type: string
+                      description: Country code of the dealer's phone.
+                  required: []
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    city: Bengaluru
+                    country: India
+                    email: dealer53@aylanetworks.com
+                    name: Dealer53
+                    oem_id: xxxxx8
+                    phone: 90xxxxxxxxx
+                    phone_country_code: '+91'
+                    street: Kadubeesanahalli
+                    state: Karnataka
+                    uuid: xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+                    zip: '560103'
+              schema:
+                type: object
+                properties:
+                  city:
+                    type: string
+                    example: Bengaluru
+                  country:
+                    type: string
+                    example: India
+                  email:
+                    type: string
+                    example: dealer53@aylanetworks.com
+                  name:
+                    type: string
+                    example: Dealer53
+                  oem_id:
+                    type: string
+                    example: xxxxx8
+                  phone:
+                    type: string
+                    example: 90xxxxxxxxx
+                  phone_country_code:
+                    type: string
+                    example: '+91'
+                  street:
+                    type: string
+                    example: Kadubeesanahalli
+                  state:
+                    type: string
+                    example: Karnataka
+                  uuid:
+                    type: string
+                    example: xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
+                  zip:
+                    type: string
+                    example: '560103'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    get:
+      summary: Get dealer by uuid
+      description: 'This API fetches the details of a dealer specified by uuid.
+
+        Access Control:
+
+
+        Ayla::Admin
+
+
+        OEM::Admin - read | write'
+      operationId: get-dealer-by-uuid
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer you want to fetch.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    city: Bengaluru
+                    country: India
+                    email: dealer53@aylanetworks.com
+                    name: Dealer53
+                    oem_id: xxxx8
+                    phone: 900xxxxxx9
+                    phone_country_code: '+91'
+                    street: Kadubeesanahalli
+                    state: Karnataka
+                    uuid: 3xxxxxx-0xxx-xxxx-xxxx-f2xxxxxxx681f
+                    zip: '560103'
+              schema:
+                type: object
+                properties:
+                  city:
+                    type: string
+                    example: Bengaluru
+                  country:
+                    type: string
+                    example: India
+                  email:
+                    type: string
+                    example: dealer53@aylanetworks.com
+                  name:
+                    type: string
+                    example: Dealer53
+                  oem_id:
+                    type: string
+                    example: xxxx8
+                  phone:
+                    type: string
+                    example: 900xxxxxx9
+                  phone_country_code:
+                    type: string
+                    example: '+91'
+                  street:
+                    type: string
+                    example: Kadubeesanahalli
+                  state:
+                    type: string
+                    example: Karnataka
+                  uuid:
+                    type: string
+                    example: 3xxxxxx-0xxx-xxxx-xxxx-f2xxxxxxx681f
+                  zip:
+                    type: string
+                    example: '560103'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    delete:
+      summary: Delete dealer
+      description: 'This API deletes the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin
+
+
+        OEM::Admin'
+      operationId: delete-dealer
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer you want to delete.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                No Content:
+                  summary: No Content
+                  value: '{}'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oem_id}/dealers/{dealer_uuid}/end_users.json:
+    get:
+      summary: Get end users of a dealer
+      description: 'This API fetches all the end users associated with the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read
+
+
+        Dealer::Admin - read
+
+
+        Dealer::Manager - read
+
+
+        Dealer:: Supervisor - read'
+      operationId: get-end-users-of-a-dealer
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facility_uuid:
+                  type: string
+                  description: uuid to identify the facility.
+                first_name:
+                  type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                With Pagination:
+                  value:
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    total: 1
+                    users:
+                    - approved: true
+                      confirmed: true
+                      id: 4xxxxx2
+                      uuid: 4xxxxxxx2-xxxx-xxxx-xxxx-564xxxxxxx4d
+                      origin_oem_name: Ayla Automation
+                      roles:
+                      - id: 2342
+                        name: EndUser
+                Without Pagination:
+                  summary: Without Pagination
+                  value:
+                  - approved: true
+                    confirmed: true
+                    id: 3
+                    uuid: f906d368-828c-11e5-9609-0ee0c870bcec
+                    origin_oem_name: Ayla
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    dealers:
+                    - dealer_name: stalin
+                      dealer_uuid: 94c71484-4ded-11f1-93dd-6e791713c565
+                      facilities: []
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+                        id:
+                          type: string
+                          example: 4xxxxx2
+                        uuid:
+                          type: string
+                          example: 4xxxxxxx2-xxxx-xxxx-xxxx-564xxxxxxx4d
+                        origin_oem_name:
+                          type: string
+                          example: Ayla Automation
+                        roles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 2342
+                                default: 0
+                              name:
+                                type: string
+                                example: EndUser
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oem_id}/dealers/{dealer_uuid}/users.json:
+    post:
+      summary: Create dealer user
+      description: 'This API creates a dealer user for the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read | write
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read | write
+
+
+        Dealer::Admin - read | write
+
+
+        Dealer::Manager - read | write'
+      operationId: create-dealer-user
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    email:
+                      type: string
+                      description: Email address of the dealer user.
+                    password:
+                      type: string
+                      description: Provide password to the dealer user to access/perform required tasks.
+                    password_confirmation:
+                      type: string
+                      description: Re-enter the password for confirmation.
+                    firstname:
+                      type: string
+                      description: First name of the dealer user.
+                    lastname:
+                      type: string
+                      description: Last name of the dealer user.
+                    role:
+                      type: string
+                    company:
+                      type: string
+                      description: Company name of the dealer user.
+                    phone:
+                      type: string
+                      description: Phone number of the dealer user.
+                    phone_country_code:
+                      type: string
+                      description: Country code of the dealer user's phone.
+                    street:
+                      type: string
+                      description: Street address of the dealer user.
+                    city:
+                      type: string
+                      description: City of the dealer user.
+                    state:
+                      type: string
+                      description: Dealer user's state.
+                    country:
+                      type: string
+                      description: Dealer user's country.
+                    zip:
+                      type: string
+                      description: Address zipcode.
+                  required:
+                  - email
+                  - password
+                  - password_confirmation
+                  - firstname
+                  - lastname
+                  - role
+                  - phone
+                  - phone_country_code
+                  type: object
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    admin: false
+                    approved: true
+                    confirmed: true
+                    ayla_dev_kit_num: null
+                    city: null
+                    company: null
+                    country: null
+                    created_at: '2026-05-14T09:01:14Z'
+                    email: stalin1@gmail.com
+                    firstname: strag
+                    id: 5493264
+                    lastname: shjgiyge
+                    oem_approved: false
+                    oem_id: null
+                    oem_name: null
+                    origin_oem_id: 2
+                    origin_oem_name: Ayla
+                    phone_country_code: '91'
+                    phone: '9876543210'
+                    primary_contact: email
+                    state: null
+                    street: null
+                    terms_accepted: true
+                    terms_accepted_at: '2026-05-14T09:01:14Z'
+                    terms_email_sent_at: null
+                    terms_token: null
+                    updated_at: '2026-05-14T09:01:14Z'
+                    username: stalin1@gmail.com
+                    zip: null
+                    uuid: 75d5091e-4f73-11f1-ac0a-f6068ea05808
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    - id: 2284
+                      name: Dealer::Admin
+                    confirmation_sent_at: null
+                    dealers:
+                    - dealer_name: Testdealer
+                      dealer_uuid: 69775f94-4f66-11f1-bc9b-7e8d9e9a1067
+              schema:
+                type: object
+                properties:
+                  admin:
+                    type: boolean
+                    example: false
+                    default: true
+                  approved:
+                    type: boolean
+                    example: true
+                    default: true
+                  confirmed:
+                    type: boolean
+                    example: true
+                    default: true
+                  ayla_dev_kit_num:
+                    type: string
+                  city:
+                    type: string
+                  company:
+                    type: string
+                  country:
+                    type: string
+                  created_at:
+                    type: string
+                    example: '2026-05-14T09:01:14Z'
+                  email:
+                    type: string
+                    example: stalin1@gmail.com
+                  firstname:
+                    type: string
+                    example: strag
+                  id:
+                    type: integer
+                    example: 5493264
+                    default: 0
+                  lastname:
+                    type: string
+                    example: shjgiyge
+                  oem_approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  oem_id:
+                    type: string
+                  oem_name:
+                    type: string
+                  origin_oem_id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  origin_oem_name:
+                    type: string
+                    example: Ayla
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  phone:
+                    type: string
+                    example: '9876543210'
+                  primary_contact:
+                    type: string
+                    example: email
+                  state:
+                    type: string
+                  street:
+                    type: string
+                  terms_accepted:
+                    type: boolean
+                    example: true
+                    default: true
+                  terms_accepted_at:
+                    type: string
+                    example: '2026-05-14T09:01:14Z'
+                  terms_email_sent_at:
+                    type: string
+                  terms_token:
+                    type: string
+                  updated_at:
+                    type: string
+                    example: '2026-05-14T09:01:14Z'
+                  username:
+                    type: string
+                    example: stalin1@gmail.com
+                  zip:
+                    type: string
+                  uuid:
+                    type: string
+                    example: 75d5091e-4f73-11f1-ac0a-f6068ea05808
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 13
+                          default: 0
+                        name:
+                          type: string
+                          example: EndUser
+                  confirmation_sent_at:
+                    type: string
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dealer_name:
+                          type: string
+                          example: Testdealer
+                        dealer_uuid:
+                          type: string
+                          example: 69775f94-4f66-11f1-bc9b-7e8d9e9a1067
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    get:
+      summary: Search dealer users
+      description: 'This API fetches all the dealer users associated with the specified dealer. The result is based on your search criteria.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read
+
+
+        NOTE: The example response provided for this API assumes that General Data Protection Regulation (GDPR) is enabled. If GDPR is not enabled, the response will include additional dealer user data.'
+      operationId: search-dealer-users
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      - name: firstname
+        in: query
+        description: First name of the dealer user.
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Last name of the dealer user.
+        schema:
+          type: string
+      - name: uuid
+        in: query
+        description: UUID of the dealer user you want to search.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Email address of the dealer user.
+        schema:
+          type: string
+      - name: role
+        in: query
+        description: Dealer user role.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Specify the response page number you want to view.
+        schema:
+          type: integer
+          format: int32
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        description: Number of records to be shown in a page.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    total: 1
+                    users:
+                    - approved: true
+                      confirmed: true
+                      id: 5493099
+                      uuid: 7ad3ba32-4ebf-11f1-8169-f6068ea05808
+                      origin_oem_name: Ayla
+                      roles:
+                      - id: 13
+                        name: EndUser
+                      - id: 2284
+                        name: Dealer::Admin
+                      dealers:
+                      - dealer_name: stalin
+                        dealer_uuid: 94c71484-4ded-11f1-93dd-6e791713c565
+                        facilities:
+                        - '*'
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+                        id:
+                          type: integer
+                          example: 5493099
+                          default: 0
+                        uuid:
+                          type: string
+                          example: 7ad3ba32-4ebf-11f1-8169-f6068ea05808
+                        origin_oem_name:
+                          type: string
+                          example: Ayla
+                        roles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 13
+                                default: 0
+                              name:
+                                type: string
+                                example: EndUser
+                        dealers:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              dealer_name:
+                                type: string
+                                example: stalin
+                              dealer_uuid:
+                                type: string
+                                example: 94c71484-4ded-11f1-93dd-6e791713c565
+                              facilities:
+                                type: array
+                                items:
+                                  type: string
+                                  example: '*'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oemid}/dealers.json:
+    get:
+      summary: Search dealers
+      description: 'This API is used to search list of dealers associated with a specified OEM. The result is based on your search criteria.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read'
+      operationId: search-dealers
+      parameters:
+      - name: oemid
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: name
+        in: query
+        description: Search by the name of the dealer.
+        schema:
+          type: string
+      - name: uuid
+        in: query
+        description: Search by the uuid of the dealer.
+        schema:
+          type: string
+      - name: phone
+        in: query
+        description: Search by phone number.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Search by email address of the dealer.
+        schema:
+          type: string
+      - name: state
+        in: query
+        description: Filter by state.
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: Maximum number of records per page.
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: Specify page number of the response report you want to view.
+        schema:
+          type: integer
+          format: int32
+      - name: order_by
+        in: query
+        description: Possible value - uuid, if uuid is specified as the search filter.
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: Possible value - name, if name is specified as the search filter.
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: desc or asc.
+        schema:
+          type: string
+      - name: paginated
+        in: query
+        description: true or 1 means results will be paginated.
+        schema:
+          type: boolean
+      - name: direction
+        in: query
+        description: desc or asc.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                With Pagination:
+                  value:
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 3
+                    total: 3
+                    dealers:
+                    - name: Test Dealer
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86
+                    - name: Test Dealer2
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: 43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5
+                    - name: Dealer53
+                      oem_id: xxxxx8
+                      state: Karnataka
+                      uuid: 3cxxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f
+                without Pagination:
+                  value: "[\n    {\n      \"name\": \"Test Dealer\",\n      \"oem_id\": xxxxx8,\n      \"state\": \"Karnataka\",\n      \"uuid\": “xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86\"\n    },\n    {\n      \"name\": \"Test Dealer2\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"43xxxxxx-dxx1-11xx-xxe0-2xxxxxxxxx5\"\n    },\n    {\n      \"name\": \"Dealer53\",\n      \"oem_id\": 6xxxxx,\n      \"state\": \"Karnataka\",\n      \"uuid\": \"3cxxxxxxxxxxxe-xxef-9xx1-xxxxxxxx81f\"\n    }\n  ]"
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 3
+                    default: 0
+                  total:
+                    type: integer
+                    example: 3
+                    default: 0
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Test Dealer
+                        oem_id:
+                          type: string
+                          example: xxxxx8
+                        state:
+                          type: string
+                          example: Karnataka
+                        uuid:
+                          type: string
+                          example: xxxxxxx-xxe1-xxeb-xxxx-0xxxxxxxxa86
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oemid}/dealers/{dealer_uuid}/end_users.json:
+    get:
+      summary: Search end users of a dealer
+      description: 'This API fetches all the end users associated with the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read
+
+
+        Dealer::Admin - read
+
+
+        Dealer::Manager - read
+
+
+        Dealer:: Supervisor - read'
+      operationId: search-end-users-of-a-dealer
+      parameters:
+      - name: oemid
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      - name: first_name
+        in: query
+        description: First name of the end user you want to search.
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Last name of the end user you want to search.
+        schema:
+          type: string
+      - name: uuid
+        in: query
+        description: UUID of the end user you want to search.
+        schema:
+          type: string
+      - name: username
+        in: query
+        description: Username of the end user you want to search.
+        schema:
+          type: string
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                facility_uuid:
+                  type: string
+                  description: uuid to identify the facility.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                With Pagination:
+                  value: "{\n  \"previous_page\": null,\n  \"next_page\": null,\n  \"current_page_number\": 1,\n  \"start_count_on_page\": 1,\n  \"end_count_on_page\": 1,\n  \"total\": 1,\n  \"users\": [\n    {\n      \"approved\": true,\n      \"confirmed\": true,\n      \"id\": 43xxxxx2,\n      \"uuid\": \"4xxxxx2-cxx7-xxxx-9xx6-564xxxxxxx4d\",\n      \"origin_oem_name\": \"Ayla Automation\",\n      \"roles\": [\n        {\n          \"id\": 13,\n          \"name\": \"EndUser\"\n        }\n      ]\n    }\n  ]\n}"
+                Without Pagination:
+                  value:
+                  - approved: true
+                    confirmed: true
+                    id: 3
+                    uuid: f906d368-828c-11e5-9609-0ee0c870bcec
+                    origin_oem_name: Ayla
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    dealers:
+                    - dealer_name: stalin
+                      dealer_uuid: 94c71484-4ded-11f1-93dd-6e791713c565
+                      facilities: []
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    approved:
+                      type: boolean
+                      example: true
+                      default: true
+                    confirmed:
+                      type: boolean
+                      example: true
+                      default: true
+                    id:
+                      type: integer
+                      example: 3
+                      default: 0
+                    uuid:
+                      type: string
+                      example: f906d368-828c-11e5-9609-0ee0c870bcec
+                    origin_oem_name:
+                      type: string
+                      example: Ayla
+                    roles:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 13
+                            default: 0
+                          name:
+                            type: string
+                            example: EndUser
+                    dealers:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          dealer_name:
+                            type: string
+                            example: stalin
+                          dealer_uuid:
+                            type: string
+                            example: 94c71484-4ded-11f1-93dd-6e791713c565
+                          facilities:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/oems/{oemid}/dealers/{dealer_uuid}/users.json:
+    get:
+      summary: Get dealer users
+      description: 'This API fetches all the dealer users associated with the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read
+
+
+        Dealer::Admin - read
+
+
+        Dealer::Manager - read
+
+
+        Dealer:: Supervisor - read'
+      operationId: get-dealer-users
+      parameters:
+      - name: oemid
+        in: path
+        description: OEM ID.
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      - name: page
+        in: query
+        description: Specify the response page number you want to view.
+        schema:
+          type: integer
+          format: int32
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        description: Number of records to be shown in a page.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                With Pagination:
+                  value:
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    total: 1
+                    users:
+                    - approved: true
+                      confirmed: true
+                      id: 5493099
+                      uuid: 7ad3ba32-4ebf-11f1-8169-f6068ea05808
+                      origin_oem_name: Ayla
+                      roles:
+                      - id: 13
+                        name: EndUser
+                      - id: 2284
+                        name: Dealer::Admin
+                      dealers:
+                      - dealer_name: stalin
+                        dealer_uuid: 94c71484-4ded-11f1-93dd-6e791713c565
+                        facilities:
+                        - '*'
+                Without Pagination:
+                  value: "[\n    {\n      \"approved\": true,\n      \"confirmed\": true,\n      \"id\": 4xxxxx1,\n      \"uuid\": \"52xxxxx8-xxxx-11ef-xxxx-2axxxxxx74d8\",\n      \"origin_oem_name\": \"Ayla Automation\",\n      \"roles\": [\n        {\n          \"id\": 13,\n          \"name\": \"EndUser\"\n        },\n        {\n          \"id\": 2xx5,\n          \"name\": \"Dealer::Staff\"\n        }\n      ]\n    }\n  ]"
+              schema:
+                type: object
+                properties:
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  users:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+                        id:
+                          type: integer
+                          example: 5493099
+                          default: 0
+                        uuid:
+                          type: string
+                          example: 7ad3ba32-4ebf-11f1-8169-f6068ea05808
+                        origin_oem_name:
+                          type: string
+                          example: Ayla
+                        roles:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                                example: 13
+                                default: 0
+                              name:
+                                type: string
+                                example: EndUser
+                        dealers:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              dealer_name:
+                                type: string
+                                example: stalin
+                              dealer_uuid:
+                                type: string
+                                example: 94c71484-4ded-11f1-93dd-6e791713c565
+                              facilities:
+                                type: array
+                                items:
+                                  type: string
+                                  example: '*'
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /oems/{oem}/otas/{ota_id}/start:
+    post:
+      summary: Start OTA
+      description: This API starts an OTA.
+      operationId: start-ota
+      parameters:
+      - name: oem
+        in: path
+        description: OEM name.
+        schema:
+          type: string
+        required: true
+      - name: ota_id
+        in: path
+        description: Unique OTA identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value: '{}'
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /oems/{oem}/otas/{ota_id}/stop:
+    post:
+      summary: Stop OTA
+      description: This API stops an OTA.
+      operationId: stop-ota
+      parameters:
+      - name: oem
+        in: path
+        description: OEM name.
+        schema:
+          type: string
+        required: true
+      - name: ota_id
+        in: path
+        description: Unique OTA identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value: '{}'
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /oems/{id}.json:
+    get:
+      summary: Get OEM
+      description: This API is used to get details of the specified OEM.
+      operationId: get-oem
+      parameters:
+      - name: id
+        in: path
+        description: ID of OEM.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 2
+                    name: Ayla
+                    address: Sunnyvale
+                    contact_info_name: Adrian Caceres
+                    contact_info_phone: '4088309844'
+                    contact_info_email: adrian@aylanetworks.com
+                    admin_user: null
+                    oem_id: 0dfc7900
+                    oem_key: 8bfd85d179d53077508feb77ed2ef6cb
+                    updated_at: '2026-04-22T05:59:17Z'
+                    created_at: null
+                    module_manufacturer: false
+                    phone_as_gateway: true
+                    homekit: true
+                    gdpr: false
+                    premium_reports: true
+                    modulemaker_oem_id: null
+                    logo: null
+                    file_name: null
+                    mobile_logs_enabled: true
+                    remote_virtual_device: true
+                    lockout_duration: null
+                    active: true
+                    smtp_setting:
+                    - address: smtp.postmarkapp.com
+                      domain: aylanetworks.com
+                      enable_starttls_auto: false
+                      port: 587
+                      user_name: 2f3dcd4a-3f3f-4b18-b1e4-6085866a06dd
+                      authentication: plain
+                      from_user_name: Ayla<ayla@aylanetworks.com>
+                      decrypted_password: 2f3dcd4a-3f3f-4b18-b1e4-6085866a06dd
+                    - address: smtp.sendgrid.net
+                      domain: sendgrid.net
+                      enable_starttls_auto: true
+                      port: 587
+                      user_name: apikey
+                      authentication: plain
+                      from_user_name: ayla@aylanetworks.com
+                      decrypted_password: SG.REDACTED_EXAMPLE
+                    domains:
+                    - id: 2
+                      domain: aylanetworks.com
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  name:
+                    type: string
+                    example: Ayla
+                  address:
+                    type: string
+                    example: Sunnyvale
+                  contact_info_name:
+                    type: string
+                    example: Adrian Caceres
+                  contact_info_phone:
+                    type: string
+                    example: '4088309844'
+                  contact_info_email:
+                    type: string
+                    example: adrian@aylanetworks.com
+                  admin_user:
+                    type: string
+                  oem_id:
+                    type: string
+                    example: 0dfc7900
+                  oem_key:
+                    type: string
+                    example: 8bfd85d179d53077508feb77ed2ef6cb
+                  updated_at:
+                    type: string
+                    example: '2026-04-22T05:59:17Z'
+                  created_at:
+                    type: string
+                    format: date
+                  module_manufacturer:
+                    type: boolean
+                    example: false
+                    default: true
+                  phone_as_gateway:
+                    type: boolean
+                    example: true
+                    default: true
+                  homekit:
+                    type: boolean
+                    example: true
+                    default: true
+                  gdpr:
+                    type: boolean
+                    example: false
+                    default: true
+                  premium_reports:
+                    type: boolean
+                    example: true
+                    default: true
+                  modulemaker_oem_id:
+                    type: string
+                  logo:
+                    type: string
+                  file_name:
+                    type: string
+                  mobile_logs_enabled:
+                    type: boolean
+                    example: true
+                    default: true
+                  remote_virtual_device:
+                    type: boolean
+                    example: true
+                    default: true
+                  lockout_duration:
+                    type: string
+                  active:
+                    type: boolean
+                    example: true
+                    default: true
+                  smtp_setting:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: smtp.postmarkapp.com
+                        domain:
+                          type: string
+                          example: aylanetworks.com
+                        enable_starttls_auto:
+                          type: boolean
+                          example: false
+                          default: true
+                        port:
+                          type: integer
+                          example: 587
+                          default: 0
+                        user_name:
+                          type: string
+                          example: 2f3dcd4a-3f3f-4b18-b1e4-6085866a06dd
+                        authentication:
+                          type: string
+                          example: plain
+                        from_user_name:
+                          type: string
+                          example: Ayla<ayla@aylanetworks.com>
+                        decrypted_password:
+                          type: string
+                          example: 2f3dcd4a-3f3f-4b18-b1e4-6085866a06dd
+                  domains:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 2
+                          default: 0
+                        domain:
+                          type: string
+                          example: aylanetworks.com
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /oems/{id}/users.json:
+    get:
+      summary: Get OEM users
+      description: This API returns an array of OEM users (as opposed to end users).
+      operationId: get-oem-users
+      parameters:
+      - name: id
+        in: path
+        description: OEM internal Identifier
+        schema:
+          type: string
+        required: true
+      - name: paginated
+        in: query
+        description: true or 1 means results will be paginated
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        description: Page number.
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: Max number of records per page
+        schema:
+          type: integer
+          format: int32
+      - name: firstname
+        in: query
+        description: Filter by firstname
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Filter by lastname
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Filter by email
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n   {\n      \"admin\":true,\n      \"approved\":true,\n      \"auth_token\":\"+kqaGX5acIQZvQO5aJfoHg== Dl9e5TQ9Bo/9M+UDFYDuNA==\",\n      \"city\":\"C.A.B.A\",\n      \"company\":\"Ayla Networks\",\n      \"country\":\"Argentina\",\n      \"created_at\":\"2012-07-25T14:01:41Z\",\n      \"email\":\"sergio@aylanetworks.com\",\n      \"firstname\":\"Sergio Rafael\",\n      \"id\":10,\n      \"lastname\":\"Gianazza\",\n      \"oem_approved\":false,\n      \"oem_id\":31,\n      \"phone\":\"01163791945\",\n      \"state\":\"Buenos Aires\",\n      \"street\":\"Av. Corrientes 4505\",\n      \"updated_at\":\"2013-01-24T14:21:05Z\",\n      \"zip\":1145,\n      \"is_oem_admin\":false\n   },\n   {\n      \"admin\":false,\n      \"approved\":true,\n      \"auth_token\":\"gFAk6ae+0NGQxa5wBE2HyQ== qnq/lB9ZoZyzF1xywECqIQ==\",\n      \"ayla_dev_kit_num\":\"\",\n      \"city\":\"CABA\",\n      \"company\":\"Ayla Networks\",\n      \"country\":\"Argentina\",\n      \"created_at\":\"2012-10-15T16:09:52Z\",\n      \"email\":\"prueba01@aylanetworks.com\",\n      \"firstname\":\"prueba ayla\",\n      \"id\":72,\n      \"lastname\":\"ayla\",\n      \"oem_approved\":true,\n      \"oem_id\":31,\n      \"phone\":\"\",\n      \"state\":\"\",\n      \"street\":\"\",\n      \"updated_at\":\"2012-10-23T14:50:03Z\",\n      \"is_oem_admin\":true\n   },\n   {\n      \"admin\":false,\n      \"approved\":true,\n      \"auth_token\":\"pez3lGXOkWd4WIrRcPr13g== hNQvkx9YsvxFhhh3pxKu0g==\",\n      \"ayla_dev_kit_num\":\"\",\n      \"city\":\"CABA\",\n      \"company\":\"Ayla Networks\",\n      \"country\":\"Argentina\",\n      \"created_at\":\"2012-10-15T17:54:26Z\",\n      \"email\":\"prueba02@aylanetworks.com\",\n      \"firstname\":\"prueba ayla\",\n      \"id\":73,\n      \"lastname\":\"ayla\",\n      \"oem_approved\":false,\n      \"oem_id\":31,\n      \"phone\":\"\",\n      \"state\":\"\",\n      \"street\":\"\",\n      \"updated_at\":\"2012-12-11T17:01:11Z\",\n      \"is_oem_admin\":false\n   },\n   {\n      \"admin\":false,\n      \"approved\":true,\n      \"auth_token\":\"TROJtX1h6QC11Cnwlv1asg== qYyO/YX/mB2K+1h9Q1NJJA==\",\n      \"ayla_dev_kit_num\":\"\",\n      \"city\":\"CABA\",\n      \"company\":\"Ayla Networks\",\n      \"country\":\"Argentina\",\n      \"created_at\":\"2012-10-31T20:14:56Z\",\n      \"email\":\"prueba03@aylanetworks.com\",\n      \"firstname\":\"Prueba Interna\",\n      \"id\":77,\n      \"lastname\":\"Interna\",\n      \"oem_approved\":false,\n      \"oem_id\":31,\n      \"phone\":\"\",\n      \"state\":\"\",\n      \"street\":\"\",\n      \"updated_at\":\"2012-10-31T20:16:10Z\",\n      \"is_oem_admin\":false\n   }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    admin:
+                      type: boolean
+                      example: true
+                      default: true
+                    approved:
+                      type: boolean
+                      example: true
+                      default: true
+                    auth_token:
+                      type: string
+                      example: +kqaGX5acIQZvQO5aJfoHg== Dl9e5TQ9Bo/9M+UDFYDuNA==
+                    city:
+                      type: string
+                      example: C.A.B.A
+                    company:
+                      type: string
+                      example: Ayla Networks
+                    country:
+                      type: string
+                      example: Argentina
+                    created_at:
+                      type: string
+                      example: '2012-07-25T14:01:41Z'
+                    email:
+                      type: string
+                      example: sergio@aylanetworks.com
+                    firstname:
+                      type: string
+                      example: Sergio Rafael
+                    id:
+                      type: integer
+                      example: 10
+                      default: 0
+                    lastname:
+                      type: string
+                      example: Gianazza
+                    oem_approved:
+                      type: boolean
+                      example: false
+                      default: true
+                    oem_id:
+                      type: integer
+                      example: 31
+                      default: 0
+                    phone:
+                      type: string
+                      example: 01163791945
+                    state:
+                      type: string
+                      example: Buenos Aires
+                    street:
+                      type: string
+                      example: Av. Corrientes 4505
+                    updated_at:
+                      type: string
+                      example: '2013-01-24T14:21:05Z'
+                    zip:
+                      type: integer
+                      example: 1145
+                      default: 0
+                    is_oem_admin:
+                      type: boolean
+                      example: false
+                      default: true
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /oems/{oem_id}/end_users.json:
+    get:
+      summary: Get end users
+      description: 'This API returns all the end users of an OEM. It excludes users with other roles.
+
+        Response data may appear in one of two formats depending on whether you set the paginated query parameter to true or 1. If so, the API returns data using Format A:
+
+
+        **Format A**
+
+
+        {
+
+        "previous_page": null,
+
+        "next_page": 2,
+
+        "current_page_number": 1,
+
+        "start_count_on_page": 1,
+
+        "end_count_on_page": 100,
+
+        "total": 0,
+
+        "users": []
+
+        }
+
+
+        Otherwise, the API returns data using Format B (without page details):
+
+
+        **Format B**
+
+
+        [
+
+
+        ]'
+      operationId: get-end-users
+      parameters:
+      - name: oem_id
+        in: path
+        description: OEM internal Identifier
+        schema:
+          type: string
+        required: true
+      - name: paginated
+        in: query
+        description: true or 1 means results will be paginated
+        schema:
+          type: boolean
+      - name: page
+        in: query
+        description: One-based number of page to return
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: Max number of records per page
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Filter by email
+        schema:
+          type: string
+      - name: first name
+        in: query
+        description: Filter by firstname
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Filter by lastname
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - admin: false
+                    approved: true
+                    confirmed: true
+                    ayla_dev_kit_num: null
+                    city: Phoenix
+                    company: WABAC Systems, LLC
+                    country: USA
+                    created_at: '2011-09-15T22:44:35Z'
+                    email: frederic.shapiro@wabacsystems.com
+                    firstname: Frederic
+                    id: 3
+                    uuid: f906d368-828c-11e5-9609-0ee0c870bcec
+                    lastname: Shapiro
+                    oem_approved: false
+                    oem_id: null
+                    origin_oem_id: 2
+                    origin_oem_name: Ayla
+                    phone_country_code: null
+                    phone: '4803216940'
+                    primary_contact: email
+                    state: AZ
+                    street: 5110 N. 44th St.
+                    terms_accepted: true
+                    terms_accepted_at: null
+                    terms_email_sent_at: null
+                    terms_token: null
+                    updated_at: '2016-09-06T17:40:21Z'
+                    username: frederic.shapiro@wabacsystems.com
+                    zip: '85018'
+                    zip2: null
+                    is_oem_admin: false
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    dealers: []
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    admin:
+                      type: boolean
+                      example: false
+                      default: true
+                    approved:
+                      type: boolean
+                      example: true
+                      default: true
+                    confirmed:
+                      type: boolean
+                      example: true
+                      default: true
+                    ayla_dev_kit_num:
+                      type: string
+                    city:
+                      type: string
+                      example: Phoenix
+                    company:
+                      type: string
+                      example: WABAC Systems, LLC
+                    country:
+                      type: string
+                      example: USA
+                    created_at:
+                      type: string
+                      example: '2011-09-15T22:44:35Z'
+                    email:
+                      type: string
+                      example: frederic.shapiro@wabacsystems.com
+                    firstname:
+                      type: string
+                      example: Frederic
+                    id:
+                      type: integer
+                      example: 3
+                      default: 0
+                    uuid:
+                      type: string
+                      example: f906d368-828c-11e5-9609-0ee0c870bcec
+                    lastname:
+                      type: string
+                      example: Shapiro
+                    oem_approved:
+                      type: boolean
+                      example: false
+                      default: true
+                    oem_id:
+                      type: string
+                    origin_oem_id:
+                      type: integer
+                      example: 2
+                      default: 0
+                    origin_oem_name:
+                      type: string
+                      example: Ayla
+                    phone_country_code:
+                      type: number
+                    phone:
+                      type: string
+                      example: '4803216940'
+                    primary_contact:
+                      type: string
+                      example: email
+                    state:
+                      type: string
+                      example: AZ
+                    street:
+                      type: string
+                      example: 5110 N. 44th St.
+                    terms_accepted:
+                      type: boolean
+                      example: true
+                      default: true
+                    terms_accepted_at:
+                      type: string
+                    terms_email_sent_at:
+                      type: string
+                    terms_token:
+                      type: string
+                    updated_at:
+                      type: string
+                      example: '2016-09-06T17:40:21Z'
+                    username:
+                      type: string
+                      example: frederic.shapiro@wabacsystems.com
+                    zip:
+                      type: string
+                      example: '85018'
+                    zip2:
+                      type: string
+                    is_oem_admin:
+                      type: boolean
+                      example: false
+                      default: true
+                    roles:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 13
+                            default: 0
+                          name:
+                            type: string
+                            example: EndUser
+                    dealers:
+                      type: array
+                      items:
+                        type: object
+                        properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-dealer-service-openapi.yml
+- ayla-networks-iot-command-center-openapi.yml
+- ayla-networks-user-service-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

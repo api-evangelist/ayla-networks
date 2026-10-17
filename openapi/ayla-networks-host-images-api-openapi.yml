@@ -1,0 +1,1015 @@
+openapi: 3.2.0
+info:
+  title: ota-service Host Images API
+  version: '1.0'
+servers:
+- url: https://aos-dev.aylanetworks.com/otaservice/v1/
+security:
+- sec0: []
+tags:
+- name: Host Images
+paths:
+  /host_images:
+    post:
+      summary: Create image record
+      description: This API creates an image record.
+      operationId: create-image-record
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  label:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5313
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 73716788374c0e7b95418ba4d98098f3
+                  created_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  description:
+                    type: string
+                    example: '1.0'
+                  file_size:
+                    type: integer
+                    example: 17432580
+                    default: 0
+                  in_use:
+                    type: boolean
+                    example: false
+                    default: true
+                  model:
+                    type: string
+                    example: 09876
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  uploaded_at:
+                    type: string
+                    example: 2018/05/18 23:47:01
+                  user_id:
+                    type: string
+                    example: '101010'
+                  from_version:
+                    type: string
+                  version:
+                    type: string
+                    example: '1.0'
+                  type:
+                    type: string
+                    example: host
+                  base_mod_img_model:
+                    type: string
+                  base_mod_img_version:
+                    type: string
+                  property_name:
+                    type: string
+                  is_full_image:
+                    type: boolean
+                    example: true
+                    default: true
+              examples:
+                Created:
+                  summary: Created
+                  value:
+                    oem: 0dfc7900
+                    label: null
+                    image_id: 5313
+                    checksum: 73716788374c0e7b95418ba4d98098f3
+                    created_at: 2023/03/09 10:37:44
+                    description: '1.0'
+                    file_size: 17432580
+                    in_use: false
+                    model: 09876
+                    source: s3
+                    updated_at: 2023/03/09 10:37:44
+                    uploaded_at: 2018/05/18 23:47:01
+                    user_id: '101010'
+                    from_version: null
+                    version: '1.0'
+                    type: host
+                    base_mod_img_model: null
+                    base_mod_img_version: null
+                    property_name: null
+                    is_full_image: true
+          description: Created
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+    get:
+      summary: Get image records
+      description: This API returns an array of image records.
+      operationId: get-image-records
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 421
+                    images:
+                    - oem: 0dfc7900
+                      label: null
+                      image_id: 5313
+                      checksum: 73716788374c0e7b95418ba4d98098f3
+                      created_at: 2023/03/09 10:37:44
+                      description: '1.0'
+                      file_size: 17432580
+                      in_use: false
+                      model: 09876
+                      source: s3
+                      updated_at: 2023/03/09 10:37:44
+                      uploaded_at: 2018/05/18 23:47:01
+                      user_id: '101010'
+                      from_version: null
+                      version: '1.0'
+                      type: host
+                      base_mod_img_model: null
+                      base_mod_img_version: null
+                      property_name: null
+                      is_full_image: true
+                    - oem: 0dfc7900
+                      label: null
+                      image_id: 5320
+                      checksum: e76bf54976e5e607db0f1c46b7bf8c24
+                      created_at: 2018/05/18 23:40:03
+                      description: '1.2'
+                      file_size: 1328172
+                      in_use: false
+                      model: '12345'
+                      source: s3
+                      updated_at: 2018/05/18 23:40:07
+                      uploaded_at: 2018/05/18 23:40:03
+                      user_id: '101010'
+                      from_version: null
+                      version: '1.2'
+                      type: host
+                      base_mod_img_model: null
+                      base_mod_img_version: null
+                      property_name: null
+                      is_full_image: true
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 10
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 421
+                    default: 0
+                  images:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        oem:
+                          type: string
+                          example: 0dfc7900
+                        label:
+                          type: string
+                        image_id:
+                          type: integer
+                          example: 5313
+                          default: 0
+                        checksum:
+                          type: string
+                          example: 73716788374c0e7b95418ba4d98098f3
+                        created_at:
+                          type: string
+                          example: 2023/03/09 10:37:44
+                        description:
+                          type: string
+                          example: '1.0'
+                        file_size:
+                          type: integer
+                          example: 17432580
+                          default: 0
+                        in_use:
+                          type: boolean
+                          example: false
+                          default: true
+                        model:
+                          type: string
+                          example: 09876
+                        source:
+                          type: string
+                          example: s3
+                        updated_at:
+                          type: string
+                          example: 2023/03/09 10:37:44
+                        uploaded_at:
+                          type: string
+                          example: 2018/05/18 23:47:01
+                        user_id:
+                          type: string
+                          example: '101010'
+                        from_version:
+                          type: number
+                        version:
+                          type: string
+                          example: '1.0'
+                        type:
+                          type: string
+                          example: host
+                        base_mod_img_model:
+                          type: string
+                        base_mod_img_version:
+                          type: string
+                        property_name:
+                          type: string
+                        is_full_image:
+                          type: boolean
+                          example: true
+                          default: true
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 10
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+  /host_images/image:
+    delete:
+      summary: Delete host OTA image by ID
+      description: This API deletes the host OTA images by comma-separated image IDs.
+      operationId: delete-host-ota-image-by-id
+      parameters:
+      - name: ids
+        in: query
+        description: 'Mention the image ID of the host OTA image you want to delete. Use commas to mention multiple image IDs and do not use spaces in between. Example: 5358,5357'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                OK:
+                  value: "{\n  \"success\": [\n    5358,\n    5357\n  ],\n  \"failures\": null\n}"
+                  summary: OK
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: array
+                    items:
+                      type: integer
+                      example: 5358
+                      default: 0
+                  failures:
+                    type: array
+                    items:
+                      type: integer
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+  /host_images/image/{image_id}:
+    get:
+      summary: Get host OTA image by ID
+      description: This API returns host OTA image by image_id.
+      operationId: get-host-ota-image-by-id
+      parameters:
+      - name: image_id
+        in: path
+        description: Image ID.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  label:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5313
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 73716788374c0e7b95418ba4d98098f3
+                  created_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  description:
+                    type: string
+                    example: '1.0'
+                  file_size:
+                    type: integer
+                    example: 17432580
+                    default: 0
+                  in_use:
+                    type: boolean
+                    example: false
+                    default: true
+                  model:
+                    type: string
+                    example: 09876
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  uploaded_at:
+                    type: string
+                    example: 2018/05/18 23:47:01
+                  user_id:
+                    type: string
+                    example: '101010'
+                  from_version:
+                    type: string
+                  version:
+                    type: string
+                    example: '1.0'
+                  type:
+                    type: string
+                    example: host
+                  base_mod_img_model:
+                    type: string
+                  base_mod_img_version:
+                    type: string
+                  property_name:
+                    type: string
+                  is_full_image:
+                    type: boolean
+                    example: true
+                    default: true
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    oem: 0dfc7900
+                    label: null
+                    image_id: 5313
+                    checksum: 73716788374c0e7b95418ba4d98098f3
+                    created_at: 2023/03/09 10:37:44
+                    description: '1.0'
+                    file_size: 17432580
+                    in_use: false
+                    model: 09876
+                    source: s3
+                    updated_at: 2023/03/09 10:37:44
+                    uploaded_at: 2018/05/18 23:47:01
+                    user_id: '101010'
+                    from_version: null
+                    version: '1.0'
+                    type: host
+                    base_mod_img_model: null
+                    base_mod_img_version: null
+                    property_name: null
+                    is_full_image: true
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Host Images
+    put:
+      summary: Update host OTA image by ID
+      description: This API updates the host OTA image by image_id.
+      operationId: update-host-ota-image-by-id
+      parameters:
+      - name: image_id
+        in: path
+        description: Image ID.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Brief description about the host OTA image.
+                checksum:
+                  type: string
+                  description: Checksum data.
+                file_size:
+                  type: integer
+                  description: File size in bytes.
+                  format: int32
+                source:
+                  type: string
+                  description: Mention the source of the image.
+                is_full_image:
+                  type: boolean
+                  description: '"true" if it is full/complete image.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                    oem: '1234'
+                    label: null
+                    image_id: 5313
+                    checksum: 737167xxxxxxx418baxxxxx98f3
+                    created_at: 2023/03/09 10:37:44
+                    description: '1.0'
+                    file_size: 17432580
+                    in_use: false
+                    model: 09876
+                    source: s3
+                    updated_at: 2023/03/09 10:37:44
+                    uploaded_at: 2018/05/18 23:47:01
+                    user_id: '101010'
+                    from_version: null
+                    version: '1.0'
+                    type: host
+                    base_mod_img_model: null
+                    base_mod_img_version: null
+                    property_name: null
+                    is_full_image: true
+                  summary: OK
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: '12345678'
+                  label: {}
+                  image_id:
+                    type: integer
+                    example: 5313
+                    default: 0
+                  checksum:
+                    type: string
+                    example: xxxxxxxxxxxc0e7b95418ba4d98098f3
+                  created_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  description:
+                    type: string
+                    example: '1.0'
+                  file_size:
+                    type: integer
+                    example: 17432580
+                    default: 0
+                  in_use: {}
+                  model:
+                    type: string
+                    example: '12345'
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2023/03/09 10:3:44
+                  uploaded_at:
+                    type: string
+                    example: 2018/05/18 23:47:01
+                  user_id:
+                    type: string
+                    example: '3245323'
+                  from_version: {}
+                  version:
+                    type: string
+                    example: '1.0'
+                  base_mod_img_model: {}
+                  base_mod_img_version: {}
+                  property_name: {}
+                  is_full_image:
+                    type: boolean
+                    example: true
+                    default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+  /host_images/{model}/image:
+    get:
+      summary: Get OTA attributes
+      description: This API returns OTA attributes.
+      operationId: get-image-record
+      parameters:
+      - name: model
+        in: path
+        description: Model name.
+        schema:
+          type: string
+        required: true
+      - name: version
+        in: query
+        description: Image version for which details to be retrieved
+        required: true
+        schema:
+          type: string
+      - name: property_name
+        in: query
+        description: Property name is mandatory if the image is multi-component.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oem:
+                  type: string
+                  description: OEM name.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    oem: 0dfc7900
+                    label: null
+                    image_id: 5313
+                    checksum: 73716788374c0e7b95418ba4d98098f3
+                    created_at: 2023/03/09 10:37:44
+                    description: '1.0'
+                    file_size: 17432580
+                    in_use: false
+                    model: 09876
+                    source: s3
+                    updated_at: 2023/03/09 10:37:44
+                    uploaded_at: 2018/05/18 23:47:01
+                    user_id: '101010'
+                    from_version: null
+                    version: '1.0'
+                    type: host
+                    base_mod_img_model: null
+                    base_mod_img_version: null
+                    property_name: null
+                    is_full_image: true
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  label:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5313
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 73716788374c0e7b95418ba4d98098f3
+                  created_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  description:
+                    type: string
+                    example: '1.0'
+                  file_size:
+                    type: integer
+                    example: 17432580
+                    default: 0
+                  in_use:
+                    type: boolean
+                    example: false
+                    default: true
+                  model:
+                    type: string
+                    example: 09876
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  uploaded_at:
+                    type: string
+                    example: 2018/05/18 23:47:01
+                  user_id:
+                    type: string
+                    example: '101010'
+                  from_version:
+                    type: string
+                  version:
+                    type: string
+                    example: '1.0'
+                  type:
+                    type: string
+                    example: host
+                  base_mod_img_model:
+                    type: string
+                  base_mod_img_version:
+                    type: string
+                  property_name:
+                    type: string
+                  is_full_image:
+                    type: boolean
+                    example: true
+                    default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+    put:
+      summary: Update image record
+      description: 'This API updates an image record.**Example response data**
+
+        { "oem": "1234abc", "label": null, "image_id": 5313, "checksum": "73716788374c0e7b95418ba4d98098f3", "created_at": "2023/03/09 10:37:44", "description": "1.0", "file_size": 17432580, "in_use": false, "model": "09876", "source": "s3", "updated_at": "2023/03/09 10:37:44", "uploaded_at": "2018/05/18 23:47:01", "user_id": "101010", "from_version": null, "version": "1.0", "type": "host", "base_mod_img_model": null, "base_mod_img_version": null, "property_name": null, "is_full_image": true }'
+      operationId: update-image-record
+      parameters:
+      - name: model
+        in: path
+        description: Model name.
+        schema:
+          type: string
+        required: true
+      - name: version
+        in: query
+        description: Version number of the image.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: User friendly description of the image record.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    oem: 0dfc7900
+                    label: null
+                    image_id: 5313
+                    checksum: 73716788374c0e7b95418ba4d98098f3
+                    created_at: 2023/03/09 10:37:44
+                    description: '1.0'
+                    file_size: 17432580
+                    in_use: false
+                    model: 09876
+                    source: s3
+                    updated_at: 2023/03/09 10:37:44
+                    uploaded_at: 2018/05/18 23:47:01
+                    user_id: '101010'
+                    from_version: null
+                    version: '1.0'
+                    type: host
+                    base_mod_img_model: null
+                    base_mod_img_version: null
+                    property_name: null
+                    is_full_image: true
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  label:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5313
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 73716788374c0e7b95418ba4d98098f3
+                  created_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  description:
+                    type: string
+                    example: '1.0'
+                  file_size:
+                    type: integer
+                    example: 17432580
+                    default: 0
+                  in_use:
+                    type: boolean
+                    example: false
+                    default: true
+                  model:
+                    type: string
+                    example: 09876
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2023/03/09 10:37:44
+                  uploaded_at:
+                    type: string
+                    example: 2018/05/18 23:47:01
+                  user_id:
+                    type: string
+                    example: '101010'
+                  from_version:
+                    type: string
+                  version:
+                    type: string
+                    example: '1.0'
+                  type:
+                    type: string
+                    example: host
+                  base_mod_img_model:
+                    type: string
+                  base_mod_img_version:
+                    type: string
+                  property_name:
+                    type: string
+                  is_full_image:
+                    type: boolean
+                    example: true
+                    default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+    delete:
+      summary: Delete image record
+      description: This API deletes the specified record and the associated image file.
+      operationId: delete-image-record
+      parameters:
+      - name: model
+        in: path
+        description: Model name.
+        schema:
+          type: string
+        required: true
+      - name: version
+        in: query
+        description: Version number.
+        schema:
+          type: string
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                No Content:
+                  summary: No Content
+                  value: ''
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+  /host_images/{model}/image/download:
+    get:
+      summary: Download image
+      description: This API downloads an image file.
+      operationId: download-image
+      parameters:
+      - name: model
+        in: path
+        description: Model name.
+        schema:
+          type: string
+        required: true
+      - name: version
+        in: query
+        description: Version number.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value: ''
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+  /host_images/{model}/image/upload:
+    post:
+      summary: Upload image
+      description: This API uploads an image file, and associates it with an image record.
+      operationId: upload-image
+      parameters:
+      - name: model
+        in: path
+        description: Model name.
+        schema:
+          type: string
+        required: true
+      - name: version
+        in: query
+        description: Version number.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Request Data
+              properties:
+                Request Data:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+              schema:
+                type: object
+                properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Host Images
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-image-record.md
+  - https://docs.aylanetworks.com/reference/delete-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-image-record.md
+  - https://docs.aylanetworks.com/reference/delete-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/download-image.md
+  - https://docs.aylanetworks.com/reference/get-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/get-image-record.md
+  - https://docs.aylanetworks.com/reference/get-image-records.md
+  - https://docs.aylanetworks.com/reference/get-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/update-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/update-image-record.md
+  - https://docs.aylanetworks.com/reference/update-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/upload-image.md
+  merge:
+    pages: 13
+    deduped: 12
+    conflicts_kept_first: 0

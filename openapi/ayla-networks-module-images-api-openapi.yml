@@ -1,0 +1,339 @@
+openapi: 3.2.0
+info:
+  title: ota-service Module Images API
+  version: '1.0'
+servers:
+- url: https://aos-dev.aylanetworks.com/otaservice/v1/
+security:
+- sec0: []
+tags:
+- name: Module Images
+paths:
+  /module_images/image:
+    delete:
+      summary: Delete module OTA image by ID
+      description: This API deletes the module OTA images by comma-separated image IDs.
+      operationId: delete-module-ota-image-by-id
+      parameters:
+      - name: ids
+        in: query
+        description: 'Mention the image ID of the host OTA image you want to delete. Use commas to mention multiple image IDs and do not use spaces in between. Example: 2314,3245'
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"success\": [\n    2314,\n    3245\n  ],\n  \"failures\": null\n}"
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: array
+                    items:
+                      type: integer
+                      example: 2314
+                      default: 0
+                  failures:
+                    type: array
+                    items:
+                      type: integer
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Module Images
+  /module_images/image/{image_id}:
+    get:
+      summary: Get module OTA image by ID
+      description: This API returns module OTA image by image_id.
+      operationId: get-module-ota-image-by-id
+      parameters:
+      - name: image_id
+        in: path
+        description: Image ID.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: '1234'
+                  image_id:
+                    type: integer
+                    example: 5335
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 9745fdf71a47fdaa199xxxxxxx3e24
+                  created_at:
+                    type: string
+                    example: 2017/04/27 13:49:33
+                  description:
+                    type: string
+                    example: 1st HBB OTA test
+                  file_size:
+                    type: integer
+                    example: 2416128
+                    default: 0
+                  in_use:
+                    type: boolean
+                    example: false
+                    default: true
+                  model:
+                    type: string
+                    example: 49981A
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2017/04/27 13:58:13
+                  uploaded_at:
+                    type: string
+                    example: 2017/04/27 13:49:33
+                  user_id:
+                    type: string
+                    example: '158793'
+                  from_version:
+                    type: integer
+                  version:
+                    type: string
+                    example: '1.1'
+                  type:
+                    type: string
+                    example: host
+                  from_mod_img_version:
+                    type: integer
+                  homekit:
+                    type: boolean
+                    example: false
+                    default: true
+                  internal:
+                    type: boolean
+                    example: false
+                    default: true
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    oem: '1234'
+                    image_id: 5335
+                    checksum: 9745fdf71a47fdaa199xxxxxxx3e24
+                    created_at: 2017/04/27 13:49:33
+                    description: 1st HBB OTA test
+                    file_size: 2416128
+                    in_use: false
+                    model: 49981A
+                    source: s3
+                    updated_at: 2017/04/27 13:58:13
+                    uploaded_at: 2017/04/27 13:49:33
+                    user_id: '158793'
+                    from_version: null
+                    version: '1.1'
+                    type: host
+                    from_mod_img_version: null
+                    homekit: false
+                    internal: false
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Module Images
+    put:
+      summary: Update module OTA image by ID
+      description: This API updates the module OTA image by image_id.
+      operationId: update-module-ota-image-by-id
+      parameters:
+      - name: image_id
+        in: path
+        description: Image ID.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: Brief description about the host OTA image.
+                file_size:
+                  type: integer
+                  description: File size in bytes.
+                  format: int32
+                from_mod_img_version:
+                  type: string
+                  description: From module image version.
+                homekit:
+                  type: boolean
+                internal:
+                  type: boolean
+                checksum:
+                  type: string
+                  description: Checksum data.
+                source:
+                  type: string
+                  description: Mention the source of the image.
+                uploaded_at:
+                  type: string
+                  description: Time in 'yyyy‑MM‑dd HH:mm:ss' format.
+                  format: date-time
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    oem: '1234'
+                    image_id: 5335
+                    checksum: 9745fdf71axxxxxx86673e24
+                    created_at: 2026/05/06 06:49:43
+                    description: Test for 1 st OTA
+                    file_size: 2416128
+                    in_use: null
+                    model: 49981A
+                    source: s3
+                    updated_at: 2026/05/06 06:49:43
+                    uploaded_at: 2017/04/27 13:49:33
+                    user_id: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    from_version: null
+                    version: '1.1'
+                    type: module
+                    from_mod_img_version: null
+                    homekit: false
+                    internal: false
+              schema:
+                type: object
+                properties:
+                  oem:
+                    type: string
+                    example: '1234'
+                  image_id:
+                    type: integer
+                    example: 5335
+                    default: 0
+                  checksum:
+                    type: string
+                    example: 9745fdf71axxxxxx86673e24
+                  created_at:
+                    type: string
+                    example: 2026/05/06 06:49:43
+                  description:
+                    type: string
+                    example: Test for 1 st OTA
+                  file_size:
+                    type: integer
+                    example: 2416128
+                    default: 0
+                  in_use:
+                    type: string
+                  model:
+                    type: string
+                    example: 49981A
+                  source:
+                    type: string
+                    example: s3
+                  updated_at:
+                    type: string
+                    example: 2026/05/06 06:49:43
+                  uploaded_at:
+                    type: string
+                    example: 2017/04/27 13:49:33
+                  user_id:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  from_version:
+                    type: integer
+                  version:
+                    type: string
+                    example: '1.1'
+                  type:
+                    type: string
+                    example: module
+                  from_mod_img_version:
+                    type: integer
+                  homekit:
+                    type: boolean
+                    example: false
+                    default: true
+                  internal:
+                    type: boolean
+                    example: false
+                    default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Module Images
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-image-record.md
+  - https://docs.aylanetworks.com/reference/delete-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-image-record.md
+  - https://docs.aylanetworks.com/reference/delete-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/download-image.md
+  - https://docs.aylanetworks.com/reference/get-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/get-image-record.md
+  - https://docs.aylanetworks.com/reference/get-image-records.md
+  - https://docs.aylanetworks.com/reference/get-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/update-host-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/update-image-record.md
+  - https://docs.aylanetworks.com/reference/update-module-ota-image-by-id.md
+  - https://docs.aylanetworks.com/reference/upload-image.md
+  merge:
+    pages: 13
+    deduped: 12
+    conflicts_kept_first: 0

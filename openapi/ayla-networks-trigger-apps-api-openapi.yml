@@ -1,0 +1,374 @@
+openapi: 3.2.0
+info:
+  title: device-service Trigger Apps API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Trigger Apps
+paths:
+  /trigger_apps/{trigAppId}.json:
+    get:
+      summary: Get trigger app
+      description: This API returns an array of trigger apps for the specified trigger.
+      operationId: get-trigger-app
+      parameters:
+      - name: trigAppId
+        in: path
+        description: Unique trigger identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    trigger_app:
+                      key: 5022163
+                      name: email
+                      username: test
+                      nickname: null
+                      trigger_key: 12867849
+                      contact_id: null
+                      repeat_freq: '60'
+                      push_sound: null
+                      push_mdata: null
+                      email_template_id: test
+                      email_subject: test
+                      email_body_html: test
+                      param1: test12@ayla.com
+                      param2: null
+                      param3: test
+                      param4: null
+                      param5: null
+              schema:
+                type: object
+                properties:
+                  trigger_app:
+                    type: object
+                    properties:
+                      key:
+                        type: integer
+                        example: 5022163
+                        default: 0
+                      name:
+                        type: string
+                        example: email
+                      username:
+                        type: string
+                        example: test
+                      nickname:
+                        type: string
+                      trigger_key:
+                        type: integer
+                        example: 12867849
+                        default: 0
+                      contact_id:
+                        type: string
+                      repeat_freq:
+                        type: string
+                        example: '60'
+                      push_sound:
+                        type: string
+                      push_mdata:
+                        type: string
+                      email_template_id:
+                        type: string
+                        example: test
+                      email_subject:
+                        type: string
+                        example: test
+                      email_body_html:
+                        type: string
+                        example: test
+                      param1:
+                        type: string
+                        example: test12@ayla.com
+                      param2:
+                        type: string
+                      param3:
+                        type: string
+                        example: test
+                      param4:
+                        type: string
+                      param5:
+                        type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Trigger Apps
+    put:
+      summary: Update trigger app
+      description: This API updates the specified trigger app.
+      operationId: update-trigger-app
+      parameters:
+      - name: trigAppId
+        in: path
+        description: Unique trigger application identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  trigger_app:
+                    type: object
+                    properties:
+                      key:
+                        type: integer
+                        example: 5022163
+                        default: 0
+                      name:
+                        type: string
+                        example: email
+                      username:
+                        type: string
+                        example: test
+                      nickname:
+                        type: string
+                      trigger_key:
+                        type: integer
+                        example: 12867849
+                        default: 0
+                      contact_id:
+                        type: string
+                      repeat_freq:
+                        type: string
+                        example: '60'
+                      push_sound:
+                        type: string
+                      push_mdata:
+                        type: string
+                      email_template_id:
+                        type: string
+                        example: test
+                      email_subject:
+                        type: string
+                        example: test
+                      email_body_html:
+                        type: string
+                        example: test
+                      param1:
+                        type: string
+                        example: test12@ayla.com
+                      param2:
+                        type: string
+                      param3:
+                        type: string
+                        example: test
+                      param4:
+                        type: string
+                      param5:
+                        type: string
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    trigger_app:
+                      key: 5022163
+                      name: email
+                      username: test
+                      nickname: null
+                      trigger_key: 12867849
+                      contact_id: null
+                      repeat_freq: '60'
+                      push_sound: null
+                      push_mdata: null
+                      email_template_id: test
+                      email_subject: test
+                      email_body_html: test
+                      param1: test12@ayla.com
+                      param2: null
+                      param3: test
+                      param4: null
+                      param5: null
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Trigger Apps
+    delete:
+      summary: Delete trigger apps by ID
+      description: This API deletes the specified trigger app.
+      operationId: delete-trigger-apps-by-id
+      parameters:
+      - name: trigAppId
+        in: path
+        description: Unique trigger app identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Trigger Apps
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

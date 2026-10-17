@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  title: groups-scenes Collections TBD.json API
+  version: '1.0'
+servers:
+- url: https://gss-dev.aylanetworks.com/groupsceneservice/v1/
+security:
+- sec0: []
+tags:
+- name: Collections TBD.json
+paths:
+  /collections_TBD.json:
+    delete:
+      summary: Delete multiple collections
+      description: This API is used to delete multiple specific collections associated with the user.
+      operationId: delete-multiple-collections
+      parameters:
+      - name: collection_uuid
+        in: query
+        description: List of UUIDs of the collections. Separate collection UUIDs by a comma.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '206':
+          content: {}
+          description: Partial Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      tags:
+      - Collections TBD.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-countdown-timer.md
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-schedule.md
+  - https://docs.aylanetworks.com/reference/activate-scene-based-on-schedule_2.md
+  - https://docs.aylanetworks.com/reference/activate-scene-manually-tap-to-run.md
+  - https://docs.aylanetworks.com/reference/add-attributes-to-collection.md
+  - https://docs.aylanetworks.com/reference/add-devices-or-child-collections.md
+  - https://docs.aylanetworks.com/reference/create-group-1.md
+  - https://docs.aylanetworks.com/reference/create-group-or-scene-deprecated.md
+  - https://docs.aylanetworks.com/reference/delete-all-collections.md
+  - https://docs.aylanetworks.com/reference/delete-collection.md
+  - https://docs.aylanetworks.com/reference/delete-multiple-collections.md
+  - https://docs.aylanetworks.com/reference/delete-schedule.md
+  - https://docs.aylanetworks.com/reference/enable-disable-scene-automation.md
+  - https://docs.aylanetworks.com/reference/get-collections-by-dsn-and-type.md
+  - https://docs.aylanetworks.com/reference/get-last-posted-datapoints-for-a-collection.md
+  - https://docs.aylanetworks.com/reference/get-received-shares-1.md
+  - https://docs.aylanetworks.com/reference/get-shared-collections-owned-by-user.md
+  - https://docs.aylanetworks.com/reference/post-datapoints-to-collection.md
+  - https://docs.aylanetworks.com/reference/remove-custom-attributes.md
+  - https://docs.aylanetworks.com/reference/remove-devices.md
+  - https://docs.aylanetworks.com/reference/remove-specific-devices-or-child-collections.md
+  - https://docs.aylanetworks.com/reference/retrieve-collection-1.md
+  - https://docs.aylanetworks.com/reference/retrieve-collection-2.md
+  - https://docs.aylanetworks.com/reference/retrieve-collections.md
+  - https://docs.aylanetworks.com/reference/share-group-or-scene.md
+  - https://docs.aylanetworks.com/reference/stop-sharing-collection.md
+  - https://docs.aylanetworks.com/reference/update-collection-name-1.md
+  - https://docs.aylanetworks.com/reference/update-collection-name.md
+  - https://docs.aylanetworks.com/reference/update-custom-attributes.md
+  - https://docs.aylanetworks.com/reference/update-schedule.md
+  - https://docs.aylanetworks.com/reference/update-schedule_2.md
+  - https://docs.aylanetworks.com/reference/update-share-1.md
+  merge:
+    pages: 32
+    deduped: 31
+    conflicts_kept_first: 0

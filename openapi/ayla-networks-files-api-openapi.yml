@@ -1,0 +1,572 @@
+openapi: 3.2.0
+info:
+  title: iot-command-center Files API
+  version: '1.0'
+servers:
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+security:
+- sec0: []
+tags:
+- name: Files
+paths:
+  /files:
+    post:
+      summary: Create file record
+      description: This API creates and returns a file record. After creating a file, call the **uploadFile** API to upload a file to the record.
+      operationId: create-file-record
+      parameters:
+      - name: oem
+        in: query
+        description: OEM identifier.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: File name.
+                description:
+                  type: string
+                  description: Description of the file.
+                file_metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata value.
+                  required: []
+                  type: object
+                url:
+                  type: string
+                  description: A given external file url for file property. Use this parameter or upload the binary file later using the upload file API.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"id\": 1234,\n  \"name\": \"File Name\",\n  \"filename\": null,\n  \"description\": \"File Description\",\n  \"url\": null,\n  \"file_metadata\": [\n    {\n      \"key\": \"key\",\n      \"value\": \"value\"\n    }\n  ],\n  \"file_size\": 0,\n  \"created_at\": \"2020-03-30T14:36:34+0000\",\n  \"updated_at\": \"2020-03-30T14:36:34+0000\"\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1234
+                    default: 0
+                  name:
+                    type: string
+                    example: File Name
+                  filename:
+                    type: string
+                  description:
+                    type: string
+                    example: File Description
+                  url:
+                    type: string
+                  file_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: key
+                        value:
+                          type: string
+                          example: value
+                  file_size:
+                    type: integer
+                    example: 0
+                    default: 0
+                  created_at:
+                    type: string
+                    example: 2020-03-30T14:36:34+0000
+                  updated_at:
+                    type: string
+                    example: 2020-03-30T14:36:34+0000
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Files
+    get:
+      summary: Get file records
+      description: This API returns an object which includes an array of file records.
+      operationId: create-file-record-1
+      parameters:
+      - name: oem
+        in: query
+        description: OEM unique identifier.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: Number of pages to return.
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: per_page
+        in: query
+        description: Max records/page. Min is 5. Max is 100.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      - name: sort_by
+        in: query
+        description: Field name on which to sort.
+        schema:
+          type: string
+      - name: direction
+        in: query
+        description: Ascending or descending. (ASC/DESC)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"total\": 2,\n  \"files\": [\n    {\n      \"id\": 1674,\n      \"name\": \"My PDF\",\n      \"filename\": \"pdf-book-2017-10.pdf\",\n      \"description\": \"My PDF Description\",\n      \"url\": \"/icc/v1/files/1674/download\",\n      \"file_metadata\": [\n        {\n          \"key\": \"\",\n          \"value\": \"\"\n        }\n      ],\n      \"file_size\": 38254,\n      \"created_at\": \"2020-04-09T22:40:42+0000\",\n      \"updated_at\": \"2020-04-09T22:40:42+0000\"\n    },\n    {\n      \"id\": 1682,\n      \"name\": \"My file 001\",\n      \"filename\": \"pdf-book-2017-10.pdf\",\n      \"description\": \"My file 001 Description\",\n      \"url\": \"/icc/v1/files/1682/download\",\n      \"file_metadata\": [],\n      \"file_size\": 38254,\n      \"created_at\": \"2020-04-13T19:05:18+0000\",\n      \"updated_at\": \"2020-04-13T19:11:42+0000\"\n    }\n  ],\n  \"previous_page\": null,\n  \"next_page\": null,\n  \"current_page_number\": 1,\n  \"start_count_on_page\": 1,\n  \"end_count_on_page\": 2\n}"
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 2
+                    default: 0
+                  files:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1674
+                          default: 0
+                        name:
+                          type: string
+                          example: My PDF
+                        filename:
+                          type: string
+                          example: pdf-book-2017-10.pdf
+                        description:
+                          type: string
+                          example: My PDF Description
+                        url:
+                          type: string
+                          example: /icc/v1/files/1674/download
+                        file_metadata:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: string
+                                example: ''
+                              value:
+                                type: string
+                                example: ''
+                        file_size:
+                          type: integer
+                          example: 38254
+                          default: 0
+                        created_at:
+                          type: string
+                          example: 2020-04-09T22:40:42+0000
+                        updated_at:
+                          type: string
+                          example: 2020-04-09T22:40:42+0000
+                  previous_page: {}
+                  next_page: {}
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 2
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Files
+  /files/{fileId}:
+    get:
+      summary: Get file record
+      description: This API returns a file record.
+      operationId: get-file-record
+      parameters:
+      - name: fileId
+        in: path
+        description: Unique file identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"id\": 1640,\n  \"name\": \"File Name 1\",\n  \"filename\": null,\n  \"description\": \"File Description\",\n  \"url\": null,\n  \"file_metadata\": [\n    {\n      \"key\": \"key\",\n      \"value\": \"value\"\n    }\n  ],\n  \"file_size\": 0,\n  \"created_at\": \"2020-03-30T15:29:07+0000\",\n  \"updated_at\": \"2020-03-30T15:29:07+0000\"\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1640
+                    default: 0
+                  name:
+                    type: string
+                    example: File Name 1
+                  filename: {}
+                  description:
+                    type: string
+                    example: File Description
+                  url: {}
+                  file_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: key
+                        value:
+                          type: string
+                          example: value
+                  file_size:
+                    type: integer
+                    example: 0
+                    default: 0
+                  created_at:
+                    type: string
+                    example: 2020-03-30T15:29:07+0000
+                  updated_at:
+                    type: string
+                    example: 2020-03-30T15:29:07+0000
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Files
+    delete:
+      summary: Delete file record
+      description: This API deletes a file record, and the corresponding file.
+      operationId: delete-file-record
+      parameters:
+      - name: fileId
+        in: path
+        description: Unique file identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                No Content:
+                  summary: No Content
+                  value: '{}'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Files
+  /files/{fileId}/download:
+    get:
+      summary: Download file
+      description: This API downloads the file associated with a file record.
+      operationId: download-file-record
+      parameters:
+      - name: fileId
+        in: path
+        description: Unique file identifier
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Files
+  /files/{fileId}/upload:
+    put:
+      summary: Upload file
+      description: This API uploads a file and associates it with a file record.
+      operationId: upload-file
+      parameters:
+      - name: fileId
+        in: path
+        description: Unique file identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Request Data
+              properties:
+                Request Data:
+                  type: string
+                  description: Upload the file that you want to associate with the specified file record.
+                  format: binary
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Files
+  /files/{file_id}:
+    put:
+      summary: Update file transfer record
+      description: This API updates a file transfer record.
+      operationId: update-file-transfer-record
+      parameters:
+      - name: file_id
+        in: path
+        description: File unique identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: File job name.
+                description:
+                  type: string
+                  description: Short description about the file transfer record update.
+                file_metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata key value.
+                  required: []
+                  type: object
+                  description: List of data objects.
+                url:
+                  type: string
+                  description: An external url for the file.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 62134
+                    name: testing
+                    filename: null
+                    description: null
+                    url: null
+                    file_metadata: []
+                    file_size: 0
+                    created_at: 2026-04-29T06:46:00+0000
+                    updated_at: 2026-04-29T07:21:52+0000
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 62134
+                    default: 0
+                  name:
+                    type: string
+                    example: testing
+                  filename:
+                    type: string
+                  description:
+                    type: string
+                  url:
+                    type: string
+                  file_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  file_size:
+                    type: integer
+                    example: 0
+                    default: 0
+                  created_at:
+                    type: string
+                    example: 2026-04-29T06:46:00+0000
+                  updated_at:
+                    type: string
+                    example: 2026-04-29T07:21:52+0000
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Files
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/cancel-job.md
+  - https://docs.aylanetworks.com/reference/copy-filter.md
+  - https://docs.aylanetworks.com/reference/copy-job.md
+  - https://docs.aylanetworks.com/reference/create-file-record-1.md
+  - https://docs.aylanetworks.com/reference/create-file-record.md
+  - https://docs.aylanetworks.com/reference/create-filter.md
+  - https://docs.aylanetworks.com/reference/create-job-schedule.md
+  - https://docs.aylanetworks.com/reference/create-job.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs-batch.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs.md
+  - https://docs.aylanetworks.com/reference/delete-file-record.md
+  - https://docs.aylanetworks.com/reference/delete-filter.md
+  - https://docs.aylanetworks.com/reference/delete-job-schedule.md
+  - https://docs.aylanetworks.com/reference/delete-job.md
+  - https://docs.aylanetworks.com/reference/download-file-record.md
+  - https://docs.aylanetworks.com/reference/download-job-report.md
+  - https://docs.aylanetworks.com/reference/edit-schedule.md
+  - https://docs.aylanetworks.com/reference/export-dsn.md
+  - https://docs.aylanetworks.com/reference/get-all-tasks.md
+  - https://docs.aylanetworks.com/reference/get-device-jobs.md
+  - https://docs.aylanetworks.com/reference/get-device-snapshot.md
+  - https://docs.aylanetworks.com/reference/get-device-status.md
+  - https://docs.aylanetworks.com/reference/get-devices-by-filter.md
+  - https://docs.aylanetworks.com/reference/get-file-record.md
+  - https://docs.aylanetworks.com/reference/get-filter.md
+  - https://docs.aylanetworks.com/reference/get-filters.md
+  - https://docs.aylanetworks.com/reference/get-job-report-details.md
+  - https://docs.aylanetworks.com/reference/get-job.md
+  - https://docs.aylanetworks.com/reference/get-jobs.md
+  - https://docs.aylanetworks.com/reference/get-ota-action.md
+  - https://docs.aylanetworks.com/reference/get-otas.md
+  - https://docs.aylanetworks.com/reference/get-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/get-schedule.md
+  - https://docs.aylanetworks.com/reference/get-user-consent.md
+  - https://docs.aylanetworks.com/reference/post-icc-express-job.md
+  - https://docs.aylanetworks.com/reference/preview-filter.md
+  - https://docs.aylanetworks.com/reference/refresh-device-list.md
+  - https://docs.aylanetworks.com/reference/remove-ota-command.md
+  - https://docs.aylanetworks.com/reference/retry-selected-devices.md
+  - https://docs.aylanetworks.com/reference/search-jobs.md
+  - https://docs.aylanetworks.com/reference/set-file-property-1.md
+  - https://docs.aylanetworks.com/reference/set-file-property.md
+  - https://docs.aylanetworks.com/reference/set-ota-action.md
+  - https://docs.aylanetworks.com/reference/set-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/start-job.md
+  - https://docs.aylanetworks.com/reference/start-ota.md
+  - https://docs.aylanetworks.com/reference/stop-ota.md
+  - https://docs.aylanetworks.com/reference/update-file-transfer-record.md
+  - https://docs.aylanetworks.com/reference/update-filter.md
+  - https://docs.aylanetworks.com/reference/update-job-1.md
+  - https://docs.aylanetworks.com/reference/update-ota-job-by-job-id.md
+  - https://docs.aylanetworks.com/reference/upload-file.md
+  merge:
+    pages: 52
+    deduped: 51
+    conflicts_kept_first: 0

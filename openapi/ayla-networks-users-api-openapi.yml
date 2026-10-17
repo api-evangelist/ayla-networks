@@ -1,0 +1,5065 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Users API
+  version: '1.0'
+  description: 'Operations tagged Users across 4 of this provider''s published API definitions: ayla-networks-device-service-openapi.yml, ayla-networks-iot-command-center-openapi.yml, ayla-networks-sign-in-openapi.yml, ayla-networks-user-service-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+- url: https://user-dev.aylanetworks.com/
+tags:
+- name: Users
+paths:
+  /api/v1/users/{user_id}/contacts/{id}.json:
+    get:
+      summary: Get user contact
+      description: This API returns the specified contact for the specified user.
+      operationId: create-associated-user-1
+      parameters:
+      - name: user_id
+        in: path
+        description: User unique identifier.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549462
+                        default: 0
+                      display_name:
+                        type: string
+                        example: Stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '98765432'
+                      street_address:
+                        type: string
+                        example: 6th street
+                      zip_code:
+                        type: string
+                        example: '876543'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:22:18Z'
+                      metadata:
+                        type: string
+                        example: testing
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes:
+                        type: string
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    put:
+      summary: Update user contact
+      description: 'This API updates the specified contact for the specified user.
+
+
+        Include only the field(s) you want to update.'
+      operationId: update-user-contact
+      parameters:
+      - name: user_id
+        in: path
+        description: User unique identifier.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - display_name
+              properties:
+                firstname:
+                  type: string
+                  description: The contact firstname.
+                lastname:
+                  type: string
+                  description: The contact lastname.
+                display_name:
+                  type: string
+                  description: The contact name to be displayed. If it is empty it will be set to “<firstname> <lastname>”.
+                email:
+                  type: string
+                  description: The contact email.
+                phone_country_code:
+                  type: string
+                  description: The contact phone country code. It is **mandatory** when phone_number is sent.
+                phone_number:
+                  type: string
+                  description: The contact phone number.
+                street_address:
+                  type: string
+                  description: The contact street address.
+                zip_code:
+                  type: string
+                  description: The contact zip code.
+                country:
+                  type: string
+                  description: The contact country.
+                metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata value.
+                  required: []
+                  type: object
+                  description: The contact metadata.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549436
+                      display_name: stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: null
+                      phone_country_code: '91'
+                      phone_number: '8764378212'
+                      street_address: 4th Street
+                      zip_code: '560191'
+                      country: India
+                      updated_at: '2026-04-28T07:00:04Z'
+                      metadata: '{"key"=>"testing", "value"=>"123"}'
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549436
+                        default: 0
+                      display_name:
+                        type: string
+                        example: stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '8764378212'
+                      street_address:
+                        type: string
+                        example: 4th Street
+                      zip_code:
+                        type: string
+                        example: '560191'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T07:00:04Z'
+                      metadata:
+                        type: string
+                        example: '{"key"=>"testing", "value"=>"123"}'
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes:
+                        type: string
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    delete:
+      summary: Delete user contact
+      description: This API deletes the specified contact for the specified user.
+      operationId: delete-user-contact
+      parameters:
+      - name: user_id
+        in: path
+        description: User unique identifier.
+        schema:
+          type: string
+        required: true
+      - name: id
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+  /users/device_jobs:
+    put:
+      summary: Decision for devices and device jobs - batch
+      description: This end point is used for user consent job. Using this API, the user can cancel the ota or schedule the OTA for set of Devices.
+      operationId: decision-for-devices-and-device-jobs-batch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{
+
+                    “succeeded”: [device_object, device_object, ...],
+
+                    “failed”: [device_object, device_object, ...]
+
+                    }
+
+                    '
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    get:
+      summary: Get device jobs
+      description: This API returns all the jobs for all the devices belonging to the user.
+      operationId: get-device-jobs
+      parameters:
+      - name: oem_model
+        in: query
+        description: OEM Model name.
+        schema:
+          type: string
+      - name: dsns
+        in: query
+        description: Device serial numbers. Click "Add" to specify a DSN.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: from
+        in: query
+        description: Timestamp in seconds.
+        schema:
+          type: integer
+          format: int32
+      - name: to
+        in: query
+        description: Timestamp in seconds.
+        schema:
+          type: integer
+          format: int32
+      - name: status
+        in: query
+        description: 'Device status. You can specify multiple statuses.<br>Possible values are: PENDING, CONSENT, PROCESSING, SUCCEED, CANCELLED, FAILED, PARTIAL_FAILED, QUEUED, WAITING, or RETRY.'
+        schema:
+          type: array
+          items:
+            type: string
+      - name: pagination
+        in: query
+        description: '"true" if pagination is required.'
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        description: 'Number of items to be returned par page. Default: 10.'
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: 'Page number to be displayed. Default: 1.'
+        schema:
+          type: integer
+          format: int32
+      - name: order_by
+        in: query
+        description: 'The name of the field based on which the returned list will be sorted. Default: dsn.'
+        schema:
+          type: string
+      - name: order
+        in: query
+        description: 'Represents sorting direction: Ascending (asc) or descending (desc). Default: asc.'
+        schema:
+          type: string
+      - name: delivery_option
+        in: query
+        description: Delivery option can be SYSTEM_PUSH or USER_CONSENT.
+        schema:
+          type: string
+      - name: job_type
+        in: query
+        description: Job type can be OTA, FILE_TRANSFER, or SET_PROPERTY.
+        schema:
+          type: string
+      - name: job_status
+        in: query
+        description: 'Status of the job. You can specify multiple statuses.<br>Possible values are: STARTED, STOPPED, or FAILED.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 1
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    devices:
+                      dsn: AC000W000340524
+                      device_jobs:
+                      - job_id: 5165
+                        id: 9YpQxaXd
+                        name: test-host-ota-job
+                        job_type: OTA
+                        delivery_option: SYSTEM_PUSH
+                        started_at: 2020-07-16T00:00:14+0000
+                        stopped_at: 2020-07-16T23:59:59+0000
+                        last_modified_by: null
+                        description: null
+                        job_metadata: []
+                        device_status: PROCESSING
+                        job_status: STOPPED
+                        fw_version: 6.9.0.07
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  devices:
+                    type: object
+                    properties:
+                      dsn:
+                        type: string
+                        example: AC000W000340524
+                      device_jobs:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            job_id:
+                              type: integer
+                              example: 5165
+                              default: 0
+                            id:
+                              type: string
+                              example: 9YpQxaXd
+                            name:
+                              type: string
+                              example: test-host-ota-job
+                            job_type:
+                              type: string
+                              example: OTA
+                            delivery_option:
+                              type: string
+                              example: SYSTEM_PUSH
+                            started_at:
+                              type: string
+                              example: 2020-07-16T00:00:14+0000
+                            stopped_at:
+                              type: string
+                              example: 2020-07-16T23:59:59+0000
+                            last_modified_by: {}
+                            description: {}
+                            job_metadata:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                            device_status:
+                              type: string
+                              example: PROCESSING
+                            job_status:
+                              type: string
+                              example: STOPPED
+                            fw_version:
+                              type: string
+                              example: 6.9.0.07
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /users/sign_in.json:
+    post:
+      summary: Sign In
+      description: 'This API is used to sign a user into the Ayla IoT Cloud service. This API returns an access token and refresh token. The access token is required to use Ayla APIs. The refresh token can be used to obtain a new access token.
+
+
+        To use this API, you need the user''s *email*, *password*, *app_id*, and *app_secret*.
+
+
+        Follow these steps to get your *app_id* and *app_secret*:
+
+        1. Log in to Alya Customer Dashboard.
+
+        2. In the left navigation panel, click **OEM Profile**.
+
+        3. Under the **Apps** tab, create a new app-id, or choose an existing app-id.'
+      operationId: sign-in
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples: {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: 9aa1fba14a6e4e08903db05bd64efa00
+                  refresh_token:
+                    type: string
+                    example: d6edfe5a76ea47b3b3ba3e6b02a7ac22
+                  expires_in:
+                    type: integer
+                    example: 86400
+                    default: 0
+                  role:
+                    type: string
+                    example: EndUser
+                  role_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    access_token: 9aa1fba14a6e4e08903db05bd64efa00
+                    refresh_token: d6edfe5a76ea47b3b3ba3e6b02a7ac22
+                    expires_in: 86400
+                    role: EndUser
+                    role_tags: []
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      security: []
+      tags:
+      - Users
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/assign_label.json:
+    put:
+      summary: Assign label
+      description: 'This API assigns a role label to a user with the given role.**Note**: Either user_email or username is required.'
+      operationId: assign-label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              properties:
+                user_email:
+                  type: string
+                  description: Email of the user. Either *user_email* or *username* is required.
+                username:
+                  type: string
+                  description: Username of the user. Either *user_email* or *username* is required.
+                role:
+                  type: string
+                  description: User role.
+                label:
+                  properties:
+                    name:
+                      type: string
+                      description: Label name.
+                    value:
+                      type: string
+                      description: Label value.
+                  required: []
+                  type: object
+                  description: Role label object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/assign_role.json:
+    put:
+      summary: Assign role
+      description: 'This API assigns a role to an existing user.
+
+        **Note**: user_email or username is required.'
+      operationId: assign-role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              - oem
+              - id
+              properties:
+                role:
+                  type: string
+                  description: Role of the user.
+                oem:
+                  type: string
+                  description: OEM identifier. **Mandatory** if *user_email* is sent and *current_user* belongs to other OEM.
+                id:
+                  type: integer
+                  description: Unique user identifier.
+                  format: int32
+                user_email:
+                  type: string
+                  description: Email of the user. *user_email* or *username* is required.
+                username:
+                  type: string
+                  description: Username of the user. *user_email* or *username* is required.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/associate_role_user.json:
+    put:
+      summary: Associate role user
+      description: This API associates an end user with the specified role to the OEM.
+      operationId: associate-role-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              - label
+              properties:
+                role:
+                  type: string
+                  description: Role user.
+                label:
+                  properties:
+                    name:
+                      type: string
+                      description: Label name.
+                    value:
+                      type: string
+                      description: Label value.
+                  required:
+                  - name
+                  - value
+                  type: object
+                  description: User label.
+                user_id:
+                  type: string
+                  description: User id of the role user. To use this parameter, OEM::Admin level privileges are required.
+                user_email:
+                  type: string
+                  description: Email of the role user. To use this parameter, OEM::Admin level privileges are required.
+                username:
+                  type: string
+                  description: Username of the role user. To use this parameter, OEM::Admin level privileges are required.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/contacts.json:
+    post:
+      summary: Create contact
+      description: 'This API creates a contact.
+
+
+        ```The phone_number``` value must be contiguous digits without whitespaces, hyphens, etc.'
+      operationId: create-contact
+      parameters:
+      - name: user_email
+        in: query
+        description: Case-insensitive email address of the user account with which to associate the new contact. Leave this field blank to associate the new contact with your own user account.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  type: string
+                  description: The contact name to be displayed. If it is empty it will be set to “<firstname> <lastname>”.
+                firstname:
+                  type: string
+                  description: The contact firstname.
+                lastname:
+                  type: string
+                  description: The contact lastname.
+                email:
+                  type: string
+                  description: The contact email.
+                phone_country_code:
+                  type: string
+                  description: The contact phone country code. It is *mandatory* when phone_number is sent.
+                phone_number:
+                  type: string
+                  description: The contact phone number.
+                street_address:
+                  type: string
+                  description: The contact street address.
+                zip_code:
+                  type: string
+                  description: The contact zip code.
+                country:
+                  type: string
+                  description: The contact country.
+                metadata:
+                  type: string
+                  description: The contact metadata.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549462
+                        default: 0
+                      display_name:
+                        type: string
+                        example: Stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '98765432'
+                      street_address:
+                        type: string
+                        example: 6th street
+                      zip_code:
+                        type: string
+                        example: '876543'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:22:18Z'
+                      metadata:
+                        type: string
+                        example: testing
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes:
+                        type: string
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    get:
+      summary: Get contacts
+      description: 'This API returns an array of contacts in the following basic format:
+
+
+        [
+
+        {
+
+        "contact": {},
+
+        {
+
+        "contact": {}
+
+        }
+
+        ]
+
+
+        The API performs a case-insensitive string compare on the field(s) corresponding to the query parameter(s) included in the invocation, logically ANDing the fields. Unicode characters are acceptable (e.g. 田中実 or 王芳 or غادة شعاع).
+
+
+        Refer to this table for valid Country Codes.'
+      operationId: get-contacts
+      parameters:
+      - name: firstname
+        in: query
+        description: Match firstname field of contact.
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Match lastname field of contact.
+        schema:
+          type: string
+      - name: display_name
+        in: query
+        description: Match display_name field of contact.
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Match email field of contact.
+        schema:
+          type: string
+      - name: phone_country_code
+        in: query
+        description: Country code.
+        schema:
+          type: string
+      - name: phone_number
+        in: query
+        description: Match phone_number field of contact.
+        schema:
+          type: string
+      - name: street_address
+        in: query
+        description: Match street_address field of contact.
+        schema:
+          type: string
+      - name: zip_code
+        in: query
+        description: Match zip_code field of contact.
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: Match country field of contact.
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Match metadata field of contact.
+        schema:
+          type: string
+      - name: user_email
+        in: query
+        description: Match email field of user associated with contacts to return.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549462
+                        default: 0
+                      display_name:
+                        type: string
+                        example: Stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '98765432'
+                      street_address:
+                        type: string
+                        example: 6th street
+                      zip_code:
+                        type: string
+                        example: '876543'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:22:18Z'
+                      metadata:
+                        type: string
+                        example: testing
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes: {}
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/contacts/{contactId}.json:
+    get:
+      summary: Get contact details
+      description: This API returns details about a contact.
+      operationId: get-contact-details
+      parameters:
+      - name: contactId
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549462
+                        default: 0
+                      display_name:
+                        type: string
+                        example: Stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '98765432'
+                      street_address:
+                        type: string
+                        example: 6th street
+                      zip_code:
+                        type: string
+                        example: '876543'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:22:18Z'
+                      metadata:
+                        type: string
+                        example: testing
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes:
+                        type: string
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    put:
+      summary: Update contact
+      description: 'This API updates details for the contact.
+
+
+        Include only the field(s) you want to update.'
+      operationId: update-contact
+      parameters:
+      - name: contactId
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                display_name:
+                  type: string
+                  description: The contact name to be displayed. If it is empty it will be set to “<firstname> <lastname>”.
+                firstname:
+                  type: string
+                  description: The contact firstname.
+                lastname:
+                  type: string
+                  description: The contact lastname.
+                email:
+                  type: string
+                  description: The contact email.
+                phone_country_code:
+                  type: string
+                  description: The contact phone country code. It is *mandatory* when phone_number is sent.
+                phone_number:
+                  type: string
+                  description: The contact phone number.
+                street_address:
+                  type: string
+                  description: The contact street address.
+                zip_code:
+                  type: string
+                  description: The contact zip code.
+                country:
+                  type: string
+                  description: The contact country.
+                metadata:
+                  type: string
+                  description: The contact metadata.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    delete:
+      summary: Delete contact
+      description: This API deletes a contact.
+      operationId: delete-contact
+      parameters:
+      - name: contactId
+        in: path
+        description: Unique contact identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/create_associated_user.json:
+    post:
+      summary: Create associated user
+      description: This API creates a user and associates with the caller. After creating a user, it sends a welcome email to the created user.
+      operationId: create-associated-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    firstname:
+                      type: string
+                      description: First name of the user.
+                    lastname:
+                      type: string
+                      description: Last name of the user.
+                    email:
+                      type: string
+                      description: User's email address.
+                    password:
+                      type: string
+                      description: User's password.
+                    application:
+                      properties:
+                        app_id:
+                          type: string
+                          description: Unique application identifier.
+                        app_secret:
+                          type: string
+                          description: Application secret string.
+                      required:
+                      - app_id
+                      - app_secret
+                      type: object
+                    company:
+                      type: string
+                      description: User's company name.
+                    street:
+                      type: string
+                      description: User's street address.
+                    city:
+                      type: string
+                      description: The city name of the user.
+                    state:
+                      type: string
+                      description: The state name of the user.
+                    country:
+                      type: string
+                      description: The country name of the user.
+                    zip:
+                      type: string
+                      description: A string representing the zip of the user.
+                    zip2:
+                      type: string
+                      description: A string representing the zip2 of the user.
+                    phone:
+                      type: string
+                      description: The phone number of the user.
+                    ayla_dev_kit_num:
+                      type: string
+                      description: A String representing the ayla dev kit number of the user.
+                    terms_accepted:
+                      type: boolean
+                      description: A boolean value indicating if the user accepted the terms and conditions.
+                  required:
+                  - firstname
+                  - lastname
+                  - email
+                  - password
+                  type: object
+                  description: User object.
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 5485304
+                        default: 0
+                      email:
+                        type: string
+                        example: santhoshstalin5333@gmail.com
+                      authentication_token:
+                        type: string
+                      firstname:
+                        type: string
+                        example: stalink
+                      lastname:
+                        type: string
+                        example: kkk
+                      company:
+                        type: string
+                      street:
+                        type: string
+                      city:
+                        type: string
+                      state:
+                        type: string
+                      zip:
+                        type: number
+                      zip2:
+                        type: number
+                      country:
+                        type: string
+                      phone:
+                        type: number
+                      logged_in_at:
+                        type: string
+                      admin:
+                        type: boolean
+                        example: false
+                        default: true
+                      security_key:
+                        type: string
+                      approved:
+                        type: boolean
+                        example: true
+                        default: true
+                      oem_id:
+                        type: string
+                      created_at:
+                        type: string
+                        example: '2026-04-28T06:15:56Z'
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T06:15:56Z'
+                      ayla_dev_kit_num:
+                        type: string
+                      oem_approved:
+                        type: boolean
+                        example: false
+                        default: true
+                      terms_token:
+                        type: string
+                      terms_email_sent_at:
+                        type: string
+                      terms_accepted_at:
+                        type: string
+                        example: '2026-04-28T06:15:56Z'
+                      terms_accepted:
+                        type: boolean
+                        example: true
+                        default: true
+                      origin_oem_id:
+                        type: integer
+                        example: 2
+                        default: 0
+                      phone_country_code:
+                        type: number
+                      uuid:
+                        type: string
+                        example: b7bea922-42c9-11f1-a288-9a12970b6ad8
+                      nickname:
+                        type: string
+                      encrypted_mfa_secret:
+                        type: string
+                        example: 'xVceozQODpjc9j+XaZPVZWJKNsiHlAJYa+ZeYmQzv686nyoLGWltNmoz7POq
+
+                          al7/
+
+                          '
+                      encrypted_mfa_secret_iv:
+                        type: string
+                        example: 'v8mBK37h26dgEn/UAydeLg==
+
+                          '
+                      encrypted_mfa_secret_salt:
+                        type: string
+                        example: '_cmY8P7wiWU46l6ggDIvMIA==
+
+                          '
+                      mfa_method:
+                        type: string
+                      last_mfa_token_at:
+                        type: string
+                      username:
+                        type: string
+                        example: santhoshstalin5333@gmail.com
+                      alternate_email:
+                        type: string
+                      alternate_phone:
+                        type: number
+                      phone_number:
+                        type: number
+                      primary_contact:
+                        type: string
+                        example: email
+                      role_name:
+                        type: string
+                        example: EndUser
+                      mfa_secret:
+                        type: string
+                        example: z5kdqcyk23vvzazr5dickfby44i6lk3c
+              examples:
+                Created:
+                  summary: Created
+                  value:
+                    user:
+                      id: 5485304
+                      email: santhoshstalin5333@gmail.com
+                      authentication_token: null
+                      firstname: stalink
+                      lastname: kkk
+                      company: null
+                      street: null
+                      city: null
+                      state: null
+                      zip: null
+                      zip2: null
+                      country: null
+                      phone: null
+                      logged_in_at: null
+                      admin: false
+                      security_key: null
+                      approved: true
+                      oem_id: null
+                      created_at: '2026-04-28T06:15:56Z'
+                      updated_at: '2026-04-28T06:15:56Z'
+                      ayla_dev_kit_num: null
+                      oem_approved: false
+                      terms_token: null
+                      terms_email_sent_at: null
+                      terms_accepted_at: '2026-04-28T06:15:56Z'
+                      terms_accepted: true
+                      origin_oem_id: 2
+                      phone_country_code: null
+                      uuid: b7bea922-42c9-11f1-a288-9a12970b6ad8
+                      nickname: null
+                      encrypted_mfa_secret: 'xVceozQODpjc9j+XaZPVZWJKNsiHlAJYa+ZeYmQzv686nyoLGWltNmoz7POq
+
+                        al7/
+
+                        '
+                      encrypted_mfa_secret_iv: 'v8mBK37h26dgEn/UAydeLg==
+
+                        '
+                      encrypted_mfa_secret_salt: '_cmY8P7wiWU46l6ggDIvMIA==
+
+                        '
+                      mfa_method: null
+                      last_mfa_token_at: null
+                      username: santhoshstalin5333@gmail.com
+                      alternate_email: null
+                      alternate_phone: null
+                      phone_number: null
+                      primary_contact: email
+                      role_name: EndUser
+                      mfa_secret: z5kdqcyk23vvzazr5dickfby44i6lk3c
+          description: Created
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/create_role_user.json:
+    post:
+      summary: Create role user
+      description: This API creates a user with role and label (created by an OEM admin). After creating, it sends a welcome email to the created user.
+      operationId: create-role-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - firstname
+              - lastname
+              - email
+              - password
+              properties:
+                firstname:
+                  type: string
+                  description: First name of the user.
+                lastname:
+                  type: string
+                  description: Last name of the user.
+                email:
+                  type: string
+                  description: User's email address.
+                password:
+                  type: string
+                  description: User's password.
+                role:
+                  type: string
+                  description: Role for the user.
+                tag:
+                  type: string
+                  description: Role tag for the user.
+                company:
+                  type: string
+                  description: User's company name.
+                street:
+                  type: string
+                  description: User's street address.
+                city:
+                  type: string
+                  description: The city name of the user.
+                state:
+                  type: string
+                  description: The state name of the user.
+                country:
+                  type: string
+                  description: The country name of the user.
+                zip:
+                  type: string
+                  description: A string representing the zip of the user.
+                zip2:
+                  type: string
+                  description: A string representing the zip2 of the user.
+                phone:
+                  type: string
+                  description: The phone number of the user.
+                ayla_dev_kit_num:
+                  type: string
+                  description: A String representing the ayla dev kit number of the user.
+                terms_accepted:
+                  type: boolean
+                  description: A boolean value indicating if the user accepted the terms and conditions.
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n   \"user\":{\n      \"admin\":false,\n      \"approved\":true,\n      \"auth_token\":null,\n      \"ayla_dev_kit_num\":null,\n      \"city\":null,\n      \"company\":null,\n      \"country\":\"USA\",\n      \"created_at\":\"2014-02-21T02:14:20Z\",\n      \"email\":\"toma@aylanetworks.com\",\n      \"firstname\":\"Tom\",\n      \"id\":1000045,\n      \"lastname\":\"Alen\",\n      \"logged_in_at\":null,\n      \"oem_approved\":false,\n      \"oem_id\":null,\n      \"origin_oem_id\":16,\n      \"phone\":null,\n      \"secanswer1\":null,\n      \"secanswer2\":null,\n      \"secanswer3\":null,\n      \"secquestion1\":null,\n      \"secquestion2\":null,\n      \"secquestion3\":null,\n      \"security_key\":null,\n      \"state\":null,\n      \"street\":null,\n      \"terms_accepted\":true,\n      \"terms_accepted_at\":\"2014-02-21T02:14:20Z\",\n      \"terms_email_sent_at\":null,\n      \"terms_token\":null,\n      \"updated_at\":\"2014-02-21T02:14:20Z\",\n      \"zip\":null,\n      \"zip2\":null\n   }\n}"
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      admin:
+                        type: boolean
+                        example: false
+                        default: true
+                      approved:
+                        type: boolean
+                        example: true
+                        default: true
+                      auth_token: {}
+                      ayla_dev_kit_num: {}
+                      city: {}
+                      company: {}
+                      country:
+                        type: string
+                        example: USA
+                      created_at:
+                        type: string
+                        example: '2014-02-21T02:14:20Z'
+                      email:
+                        type: string
+                        example: toma@aylanetworks.com
+                      firstname:
+                        type: string
+                        example: Tom
+                      id:
+                        type: integer
+                        example: 1000045
+                        default: 0
+                      lastname:
+                        type: string
+                        example: Alen
+                      logged_in_at: {}
+                      oem_approved:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_id: {}
+                      origin_oem_id:
+                        type: integer
+                        example: 16
+                        default: 0
+                      phone: {}
+                      secanswer1: {}
+                      secanswer2: {}
+                      secanswer3: {}
+                      secquestion1: {}
+                      secquestion2: {}
+                      secquestion3: {}
+                      security_key: {}
+                      state: {}
+                      street: {}
+                      terms_accepted:
+                        type: boolean
+                        example: true
+                        default: true
+                      terms_accepted_at:
+                        type: string
+                        example: '2014-02-21T02:14:20Z'
+                      terms_email_sent_at: {}
+                      terms_token: {}
+                      updated_at:
+                        type: string
+                        example: '2014-02-21T02:14:20Z'
+                      zip: {}
+                      zip2: {}
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/data.json:
+    post:
+      summary: Create user metadatum
+      description: This API creates a single datum object for caller.
+      operationId: create-user-metadatum
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata value.
+                  required:
+                  - key
+                  type: object
+                  description: Datum object.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    datum:
+                      created_at: '2021-04-07T12:50:12Z'
+                      key: Test
+                      updated_at: '2021-04-07T12:50:12Z'
+                      user_id: 3637421
+                      value: 1
+              schema:
+                type: object
+                properties:
+                  datum:
+                    type: object
+                    properties:
+                      created_at:
+                        type: string
+                        example: '2021-04-07T12:50:12Z'
+                      key:
+                        type: string
+                        example: Test
+                      updated_at:
+                        type: string
+                        example: '2021-04-07T12:50:12Z'
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      value:
+                        type: integer
+                        example: 1
+                        default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/data/{aKey}.json:
+    get:
+      summary: Get user metadatum
+      description: This API returns a single datum object for the specified user.
+      operationId: get-user-metadatum
+      parameters:
+      - name: user_id
+        in: query
+        description: Targeted user ID. Leave blank to target yourself.
+        schema:
+          type: string
+      - name: aKey
+        in: path
+        description: Metadatum key name.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    datum:
+                      created_at: '2021-04-07T12:50:12Z'
+                      key: Test
+                      updated_at: '2021-04-07T12:50:12Z'
+                      user_id: 3637421
+                      value: null
+              schema:
+                type: object
+                properties:
+                  datum:
+                    type: object
+                    properties:
+                      created_at:
+                        type: string
+                        example: '2021-04-07T12:50:12Z'
+                      key:
+                        type: string
+                        example: Test
+                      updated_at:
+                        type: string
+                        example: '2021-04-07T12:50:12Z'
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      value:
+                        type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/data/{datumKey}.json:
+    put:
+      summary: Update user metadatum
+      description: This API updates a single datum object for the caller.
+      operationId: update-user-metadatum
+      parameters:
+      - name: datumKey
+        in: path
+        description: Metadatum key name.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                datum:
+                  properties:
+                    value:
+                      type: string
+                      description: Metadatum key value.
+                  required: []
+                  type: object
+                  description: Datum object.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    datum:
+                      created_at: '2021-04-07T12:50:12Z'
+                      key: Test
+                      updated_at: '2021-04-07T12:52:08Z'
+                      user_id: 3637421
+                      value: '2'
+              schema:
+                type: object
+                properties:
+                  datum:
+                    type: object
+                    properties:
+                      created_at:
+                        type: string
+                        example: '2021-04-07T12:50:12Z'
+                      key:
+                        type: string
+                        example: Test
+                      updated_at:
+                        type: string
+                        example: '2021-04-07T12:52:08Z'
+                      user_id:
+                        type: integer
+                        example: 3637421
+                        default: 0
+                      value:
+                        type: string
+                        example: '2'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    delete:
+      summary: Delete user metadatum
+      description: This API deletes a single datum object for the caller.
+      operationId: delete-user-metadatum
+      parameters:
+      - name: datumKey
+        in: path
+        description: Key in key/value pair.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/disassociate_role_user.json:
+    put:
+      summary: Disassociate role user
+      description: This API disassociates a user role from the caller.
+      operationId: disassociate-role-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              - label_key
+              properties:
+                role:
+                  type: string
+                  description: User role name.
+                label_key:
+                  type: string
+                  description: Role label key.
+                user_id:
+                  type: string
+                  description: user_id to disassociate from. OEM::Admin level privileges are required to use this parameter.
+                user_email:
+                  type: string
+                  description: user_email to disassociate from. OEM::Admin level privileges are required to use this parameter.
+                username:
+                  type: string
+                  description: Username to disassociate from. OEM::Admin level privileges are required to use this parameter.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/disassociate_user.json:
+    put:
+      summary: Disassociate user
+      description: This API disassociates the calling user.
+      operationId: disassociate-user
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '400':
+          description: '400'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/index_by_label.json:
+    get:
+      summary: Get users by label
+      description: This API lists all the users based on the user tag. For example, to get all the users associated with a particular dealer tag.
+      operationId: get-users-by-label
+      parameters:
+      - name: role
+        in: query
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: query
+        description: Key in (key,value) pair.
+        required: true
+        schema:
+          type: string
+      - name: value
+        in: query
+        description: Value in (key,value) pair.
+        required: true
+        schema:
+          type: string
+      - name: paginated
+        in: query
+        description: Indicate if pagination is required or not.
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        description: Indicates number of items to be displayed per page.
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: Page number to be displayed.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n   {\n      \"user\":{\n         \"admin\":false,\n         \"admin_allowed\":false,\n         \"approved\":true,\n         \"country\":\"USA\",\n         \"company\":\"Ayla Networks\",\n         \"created_at\":\"2014-01-23T00:45:43Z\",\n         \"email\":\"dealer@test.com\",\n         \"firstname\":\"Kid\",\n         \"id\":1000015,\n         \"is_oem_admin\":false,\n         \"lastname\":\"ayla\",\n         \"oem_approved\":true,\n         \"oem_id\":null,\n         \"terms_accepted\":false,\n         \"updated_at\":\"2014-01-23T00:45:43Z\",\n         \"awaiting_oem_authorization\":false,\n         \"confirmed\":true\n      }\n   },\n   {\n      \"user\":{\n         \"admin\":false,\n         \"admin_allowed\":false,\n         \"approved\":true,\n         \"country\":\"USA\",\n         \"company\":\"AylaNetworks\",\n         \"created_at\":\"2014-01-23T00:45:44Z\",\n         \"email\":\"dealer2@test.com\",\n         \"firstname\":\"Kid\",\n         \"id\":1000016,\n         \"is_oem_admin\":false,\n         \"lastname\":\"ayla\",\n         \"oem_approved\":true,\n         \"oem_id\":null,\n         \"terms_accepted\":false,\n         \"updated_at\":\"2014-01-23T00:45:44Z\",\n         \"awaiting_oem_authorization\":false,\n         \"confirmed\":true,\n         \"role_tags\":[\n            {\n               \"key\":\"dealer_id\",\n               \"value\":\"abc\"\n            }\n         ]\n      }\n   }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        admin_allowed:
+                          type: boolean
+                          example: false
+                          default: true
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        country:
+                          type: string
+                          example: USA
+                        company:
+                          type: string
+                          example: Ayla Networks
+                        created_at:
+                          type: string
+                          example: '2014-01-23T00:45:43Z'
+                        email:
+                          type: string
+                          example: dealer@test.com
+                        firstname:
+                          type: string
+                          example: Kid
+                        id:
+                          type: integer
+                          example: 1000015
+                          default: 0
+                        is_oem_admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        lastname:
+                          type: string
+                          example: ayla
+                        oem_approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        oem_id: {}
+                        terms_accepted:
+                          type: boolean
+                          example: false
+                          default: true
+                        updated_at:
+                          type: string
+                          example: '2014-01-23T00:45:43Z'
+                        awaiting_oem_authorization:
+                          type: boolean
+                          example: false
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/index_by_oem.json:
+    get:
+      summary: Get users by OEM
+      description: This API returns all users in the Ayla account of the caller.
+      operationId: get-users-by-oem
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n   {\n      \"user\":{\n         \"admin\":false,\n         \"admin_allowed\":false,\n         \"approved\":true,\n         \"country\":\"USA\",\n         \"company\":\"AylaNetworks\",\n         \"created_at\":\"2014-01-23T00:45:43Z\",\n         \"email\":\"dealer@test.com\",\n         \"firstname\":\"Kid\",\n         \"id\":1000015,\n         \"is_oem_admin\":false,\n         \"lastname\":\"ayla\",\n         \"oem_approved\":true,\n         \"oem_id\":null,\n         \"terms_accepted\":false,\n         \"updated_at\":\"2014-01-23T00:45:43Z\",\n         \"awaiting_oem_authorization\":false,\n         \"confirmed\":true\n      }\n   },\n   {\n      \"user\":{\n         \"admin\":false,\n         \"admin_allowed\":false,\n         \"approved\":true,\n         \"country\":\"USA\",\n         \"company\":\"AylaNetworks\",\n         \"created_at\":\"2014-01-23T00:45:44Z\",\n         \"email\":\"dealer2@test.com\",\n         \"firstname\":\"Kid\",\n         \"id\":1000016,\n         \"is_oem_admin\":false,\n         \"lastname\":\"ayla\",\n         \"oem_approved\":true,\n         \"oem_id\":null,\n         \"terms_accepted\":false,\n         \"updated_at\":\"2014-01-23T00:45:44Z\",\n         \"awaiting_oem_authorization\":false,\n         \"confirmed\":true\n      }\n   }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        admin_allowed:
+                          type: boolean
+                          example: false
+                          default: true
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        country:
+                          type: string
+                          example: USA
+                        company:
+                          type: string
+                          example: AylaNetworks
+                        created_at:
+                          type: string
+                          example: '2014-01-23T00:45:43Z'
+                        email:
+                          type: string
+                          example: dealer@test.com
+                        firstname:
+                          type: string
+                          example: Kid
+                        id:
+                          type: integer
+                          example: 1000015
+                          default: 0
+                        is_oem_admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        lastname:
+                          type: string
+                          example: ayla
+                        oem_approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        oem_id: {}
+                        terms_accepted:
+                          type: boolean
+                          example: false
+                          default: true
+                        updated_at:
+                          type: string
+                          example: '2014-01-23T00:45:43Z'
+                        awaiting_oem_authorization:
+                          type: boolean
+                          example: false
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/index_by_role.json:
+    get:
+      summary: Get users by role
+      description: This API lists all the users based on the user role. For example, to get all the dealers with a given dealer role.
+      operationId: get-users-by-role
+      parameters:
+      - name: role
+        in: query
+        description: Role name.
+        required: true
+        schema:
+          type: string
+      - name: key
+        in: query
+        description: Label key.
+        schema:
+          type: string
+      - name: value
+        in: query
+        description: Label value.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - user:
+                      admin: false
+                      admin_allowed: null
+                      approved: true
+                      country: USA
+                      company: WABAC Systems, LLC
+                      created_at: '2011-09-15T22:44:35Z'
+                      email: frederic.shapiro@wabacsystems.com
+                      firstname: Frederic
+                      id: 3
+                      uuid: f906d368-828c-11e5-9609-0ee0c870bcec
+                      is_oem_admin: false
+                      lastname: Shapiro
+                      phone_number: null
+                      oem_approved: false
+                      oem_id: null
+                      terms_accepted: true
+                      updated_at: '2016-09-06T17:40:21Z'
+                      awaiting_oem_authorization: false
+                      confirmed: true
+                      role_tags: []
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    user:
+                      type: object
+                      properties:
+                        admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        admin_allowed:
+                          type: string
+                        approved:
+                          type: boolean
+                          example: true
+                          default: true
+                        country:
+                          type: string
+                          example: USA
+                        company:
+                          type: string
+                          example: WABAC Systems, LLC
+                        created_at:
+                          type: string
+                          example: '2011-09-15T22:44:35Z'
+                        email:
+                          type: string
+                          example: frederic.shapiro@wabacsystems.com
+                        firstname:
+                          type: string
+                          example: Frederic
+                        id:
+                          type: integer
+                          example: 3
+                          default: 0
+                        uuid:
+                          type: string
+                          example: f906d368-828c-11e5-9609-0ee0c870bcec
+                        is_oem_admin:
+                          type: boolean
+                          example: false
+                          default: true
+                        lastname:
+                          type: string
+                          example: Shapiro
+                        phone_number:
+                          type: number
+                        oem_approved:
+                          type: boolean
+                          example: false
+                          default: true
+                        oem_id:
+                          type: string
+                        terms_accepted:
+                          type: boolean
+                          example: true
+                          default: true
+                        updated_at:
+                          type: string
+                          example: '2016-09-06T17:40:21Z'
+                        awaiting_oem_authorization:
+                          type: boolean
+                          example: false
+                          default: true
+                        confirmed:
+                          type: boolean
+                          example: true
+                          default: true
+                        role_tags:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/revoke_label.json:
+    put:
+      summary: Revoke label
+      description: 'This API removes a role label of a user. **NOTE**: Either "username" or "user_email" is required.'
+      operationId: revoke-label
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              - label_key
+              - user_email
+              - username
+              properties:
+                user_email:
+                  type: string
+                  description: Email of the user. Either user_email or username is required.
+                username:
+                  type: string
+                  description: Username of the user. Either user_email or username is required.
+                role:
+                  type: string
+                  description: User role name.
+                label_key:
+                  type: string
+                  description: Role label key.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/revoke_role.json:
+    put:
+      summary: Revoke role
+      description: 'This API removes a role of an existing user.**NOTE**: Either "username" or "user_email" is required.'
+      operationId: revoke-role
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - role
+              properties:
+                user_email:
+                  type: string
+                  description: User email address.  Either "username" or "user_email" is required.
+                username:
+                  type: string
+                  description: Username of the user. Either "username" or "user_email" is required.
+                role:
+                  type: string
+                  description: Role name of the user.
+            examples: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/role_users.json:
+    get:
+      summary: Get role user
+      description: This API lists all the user roles of a user.
+      operationId: get-role-users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - user_email
+              properties:
+                user_email:
+                  type: string
+                  description: User email address.
+                oem:
+                  type: string
+                  description: Unique OEM identifier. By default, consumer’s OEM id.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "[\n   {\n      \"role\":\"EndUser\",\n      \"label\":{\n         \"key\":\"value\"\n      }\n   }\n]"
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    role:
+                      type: string
+                      example: EndUser
+                    label:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: value
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/shares.json:
+    post:
+      summary: Create share
+      description: 'This API creates a single shared resource or multiple shared resources depending on the format of the request data.
+
+
+        To share a resource that you own, omit the ```owner_id``` field, and use the ```user_email``` field to specify the receiver of the share.
+
+        To (as an admin) create a share between two users, use the ```owner_id``` field to specify the owner of the shared resource, and the ```user_email``` field to specify the receiver of the share. In either case, the ```user_email``` must exist within the OEM account. If ```resource_name``` is device, then ```resource_id``` must be a dsn.
+
+
+        To create multiple shared resources with a single call to this API, use an array in the request data. The following example request uses the default template:
+
+
+        {
+
+        "shares": [
+
+        {
+
+        "resource_name": "",
+
+        "resource_id": "",
+
+        "role_name": "",
+
+        "user_email": "",
+
+        "owner_id": 0,
+
+        "operation": "",
+
+        "start_date_at": "",
+
+        "end_date_at": ""
+
+        }
+
+        ]
+
+        }
+
+
+        You can create a share using a specific template using the "email_template_id" parameter as a query parameter.
+
+
+        **NOTE**: A user can’t have more than one share for the same resource_name, resource_id.'
+      operationId: create-share
+      parameters:
+      - name: email_template_id
+        in: query
+        description: Custom email template to be used while sending the email to the target user.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                share:
+                  type: array
+                  items:
+                    properties:
+                      resource_name:
+                        type: string
+                        default: ''
+                      resource_id:
+                        type: string
+                      role_name:
+                        type: string
+                      user_email:
+                        type: string
+                      owner_id:
+                        type: integer
+                      operation:
+                        type: string
+                      start_date_at:
+                        type: string
+                      end_date_at:
+                        type: string
+                    type: object
+              required:
+              - share
+            examples: {}
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    share:
+                      id: 925139
+                      owner_id: 5485317
+                      user_id: 4254720
+                      resource_name: device
+                      resource_id: AC000W000340333
+                      operation: read
+                      end_date_at: null
+                      start_date_at: null
+                      grant_id: 157654
+                      created_at: '2026-04-28T10:41:57Z'
+                      updated_at: '2026-04-28T10:41:57Z'
+                      accepted: true
+                      accepted_at: null
+                      tag: null
+                      owner_profile:
+                        firstname: Jennifer
+                        lastname: Griffin
+                        email: aylaadminautomation@aylanetworks.com
+                      user_email: null
+                      user_profile:
+                        firstname: AutomationUser176
+                        lastname: LastName846
+                        email: null
+              schema:
+                type: object
+                properties:
+                  share:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 925139
+                        default: 0
+                      owner_id:
+                        type: integer
+                        example: 5485317
+                        default: 0
+                      user_id:
+                        type: integer
+                        example: 4254720
+                        default: 0
+                      resource_name:
+                        type: string
+                        example: device
+                      resource_id:
+                        type: string
+                        example: AC000W000340333
+                      operation:
+                        type: string
+                        example: read
+                      end_date_at:
+                        type: string
+                        format: date
+                      start_date_at:
+                        type: string
+                        format: date
+                      grant_id:
+                        type: integer
+                        example: 157654
+                        default: 0
+                      created_at:
+                        type: string
+                        example: '2026-04-28T10:41:57Z'
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T10:41:57Z'
+                      accepted:
+                        type: boolean
+                        example: true
+                        default: true
+                      accepted_at:
+                        type: string
+                      tag:
+                        type: string
+                      owner_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: Jennifer
+                          lastname:
+                            type: string
+                            example: Griffin
+                          email:
+                            type: string
+                            example: aylaadminautomation@aylanetworks.com
+                      user_email:
+                        type: string
+                      user_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: AutomationUser176
+                          lastname:
+                            type: string
+                            example: LastName846
+                          email: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      x-readme: {}
+      tags:
+      - Users
+      security:
+      - sec0: []
+    get:
+      summary: Get shares
+      description: 'This API returns an array of shared resources (e.g. devices, groups).
+
+
+        The response data has the following basic format:
+
+
+        [
+
+        {
+
+        "share": {},
+
+        {
+
+        "share": {}
+
+        }
+
+        ]'
+      operationId: get-shares
+      parameters:
+      - name: owner_id
+        in: query
+        description: User who shared the resources. Leave blank to indicate yourself.
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        description: User with whom the resources were shared. Leave blank for all users.
+        schema:
+          type: string
+      - name: resource_name
+        in: query
+        description: Name of resource class (e.g. device, group). Leave blank for all resources. **Mandatory** if resource_id parameter is included in the query.
+        schema:
+          type: string
+      - name: resource_id
+        in: query
+        description: dsn if resource_name is device.
+        schema:
+          type: string
+      - name: expired
+        in: query
+        description: true means include expired shares, too.
+        schema:
+          type: boolean
+          default: false
+      - name: accepted
+        in: query
+        description: true=accepted shares; false=pending shares; both=accepted & pending shares.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    share:
+                      id: 925139
+                      owner_id: 5485317
+                      user_id: 4254720
+                      resource_name: device
+                      resource_id: AC000W000340333
+                      operation: read
+                      end_date_at: null
+                      start_date_at: null
+                      grant_id: 157654
+                      created_at: '2026-04-28T10:41:57Z'
+                      updated_at: '2026-04-28T10:41:57Z'
+                      accepted: true
+                      accepted_at: null
+                      tag: null
+                      owner_profile:
+                        firstname: Jennifer
+                        lastname: Griffin
+                        email: aylaadminautomation@aylanetworks.com
+                      user_email: null
+                      user_profile:
+                        firstname: AutomationUser176
+                        lastname: LastName846
+                        email: null
+              schema:
+                type: object
+                properties:
+                  share:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 925139
+                        default: 0
+                      owner_id:
+                        type: integer
+                        example: 5485317
+                        default: 0
+                      user_id:
+                        type: integer
+                        example: 4254720
+                        default: 0
+                      resource_name:
+                        type: string
+                        example: device
+                      resource_id:
+                        type: string
+                        example: AC000W000340333
+                      operation:
+                        type: string
+                        example: read
+                      end_date_at:
+                        type: string
+                        format: date
+                      start_date_at:
+                        type: string
+                        format: date
+                      grant_id:
+                        type: integer
+                        example: 157654
+                        default: 0
+                      created_at:
+                        type: string
+                        example: '2026-04-28T10:41:57Z'
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T10:41:57Z'
+                      accepted:
+                        type: boolean
+                        example: true
+                        default: true
+                      accepted_at:
+                        type: string
+                      tag:
+                        type: string
+                      owner_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: Jennifer
+                          lastname:
+                            type: string
+                            example: Griffin
+                          email:
+                            type: string
+                            example: aylaadminautomation@aylanetworks.com
+                      user_email:
+                        type: string
+                      user_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: AutomationUser176
+                          lastname:
+                            type: string
+                            example: LastName846
+                          email: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    delete:
+      summary: Delete share by User ID
+      description: This API unshares a resource (specified by ```resource_name``` and ```resource_id```) from the ```userId```.
+      operationId: delete-share-by-user-id
+      parameters:
+      - name: owner_id
+        in: query
+        description: User who shared the resources. Leave blank to indicate yourself.
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        description: User with whom the resources were shared. Leave blank for all users.
+        schema:
+          type: string
+      - name: resource_name
+        in: query
+        description: Name of resource class (e.g. device, group). Leave blank for all resources.
+        required: true
+        schema:
+          type: string
+      - name: resource_id
+        in: query
+        description: DSN if resource_name is a device.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: No Content
+          content: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/shares/received.json:
+    get:
+      summary: Get received shares
+      description: This API returns a list of not expired received shares that have been shared with the current user by another Ayla registered user.
+      operationId: get-received-shares
+      parameters:
+      - name: owner_id
+        in: query
+        description: User who shared the resources. Leave blank for all sharers.
+        schema:
+          type: string
+      - name: owner_uuid
+        in: query
+        description: uuid of the share’s owner.
+        schema:
+          type: string
+      - name: user_id
+        in: query
+        description: User with whom the resources were shared. By default, the current user.
+        schema:
+          type: string
+      - name: user_uuid
+        in: query
+        description: uuid of the user’s target user. By default, the current user.
+        schema:
+          type: string
+      - name: resource_name
+        in: query
+        description: Name of resource class (e.g. device, group). Leave blank for all resources.
+        schema:
+          type: string
+      - name: resource_id
+        in: query
+        description: DSN if resource_name is device
+        schema:
+          type: string
+      - name: expired
+        in: query
+        description: true means include expired shares, too
+        schema:
+          type: boolean
+      - name: accepted
+        in: query
+        description: true=accepted shares; false=pending shares; both=accepted & pending shares.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - share:
+                      id: 928031
+                      owner_id: 5485325
+                      user_id: 5485317
+                      resource_name: device
+                      resource_id: AC000W047954797
+                      operation: read
+                      end_date_at: null
+                      start_date_at: null
+                      grant_id: 157676
+                      created_at: '2026-05-06T10:23:42Z'
+                      updated_at: '2026-05-06T10:23:42Z'
+                      accepted: true
+                      accepted_at: null
+                      tag: null
+                      owner_profile:
+                        firstname: Stalin
+                        lastname: Kalimuthu
+                        email: stalinkalimuthu13@gmail.com
+                      user_email: aylaadminautomation@aylanetworks.com
+                      user_profile:
+                        firstname: Jennifer
+                        lastname: Griffin
+                        email: aylaadminautomation@aylanetworks.com
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    share:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 928031
+                          default: 0
+                        owner_id:
+                          type: integer
+                          example: 5485325
+                          default: 0
+                        user_id:
+                          type: integer
+                          example: 5485317
+                          default: 0
+                        resource_name:
+                          type: string
+                          example: device
+                        resource_id:
+                          type: string
+                          example: AC000W047954797
+                        operation:
+                          type: string
+                          example: read
+                        end_date_at:
+                          type: string
+                          format: date
+                        start_date_at:
+                          type: string
+                          format: date
+                        grant_id:
+                          type: integer
+                          example: 157676
+                          default: 0
+                        created_at:
+                          type: string
+                          example: '2026-05-06T10:23:42Z'
+                        updated_at:
+                          type: string
+                          example: '2026-05-06T10:23:42Z'
+                        accepted:
+                          type: boolean
+                          example: true
+                          default: true
+                        accepted_at:
+                          type: string
+                          format: date
+                        tag:
+                          type: string
+                        owner_profile:
+                          type: object
+                          properties:
+                            firstname:
+                              type: string
+                              example: Stalin
+                            lastname:
+                              type: string
+                              example: Kalimuthu
+                            email:
+                              type: string
+                              example: stalinkalimuthu13@gmail.com
+                        user_email:
+                          type: string
+                          example: aylaadminautomation@aylanetworks.com
+                        user_profile:
+                          type: object
+                          properties:
+                            firstname:
+                              type: string
+                              example: Jennifer
+                            lastname:
+                              type: string
+                              example: Griffin
+                            email:
+                              type: string
+                              example: aylaadminautomation@aylanetworks.com
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/shares/{shareId}.json:
+    get:
+      summary: Get share
+      description: This API returns the specified share.
+      operationId: get-share
+      parameters:
+      - name: shareId
+        in: path
+        description: Unique share identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner_id:
+                  type: string
+                  description: Unique identifier of the share’s owner.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    share:
+                      id: 925139
+                      owner_id: 5485317
+                      user_id: 4254720
+                      resource_name: device
+                      resource_id: AC000W000340333
+                      operation: read
+                      end_date_at: null
+                      start_date_at: null
+                      grant_id: 157654
+                      created_at: '2026-04-28T10:41:57Z'
+                      updated_at: '2026-04-28T10:41:57Z'
+                      accepted: true
+                      accepted_at: null
+                      tag: null
+                      owner_profile:
+                        firstname: Jennifer
+                        lastname: Griffin
+                        email: aylaadminautomation@aylanetworks.com
+                      user_email: null
+                      user_profile:
+                        firstname: AutomationUser176
+                        lastname: LastName846
+                        email: null
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    put:
+      summary: Update share
+      description: This API updates the specified share.
+      operationId: update-share
+      parameters:
+      - name: shareId
+        in: path
+        description: Unique share identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner_id:
+                  type: string
+                  description: 'ID of the share’s owner (by default: current user).'
+                share:
+                  properties:
+                    role_name:
+                      type: string
+                      description: Role’s name (either use this parameter or the next parameter "role" - they work identically).
+                    role:
+                      properties:
+                        name:
+                          type: string
+                          description: 'Role name. Example: OEM::Admin.'
+                      required: []
+                      type: object
+                    operation:
+                      type: string
+                      description: '"read" or "write" operation.'
+                      default: read
+                    start_date_at:
+                      type: string
+                      description: UTC DateTime at which the share begins in the format YYYY-MM-DDTHH:MM:SSZ.
+                      format: date
+                    end_date_at:
+                      type: string
+                      description: UTC DateTime at which the share ends in the format YYYY-MM-DDTHH:MM:SSZ.
+                      format: date
+                    email_template_id:
+                      type: string
+                      description: Custom email template to be used while sending the email to the target user.
+                    user_email:
+                      type: string
+                      description: Email of the user to grant permission.
+                    username:
+                      type: string
+                      description: Email of the user to grant permission.
+                    phone:
+                      type: string
+                      description: Phone number of the user with country code in E164 format.
+                  required: []
+                  type: object
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  share:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 925139
+                        default: 0
+                      user_id:
+                        type: integer
+                        example: 3034926
+                        default: 0
+                      owner_id:
+                        type: integer
+                        example: 5485317
+                        default: 0
+                      tag:
+                        type: string
+                      operation:
+                        type: string
+                        example: write
+                      resource_id:
+                        type: string
+                        example: AC000W000340333
+                      resource_name:
+                        type: string
+                        example: device
+                      end_date_at:
+                        type: string
+                        format: date
+                      start_date_at:
+                        type: string
+                        format: date
+                      grant_id:
+                        type: integer
+                        example: 157654
+                        default: 0
+                      created_at:
+                        type: string
+                        example: '2026-04-28T10:41:57Z'
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:06:21Z'
+                      accepted:
+                        type: boolean
+                        example: true
+                        default: true
+                      accepted_at:
+                        type: string
+                      owner_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: Jennifer
+                          lastname:
+                            type: string
+                            example: Griffin
+                          email:
+                            type: string
+                            example: aylaadminautomation@aylanetworks.com
+                      user_email:
+                        type: string
+                      user_profile:
+                        type: object
+                        properties:
+                          firstname:
+                            type: string
+                            example: FirstNamePhoneNumber
+                          lastname:
+                            type: string
+                            example: LastNamePhoneNumber
+                          email: {}
+              examples:
+                Result:
+                  summary: Result
+                  value:
+                    share:
+                      id: 925139
+                      user_id: 3034926
+                      owner_id: 5485317
+                      tag: null
+                      operation: write
+                      resource_id: AC000W000340333
+                      resource_name: device
+                      end_date_at: null
+                      start_date_at: null
+                      grant_id: 157654
+                      created_at: '2026-04-28T10:41:57Z'
+                      updated_at: '2026-04-28T11:06:21Z'
+                      accepted: true
+                      accepted_at: null
+                      owner_profile:
+                        firstname: Jennifer
+                        lastname: Griffin
+                        email: aylaadminautomation@aylanetworks.com
+                      user_email: null
+                      user_profile:
+                        firstname: FirstNamePhoneNumber
+                        lastname: LastNamePhoneNumber
+                        email: null
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    delete:
+      summary: Delete share
+      description: This API unshares the specified resource.
+      operationId: delete-share
+      parameters:
+      - name: shareId
+        in: path
+        description: Unique share identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                owner_id:
+                  type: string
+                  description: ID of the share’s owner. By default, the current user.
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/{user_id}/contacts.json:
+    post:
+      summary: Create user contact
+      description: This API creates a new contact associated with the specified user.
+      operationId: create-user-contact
+      parameters:
+      - name: user_id
+        in: path
+        description: User unique identifier
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first name:
+                  type: string
+                  description: The contact firstname.
+                lastname:
+                  type: string
+                  description: The contact lastname.
+                display_name:
+                  type: string
+                  description: The contact name to be displayed. If it is empty it will be set to “<firstname> <lastname>”.
+                email:
+                  type: string
+                  description: The contact email.
+                phone_country_code:
+                  type: string
+                  description: The contact phone country code. It’s **mandatory** when phone_number is sent.
+                phone_number:
+                  type: string
+                  description: The contact phone number.
+                street_address:
+                  type: string
+                  description: The contact street address.
+                zip_code:
+                  type: string
+                  description: The contact zip code.
+                country:
+                  type: string
+                  description: The contact country.
+                metadata:
+                  type: string
+                  description: The contact metadata.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+              schema:
+                type: object
+                properties:
+                  contact:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 549462
+                        default: 0
+                      display_name:
+                        type: string
+                        example: Stalin K
+                      firstname:
+                        type: string
+                        example: Stalin
+                      lastname:
+                        type: string
+                        example: Kalimuthu
+                      email:
+                        type: string
+                        example: stalinkalimuthu13@gmail.com
+                      phone_country_code:
+                        type: string
+                        example: '91'
+                      phone_number:
+                        type: string
+                        example: '98765432'
+                      street_address:
+                        type: string
+                        example: 6th street
+                      zip_code:
+                        type: string
+                        example: '876543'
+                      country:
+                        type: string
+                        example: India
+                      updated_at:
+                        type: string
+                        example: '2026-04-28T11:22:18Z'
+                      metadata:
+                        type: string
+                        example: testing
+                      sms_accept:
+                        type: string
+                        example: not_req
+                      email_accept:
+                        type: string
+                        example: not_req
+                      notes:
+                        type: string
+                      sms_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      email_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      push_notification:
+                        type: boolean
+                        example: false
+                        default: true
+                      oem_models:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    get:
+      summary: Get user contacts
+      description: 'This API returns an array of contacts associated with the specified user.
+
+
+        The API performs a case-insensitive string compare on the field(s) corresponding to the query parameter(s) included in the invocation, logically ANDing the fields. Unicode characters are acceptable (e.g. 田中実 or 王芳 or غادة شعاع).
+
+
+        Refer to this table for valid (Country Codes)[https://countrycode.org/].'
+      operationId: get-user-contacts
+      parameters:
+      - name: user_id
+        in: path
+        description: User ID of owner of contact list to return.
+        schema:
+          type: string
+        required: true
+      - name: firstname
+        in: query
+        description: Match firstname field of contact
+        schema:
+          type: string
+      - name: lastname
+        in: query
+        description: Match lastname field of contact
+        schema:
+          type: string
+      - name: display_name
+        in: query
+        description: Match display_name field of contact
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Match email field of contact
+        schema:
+          type: string
+      - name: phone_country_code
+        in: query
+        description: Country code
+        schema:
+          type: string
+      - name: street_address
+        in: query
+        description: Match street_address field of contact
+        schema:
+          type: string
+      - name: zip_code
+        in: query
+        description: Match zip_code field of contact
+        schema:
+          type: string
+      - name: country
+        in: query
+        description: Match country field of contact
+        schema:
+          type: string
+      - name: metadata
+        in: query
+        description: Match metadata field of contact
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    contact:
+                      id: 549462
+                      display_name: Stalin K
+                      firstname: Stalin
+                      lastname: Kalimuthu
+                      email: stalinkalimuthu13@gmail.com
+                      phone_country_code: '91'
+                      phone_number: '98765432'
+                      street_address: 6th street
+                      zip_code: '876543'
+                      country: India
+                      updated_at: '2026-04-28T11:22:18Z'
+                      metadata: testing
+                      sms_accept: not_req
+                      email_accept: not_req
+                      notes: null
+                      sms_notification: false
+                      email_notification: false
+                      push_notification: false
+                      oem_models: []
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /api/v1/users/{user_id}/data.json:
+    get:
+      summary: Get user metadata
+      description: This API returns user metadata.
+      operationId: get-user-metadata
+      parameters:
+      - name: keys
+        in: query
+        description: An array of metadata key names. Exact match or s%=beginning with s; %s%=contains s; %s=ends with s.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: user_id
+        in: path
+        description: Unique user identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - datum:
+                      created_at: '2021-04-07T12:50:12Z'
+                      key: Test
+                      updated_at: '2021-04-07T12:50:12Z'
+                      user_id: 3637421
+                      value: null
+                  - datum:
+                      created_at: '2021-01-06T07:23:48Z'
+                      key: TestDatum
+                      updated_at: '2021-01-06T11:18:53Z'
+                      user_id: 3637421
+                      value: '4'
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    datum:
+                      type: object
+                      properties:
+                        created_at:
+                          type: string
+                          example: '2021-04-07T12:50:12Z'
+                        key:
+                          type: string
+                          example: Test
+                        updated_at:
+                          type: string
+                          example: '2021-04-07T12:50:12Z'
+                        user_id:
+                          type: integer
+                          example: 3637421
+                          default: 0
+                        value:
+                          type: string
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/confirmation.json:
+    post:
+      summary: Send confirmation instruction
+      description: This API sends confirmation instructions.
+      operationId: send-how-to-confirm
+      parameters:
+      - name: user.email_template_id
+        in: query
+        description: Email template identifier.
+        schema:
+          type: string
+      - name: user.email_subject
+        in: query
+        description: Custom email subject.
+        schema:
+          type: string
+      - name: user.email_body_html
+        in: query
+        description: Custom email body.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    email:
+                      type: string
+                      description: User email address.
+                    application:
+                      properties:
+                        app_id:
+                          type: string
+                          description: Unique application identifier.
+                        app_secret:
+                          type: string
+                          description: Application secret string.
+                      required:
+                      - app_id
+                      - app_secret
+                      type: object
+                  required:
+                  - email
+                  type: object
+                  description: User object.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    put:
+      summary: Confirm user account
+      description: This API confirms the user account based on the confirmation token supplied.
+      operationId: confirm-user-account
+      parameters:
+      - name: confirmation_token
+        in: query
+        description: Confirmation token found in email.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    admin: false
+                    alternate_email: null
+                    approved: true
+                    city: Chennai
+                    country: India
+                    created_at: '2026-04-28T08:57:04Z'
+                    email: stalinkalimuthu13@gmail.com
+                    firstname: Stalin
+                    id: 5485325
+                    lastname: Kalimuthu
+                    oem_approved: false
+                    origin_oem_id: 2
+                    phone_number: null
+                    primary_contact: email
+                    phone: '876543219'
+                    phone_country_code: '91'
+                    street: 4th street
+                    terms_accepted: false
+                    terms_accepted_at: '2026-04-28T08:57:04Z'
+                    updated_at: '2026-04-28T08:59:59Z'
+                    username: stalinkalimuthu13@gmail.com
+                    uuid: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                    zip: '678906'
+                    dealers: []
+              schema:
+                type: object
+                properties:
+                  admin:
+                    type: boolean
+                    example: false
+                    default: true
+                  alternate_email:
+                    type: string
+                  approved:
+                    type: boolean
+                    example: true
+                    default: true
+                  city:
+                    type: string
+                    example: Chennai
+                  country:
+                    type: string
+                    example: India
+                  created_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  email:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  firstname:
+                    type: string
+                    example: Stalin
+                  id:
+                    type: integer
+                    example: 5485325
+                    default: 0
+                  lastname:
+                    type: string
+                    example: Kalimuthu
+                  oem_approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  origin_oem_id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  phone_number:
+                    type: number
+                  primary_contact:
+                    type: string
+                    example: email
+                  phone:
+                    type: string
+                    example: '876543219'
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  street:
+                    type: string
+                    example: 4th street
+                  terms_accepted:
+                    type: boolean
+                    example: false
+                    default: true
+                  terms_accepted_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  updated_at:
+                    type: string
+                    example: '2026-04-28T08:59:59Z'
+                  username:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  uuid:
+                    type: string
+                    example: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                  zip:
+                    type: string
+                    example: '678906'
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/get_user_profile.json:
+    get:
+      summary: Get user profile
+      description: This API returns information about the user account of the caller.
+      operationId: get-user-profile-1
+      parameters:
+      - name: access_token
+        in: query
+        description: Auth token of the user to retrieve profile information.
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: ID of the user to retrieve profile of.
+        schema:
+          type: string
+      - name: uuid
+        in: query
+        description: uuid of the user to retrieve profile of.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    approved: true
+                    confirmed: true
+                    city: Chennai
+                    company: null
+                    confirmed_at: '2026-04-28T08:59:59Z'
+                    country: India
+                    created_at: '2026-04-28T08:57:04Z'
+                    email: stalinkalimuthu13@gmail.com
+                    firstname: Stalin
+                    lastname: Kalimuthu
+                    phone_country_code: '91'
+                    phone: '876543219'
+                    primary_contact: email
+                    state: null
+                    street: 4th street
+                    updated_at: '2026-04-28T09:01:43Z'
+                    username: stalinkalimuthu13@gmail.com
+                    uuid: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                    zip: '678906'
+                    dealers: []
+              schema:
+                type: object
+                properties:
+                  approved:
+                    type: boolean
+                    example: true
+                    default: true
+                  confirmed:
+                    type: boolean
+                    example: true
+                    default: true
+                  city:
+                    type: string
+                    example: Chennai
+                  company:
+                    type: string
+                  confirmed_at:
+                    type: string
+                    example: '2026-04-28T08:59:59Z'
+                  country:
+                    type: string
+                    example: India
+                  created_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  email:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  firstname:
+                    type: string
+                    example: Stalin
+                  lastname:
+                    type: string
+                    example: Kalimuthu
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  phone:
+                    type: string
+                    example: '876543219'
+                  primary_contact:
+                    type: string
+                    example: email
+                  state:
+                    type: string
+                  street:
+                    type: string
+                    example: 4th street
+                  updated_at:
+                    type: string
+                    example: '2026-04-28T09:01:43Z'
+                  username:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  uuid:
+                    type: string
+                    example: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                  zip:
+                    type: string
+                    example: '678906'
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/password.json:
+    post:
+      summary: Reset password
+      description: This API is used to reset password for a confirmed and approved user.
+      operationId: send-how-to-reset
+      parameters:
+      - name: email_template_id
+        in: query
+        description: Unique email template identifier.
+        schema:
+          type: string
+      - name: email_subject
+        in: query
+        description: Email subject string.
+        schema:
+          type: string
+      - name: email_body_html
+        in: query
+        description: Custom email body.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    email:
+                      type: string
+                      description: User email address.
+                    application:
+                      properties:
+                        app_id:
+                          type: string
+                          description: Unique application identifier.
+                        app_secret:
+                          type: string
+                          description: Application secret string.
+                      required:
+                      - app_id
+                      - app_secret
+                      type: object
+                  required:
+                  - email
+                  type: object
+                  description: User object.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    put:
+      summary: Reset password of API caller
+      description: This API updates a user’s password using a reset password token.
+      operationId: reset-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    reset_password_token:
+                      type: string
+                      description: Token used to validate the password reset request.
+                    password:
+                      type: string
+                      description: New password for the user account.
+                    password_confirmation:
+                      type: string
+                      description: Confirmation of the new password. Must match password.
+                  type: object
+                  description: User object.
+                  required:
+                  - reset_password_token
+                  - password
+                  - password_confirmation
+      responses:
+        '204':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                No Content:
+                  summary: No Content
+                  value: '{}'
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/refresh_token.json:
+    post:
+      summary: Refresh token
+      description: This API returns a new access_token and refresh_token.
+      operationId: refresh-token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    refresh_token:
+                      type: string
+                      description: Refresh token string.
+                  required: []
+                  type: object
+                  description: User object.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    access_token: 4fe4edc2acf746aeac4c9003d0bca1b5
+                    expires_in: 86399
+                    refresh_token: cf24bc7616874f7fb59f27f09a1e0f7d
+                    role: EndUser
+                    role_tags: []
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    example: 4fe4edc2acf746aeac4c9003d0bca1b5
+                  expires_in:
+                    type: integer
+                    example: 86399
+                    default: 0
+                  refresh_token:
+                    type: string
+                    example: cf24bc7616874f7fb59f27f09a1e0f7d
+                  role:
+                    type: string
+                    example: EndUser
+                  role_tags:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/sign_out.json:
+    post:
+      summary: Sign out
+      description: This API is used to sign a user out of the Ayla IoT Cloud service.
+      operationId: return-tokens
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  properties:
+                    access_token:
+                      type: string
+                      description: Token supplied to the user.
+                  required:
+                  - access_token
+                  type: object
+                  description: User object.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    logout: true
+              schema:
+                type: object
+                properties:
+                  logout:
+                    type: boolean
+                    example: true
+                    default: true
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/update_email.json:
+    put:
+      summary: Update email
+      description: 'This API updates the email associated with the end-user account.
+
+        It updates the username with email if primary_contact is email.
+
+        The API also invalidates the API caller''s current access token requiring the caller to invoke ```getTokens``` to obtain new tokens.'
+      operationId: update-email
+      parameters:
+      - name: email
+        in: query
+        description: New email address.
+        required: true
+        schema:
+          type: string
+      - name: uuid
+        in: query
+        description: UUID of the end-user. <br><b>NOTE:</b> <ul><li>If an end-user updates their email from the mobile app, there's no need to pass the UUID manually.</li> <li>If an OEM admin updates an end-user's email, passing the end-user's UUID is mandatory.</li></ul>
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/{user_id}.json:
+    get:
+      summary: Get user by ID
+      description: This API returns information about the specified user.
+      operationId: get-user-by-id
+      parameters:
+      - name: user_id
+        in: path
+        description: User unique identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    admin: false
+                    approved: true
+                    confirmed: true
+                    ayla_dev_kit_num: null
+                    city: Chennai
+                    company: null
+                    country: India
+                    created_at: '2026-04-28T08:57:04Z'
+                    email: stalinkalimuthu13@gmail.com
+                    firstname: Stalin
+                    id: 5485325
+                    lastname: Kalimuthu
+                    oem_approved: false
+                    oem_id: null
+                    oem_name: null
+                    origin_oem_id: 2
+                    origin_oem_name: Ayla
+                    phone_country_code: '91'
+                    phone: '876543219'
+                    primary_contact: email
+                    state: null
+                    street: 4th street
+                    terms_accepted: false
+                    terms_accepted_at: '2026-04-28T08:57:04Z'
+                    terms_email_sent_at: null
+                    terms_token: null
+                    updated_at: '2026-04-28T09:24:42Z'
+                    username: stalinkalimuthu13@gmail.com
+                    zip: '678906'
+                    uuid: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    confirmation_sent_at: '2026-04-28T08:57:04Z'
+                    dealers: []
+                    failed_attempts: 0
+              schema:
+                type: object
+                properties:
+                  admin:
+                    type: boolean
+                    example: false
+                    default: true
+                  approved:
+                    type: boolean
+                    example: true
+                    default: true
+                  confirmed:
+                    type: boolean
+                    example: true
+                    default: true
+                  ayla_dev_kit_num:
+                    type: number
+                  city:
+                    type: string
+                    example: Chennai
+                  company:
+                    type: string
+                  country:
+                    type: string
+                    example: India
+                  created_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  email:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  firstname:
+                    type: string
+                    example: Stalin
+                  id:
+                    type: integer
+                    example: 5485325
+                    default: 0
+                  lastname:
+                    type: string
+                    example: Kalimuthu
+                  oem_approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  oem_id:
+                    type: string
+                  oem_name:
+                    type: string
+                  origin_oem_id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  origin_oem_name:
+                    type: string
+                    example: Ayla
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  phone:
+                    type: string
+                    example: '876543219'
+                  primary_contact:
+                    type: string
+                    example: email
+                  state:
+                    type: string
+                  street:
+                    type: string
+                    example: 4th street
+                  terms_accepted:
+                    type: boolean
+                    example: false
+                    default: true
+                  terms_accepted_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  terms_email_sent_at:
+                    type: string
+                  terms_token:
+                    type: string
+                  updated_at:
+                    type: string
+                    example: '2026-04-28T09:24:42Z'
+                  username:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  zip:
+                    type: string
+                    example: '678906'
+                  uuid:
+                    type: string
+                    example: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 13
+                          default: 0
+                        name:
+                          type: string
+                          example: EndUser
+                  confirmation_sent_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  failed_attempts:
+                    type: integer
+                    example: 0
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /users/{uuid}.json:
+    get:
+      summary: Get user by universal user ID
+      description: This API returns information about the specified user.
+      operationId: get-user-by-universal-user-id
+      parameters:
+      - name: uuid
+        in: path
+        description: Universal user identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    admin: false
+                    approved: true
+                    confirmed: true
+                    ayla_dev_kit_num: null
+                    city: Chennai
+                    company: null
+                    country: India
+                    created_at: '2026-04-28T08:57:04Z'
+                    email: stalinkalimuthu13@gmail.com
+                    firstname: Stalin
+                    id: 5485325
+                    lastname: Kalimuthu
+                    oem_approved: false
+                    oem_id: null
+                    oem_name: null
+                    origin_oem_id: 2
+                    origin_oem_name: Ayla
+                    phone_country_code: '91'
+                    phone: '876543219'
+                    primary_contact: email
+                    state: null
+                    street: 4th street
+                    terms_accepted: false
+                    terms_accepted_at: '2026-04-28T08:57:04Z'
+                    terms_email_sent_at: null
+                    terms_token: null
+                    updated_at: '2026-04-28T09:24:42Z'
+                    username: stalinkalimuthu13@gmail.com
+                    zip: '678906'
+                    uuid: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                    roles:
+                    - id: 13
+                      name: EndUser
+                    confirmation_sent_at: '2026-04-28T08:57:04Z'
+                    dealers: []
+                    failed_attempts: 0
+              schema:
+                type: object
+                properties:
+                  admin:
+                    type: boolean
+                    example: false
+                    default: true
+                  approved:
+                    type: boolean
+                    example: true
+                    default: true
+                  confirmed:
+                    type: boolean
+                    example: true
+                    default: true
+                  ayla_dev_kit_num:
+                    type: number
+                  city:
+                    type: string
+                    example: Chennai
+                  company:
+                    type: string
+                  country:
+                    type: string
+                    example: India
+                  created_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  email:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  firstname:
+                    type: string
+                    example: Stalin
+                  id:
+                    type: integer
+                    example: 5485325
+                    default: 0
+                  lastname:
+                    type: string
+                    example: Kalimuthu
+                  oem_approved:
+                    type: boolean
+                    example: false
+                    default: true
+                  oem_id:
+                    type: string
+                  oem_name:
+                    type: string
+                  origin_oem_id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  origin_oem_name:
+                    type: string
+                    example: Ayla
+                  phone_country_code:
+                    type: string
+                    example: '91'
+                  phone:
+                    type: string
+                    example: '876543219'
+                  primary_contact:
+                    type: string
+                    example: email
+                  state:
+                    type: string
+                  street:
+                    type: string
+                    example: 4th street
+                  terms_accepted:
+                    type: boolean
+                    example: false
+                    default: true
+                  terms_accepted_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  terms_email_sent_at:
+                    type: string
+                  terms_token:
+                    type: string
+                  updated_at:
+                    type: string
+                    example: '2026-04-28T09:24:42Z'
+                  username:
+                    type: string
+                    example: stalinkalimuthu13@gmail.com
+                  zip:
+                    type: string
+                    example: '678906'
+                  uuid:
+                    type: string
+                    example: 3a706bba-42e0-11f1-a2bc-caa2f9341902
+                  roles:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 13
+                          default: 0
+                        name:
+                          type: string
+                          example: EndUser
+                  confirmation_sent_at:
+                    type: string
+                    example: '2026-04-28T08:57:04Z'
+                  dealers:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  failed_attempts:
+                    type: integer
+                    example: 0
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Users
+      security:
+      - sec0: []
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-device-service-openapi.yml
+- ayla-networks-iot-command-center-openapi.yml
+- ayla-networks-sign-in-openapi.yml
+- ayla-networks-user-service-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

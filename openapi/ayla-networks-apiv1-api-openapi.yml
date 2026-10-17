@@ -1,0 +1,301 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Apiv1 API
+  version: '1.0'
+  description: 'Operations tagged Apiv1 across 2 of this provider''s published API definitions: ayla-networks-dealer-service-openapi.yml, ayla-networks-device-service-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://user-dev.aylanetworks.com/
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Apiv1
+paths:
+  /apiv1/oems/{oem_str}/dealers/{dealer_uuid}/devices:
+    get:
+      summary: Get devices tagged to a dealer
+      description: 'This API fetches all the devices associated with the specified dealer.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read
+
+
+        Dealer::Admin - read
+
+
+        Dealer::Staff - read
+
+
+        Dealer::Manager - read
+
+
+        Dealer::Supervisor - read'
+      operationId: get-devices-tagged-to-a-dealer
+      parameters:
+      - name: oem_str
+        in: path
+        description: OEM ID
+        schema:
+          type: string
+        required: true
+      - name: dealer_uuid
+        in: path
+        description: UUID of the dealer.
+        schema:
+          type: string
+        required: true
+      - name: facility_uuid
+        in: query
+        description: UUID of the facility.
+        schema:
+          type: string
+      - name: paginated
+        in: query
+        description: true = Response is shown in paginated format. <br> false = Response is shown without pagination.
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    devices:
+                    - device:
+                        product_name: Ayla Devkit
+                        dsn: ACxxxxxxxxxxx85
+                        sw_version: bc 2.9-eng 10/03/17 15:00:22 ID PHunt/2214507+ dev
+                        ip: 49.249.89.50
+                        connected_at: '2022-09-22T03:29:02Z'
+                        user_id: 4061257
+                        user_uuid: 226051xxxxxxxxxxx-06452889cfce
+                        lat: '12.9634'
+                        lng: '77.5855'
+                        locality: '560001'
+                        homekit: null
+                        connection_status: Offline
+                        oem_model: AylaShield
+                        dealer:
+                          dealer_name: test Siva
+                          dealer_uuid: f597xxxxxxxxxxxd0-dea040915193
+                        facility_uuid: null
+                        manuf_model: LBWA1Zxxxxxxxxxxx-AYLA
+              schema:
+                type: object
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        device:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: Ayla Devkit
+                            dsn:
+                              type: string
+                              example: ACxxxxxxxxxxx85
+                            sw_version:
+                              type: string
+                              example: bc 2.9-eng 10/03/17 15:00:22 ID PHunt/2214507+ dev
+                            ip:
+                              type: string
+                              example: 49.249.89.50
+                            connected_at:
+                              type: string
+                              example: '2022-09-22T03:29:02Z'
+                            user_id:
+                              type: integer
+                              example: 4061257
+                              default: 0
+                            user_uuid:
+                              type: string
+                              example: 226051xxxxxxxxxxx-06452889cfce
+                            lat:
+                              type: string
+                              example: '12.9634'
+                            lng:
+                              type: string
+                              example: '77.5855'
+                            locality:
+                              type: string
+                              example: '560001'
+                            homekit:
+                              type: string
+                            connection_status:
+                              type: string
+                              example: Offline
+                            oem_model:
+                              type: string
+                              example: AylaShield
+                            dealer:
+                              type: object
+                              properties:
+                                dealer_name:
+                                  type: string
+                                  example: test Siva
+                                dealer_uuid:
+                                  type: string
+                                  example: f597xxxxxxxxxxxd0-dea040915193
+                            facility_uuid:
+                              type: string
+                            manuf_model:
+                              type: string
+                              example: LBWA1Zxxxxxxxxxxx-AYLA
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Apiv1
+    servers:
+    - url: https://user-dev.aylanetworks.com/
+  /apiv1/groups/{group_id}/assign_dealer_group.json:
+    put:
+      summary: Assign dealer to group
+      description: 'This API assigns a dealer to the specified group.
+
+        Access Control:
+
+
+        Ayla::Admin - read | write
+
+
+        Ayla::Staff - read
+
+
+        OEM::Admin - read | write
+
+
+        OEM::Staff - read'
+      operationId: assign-dealer-to-group
+      parameters:
+      - name: group_id
+        in: path
+        description: ID of the group to which you want to assign the dealer.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - dealer_uuid
+              - oem_str
+              properties:
+                dealer_uuid:
+                  type: string
+                  description: UUID of the dealer.
+                oem_str:
+                  type: string
+                  description: OEM ID.
+                assign_end_user:
+                  type: boolean
+                  description: Use this parameter to indicate whether to include all end users or not.<br>If "True", all the end users are assigned.
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: 'Dealer not found for the given uuid.
+
+                    Group not found for the given group ID.
+
+                    OEM not found for the given oem_id.'
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: 'oem_str is blank.
+
+                    dealer_uuid is blank.
+
+                    Group doesn''t belong to oem.'
+      deprecated: false
+      tags:
+      - Apiv1
+    servers:
+    - url: https://ads-dev.aylanetworks.com/apiv1/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-dealer-service-openapi.yml
+- ayla-networks-device-service-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

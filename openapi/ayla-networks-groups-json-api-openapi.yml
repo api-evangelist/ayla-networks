@@ -1,0 +1,296 @@
+openapi: 3.2.0
+info:
+  title: device-service Groups.json API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Groups.json
+paths:
+  /groups.json:
+    post:
+      summary: Create group
+      description: 'This API creates a device group.
+
+
+        The name field is required, but the devices object is optional.'
+      operationId: create-group
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                group:
+                  properties:
+                    name:
+                      type: string
+                      description: Name of the group you want to create.
+                    devices:
+                      properties:
+                        device_id:
+                          type: array
+                          description: An array of device identifiers.
+                          items:
+                            type: integer
+                            format: int32
+                      required:
+                      - device_id
+                      type: object
+                  required:
+                  - name
+                  type: object
+            examples: {}
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    group:
+                      name: testdocument1
+                      key: 28241
+                      device_count: 2
+                      devices:
+                      - product_name: Ayla FastTrack Color Bulb
+                        dsn: AC000W027329350
+                        oem_model: bulb-color-dev
+                        key: 6027778
+                        product_class: null
+                        connection_status: Offline
+                      - product_name: ESP32 demo
+                        dsn: AC000W030149446
+                        oem_model: AylaShield
+                        key: 6374901
+                        product_class: demo
+                        connection_status: Offline
+              schema:
+                type: object
+                properties:
+                  group:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: testdocument1
+                      key:
+                        type: integer
+                        example: 28241
+                        default: 0
+                      device_count:
+                        type: integer
+                        example: 2
+                        default: 0
+                      devices:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            product_name:
+                              type: string
+                              example: Ayla FastTrack Color Bulb
+                            dsn:
+                              type: string
+                              example: AC000W027329350
+                            oem_model:
+                              type: string
+                              example: bulb-color-dev
+                            key:
+                              type: integer
+                              example: 6027778
+                              default: 0
+                            product_class:
+                              type: string
+                            connection_status:
+                              type: string
+                              example: Offline
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Groups.json
+    get:
+      summary: Get groups
+      description: This API returns an array of device groups.
+      operationId: get-groups
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                  - group:
+                      name: apitesting
+                      key: 28238
+                      device_count: 0
+                  - group:
+                      name: testdocument1
+                      key: 28241
+                      device_count: 3
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    group:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: apitesting
+                        key:
+                          type: integer
+                          example: 28238
+                          default: 0
+                        device_count:
+                          type: integer
+                          example: 0
+                          default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+      deprecated: false
+      tags:
+      - Groups.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

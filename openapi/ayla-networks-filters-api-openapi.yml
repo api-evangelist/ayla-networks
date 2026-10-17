@@ -1,0 +1,1370 @@
+openapi: 3.2.0
+info:
+  title: iot-command-center Filters API
+  version: '1.0'
+servers:
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+security:
+- sec0: []
+tags:
+- name: Filters
+paths:
+  /filters:
+    post:
+      summary: Create filter
+      description: 'This API creates a device filter.
+
+
+        | Field | Necessity | Description |
+
+        |--|--|--|
+
+        | attributes | optional | List of data objects |
+
+        | device_metadata | optional | List of device metadata objects |
+
+        | description | optional | Brief description of the filter |
+
+        | dsns | optional | Array of DSNs
+
+
+        {
+
+        “match”: [“dsn1”],
+
+        “include”: [“dsn2”],
+
+        “exclude”: [“dsn3”]
+
+        }
+
+        |
+
+        | filter_metadata | optional | List of filter metadata objects |
+
+        | name | required | Filter name |
+
+        | oem_model | required | OEM model name |
+
+        | oem_version | optional | OEM version number |
+
+        | properties | optional | List of properties data objects |
+
+        | status | optional | List of status objects |'
+      operationId: create-filter
+      parameters:
+      - name: oem
+        in: query
+        description: Unique OEM identifier.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 300846
+                    name: TestFileter33
+                    description: null
+                    attributes: null
+                    dsns:
+                      match:
+                      - TESTDSN_753877_001
+                      - TESTDSN_164527_000
+                      include: []
+                      exclude: []
+                    properties: []
+                    status: null
+                    oem: 0dfc7900
+                    oem_model: ledevb
+                    device_metadata: null
+                    created_at: 2026-04-29T07:25:51+0000
+                    updated_at: 2026-04-29T07:25:51+0000
+                    filter_metadata: []
+                    oem_version: null
+                    match_oem_version: true
+                    provision_key: null
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    facility_uuids: []
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 300846
+                    default: 0
+                  name:
+                    type: string
+                    example: TestFileter33
+                  description:
+                    type: string
+                  attributes:
+                    type: string
+                  dsns:
+                    type: object
+                    properties:
+                      match:
+                        type: array
+                        items:
+                          type: string
+                          example: TESTDSN_753877_001
+                      include:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      exclude:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  status:
+                    type: string
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  device_metadata:
+                    type: string
+                  created_at:
+                    type: string
+                    example: 2026-04-29T07:25:51+0000
+                  updated_at:
+                    type: string
+                    example: 2026-04-29T07:25:51+0000
+                  filter_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  oem_version:
+                    type: string
+                  match_oem_version:
+                    type: boolean
+                    example: true
+                    default: true
+                  provision_key:
+                    type: string
+                  user_uuid:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  user_role:
+                    type: string
+                    example: Ayla::Admin
+                  dealer_uuid:
+                    type: string
+                  facility_uuids:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+    get:
+      summary: Get filters
+      description: This API returns a list of filters.
+      operationId: get-filters
+      parameters:
+      - name: oem
+        in: query
+        description: Unique OEM identifier.
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: One-based number of page to return.
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        description: Max number of records per page.
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: Field name on which to sort.
+        schema:
+          type: string
+      - name: direction
+        in: query
+        description: Ascending or descending.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 2
+                    filters:
+                    - id: 4827
+                      name: DeviceFilterTestNew
+                      description: null
+                      attributes: null
+                      dsns:
+                        match:
+                        - AC000W000340384
+                        include: []
+                        exclude: []
+                      properties: []
+                      status: null
+                      oem: 0dfc7900
+                      oem_model: AylaShield
+                      device_metadata: null
+                      created_at: 2020-02-26T06:56:51+0000
+                      updated_at: 2020-02-26T06:58:27+0000
+                      filter_metadata: []
+                      oem_version: demo_msg-spi-2.1
+                      match_oem_version: true
+                      provision_key: null
+                      user_uuid: null
+                      user_role: null
+                      dealer_uuid: null
+                      facility_uuids: []
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 10
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 2
+                    default: 0
+                  filters:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 4827
+                          default: 0
+                        name:
+                          type: string
+                          example: DeviceFilterTestNew
+                        description:
+                          type: string
+                        attributes:
+                          type: string
+                        dsns:
+                          type: object
+                          properties:
+                            match:
+                              type: array
+                              items:
+                                type: string
+                                example: AC000W000340384
+                            include:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                            exclude:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                        properties:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        status:
+                          type: string
+                        oem:
+                          type: string
+                          example: 0dfc7900
+                        oem_model:
+                          type: string
+                          example: AylaShield
+                        device_metadata:
+                          type: string
+                        created_at:
+                          type: string
+                          example: 2020-02-26T06:56:51+0000
+                        updated_at:
+                          type: string
+                          example: 2020-02-26T06:58:27+0000
+                        filter_metadata:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        oem_version:
+                          type: string
+                          example: demo_msg-spi-2.1
+                        match_oem_version:
+                          type: boolean
+                          example: true
+                          default: true
+                        provision_key:
+                          type: string
+                        user_uuid:
+                          type: string
+                        user_role:
+                          type: string
+                        dealer_uuid:
+                          type: string
+                        facility_uuids:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 10
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+  /filters/preview:
+    post:
+      summary: Preview filter
+      description: This API creates a temporary filter and returns an array of fitting device objects.
+      operationId: preview-filter
+      parameters:
+      - name: oem
+        in: query
+        description: Unique OEM identifier.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of entries to be returned. Minimum=0. Maximum=100.
+        schema:
+          type: string
+          default: '10'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - oem_model
+              - name
+              properties:
+                oem_model:
+                  type: string
+                  description: OEM model name.
+                oem_version:
+                  type: string
+                  description: OEM version.
+                name:
+                  type: string
+                  description: Name of the filter.
+                description:
+                  type: string
+                  description: Description of the filter.
+                dsn:
+                  properties:
+                    match:
+                      type: array
+                      description: An array of DSNs.
+                      items:
+                        type: string
+                    include:
+                      type: array
+                      description: Additional DSNs to include.
+                      items:
+                        type: string
+                    exclude:
+                      type: array
+                      description: Specific DSNs to exclude.
+                      items:
+                        type: string
+                  required: []
+                  type: object
+                  description: Device Serial Number (DSN) object.
+                properties:
+                  properties:
+                    key:
+                      type: string
+                      description: Name of the property.
+                    value:
+                      type: string
+                      description: Property key value.
+                    op:
+                      type: string
+                      description: Operation can be any one of the following:<br> !=, <=, ==, >=, contain, does_not_contain.
+                    metadata:
+                      properties:
+                        key:
+                          type: string
+                          description: Property metadata key name.
+                        val:
+                          type: string
+                          description: Property metadata key value.
+                      required: []
+                      type: object
+                  required: []
+                  type: object
+                  description: Properties object.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 2774
+                    oem_model: ledevb
+                    devices:
+                    - lifecycle: activated
+                      hwsig: mac-b0a732c817b8
+                      connection_status: Offline
+                      connected_at: '2026-04-08 08:37:27'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 2.0 Jan 23 2026 02:45:02
+                      dsn: AC000W042116555
+                      sw_version: ADA 3.3 esp-idf-v5.5.2 2026-01-23 02:43:19 9412ce1950
+                    - lifecycle: not available
+                      hwsig: 'null'
+                      connection_status: 'null'
+                      connected_at: null
+                      oem_model: ledevb
+                      host_sw_version: 'null'
+                      dsn: VD0dfc79000000049
+                      sw_version: unknown
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-04-10 07:21:59'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 1.4 Apr  3 2025 17:02:34
+                      dsn: AC000W047387959
+                      sw_version: ADA 1.12.3 esp-idf-v4.3.4 2025-04-03 17:01:59 32c71d6414
+                    - lifecycle: registered
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-03-23 14:43:59'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 1.3 Jan 18 2024 23:10:54
+                      dsn: AC000W041245468
+                      sw_version: ADA 1.6.2 esp-idf-v3.3.1 2021-10-26 12:26:13 d95cfce
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-03-18 14:47:47'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: AC000W046761301
+                      sw_version: ADA 1.6.3 esp-idf-v3.3.1 2025-04-09 13:51:47 751e2853e3
+                    - lifecycle: registered
+                      hwsig: ifgbwevw034kmbndhfu464
+                      connection_status: Offline
+                      connected_at: '2026-03-17 10:49:06'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: TESTDSN_1374413_002
+                      sw_version: '1.0'
+                    - lifecycle: registered
+                      hwsig: ifgbwevw034kmbndhfu464
+                      connection_status: Offline
+                      connected_at: '2026-03-17 10:46:40'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: TESTDSN_1374413_001
+                      sw_version: '1.0'
+                    - lifecycle: registered
+                      hwsig: ifgbwevw034kmbndhfu464
+                      connection_status: Offline
+                      connected_at: '2026-03-17 10:39:07'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: TESTDSN_1374413_000
+                      sw_version: '1.0'
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: 'null'
+                      connected_at: null
+                      oem_model: ledevb
+                      host_sw_version: 'null'
+                      dsn: VR00ZN001025100
+                      sw_version: '0.1'
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2025-11-25 10:51:08'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: AC000W033430665
+                      sw_version: ADA 3.0-eng-lat1 http 2022-05-20 09:18:45 jre/ref-pda/7264aa59f+
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 2774
+                    default: 0
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        lifecycle:
+                          type: string
+                          example: activated
+                        hwsig:
+                          type: string
+                          example: mac-b0a732c817b8
+                        connection_status:
+                          type: string
+                          example: Offline
+                        connected_at:
+                          type: string
+                          example: '2026-04-08 08:37:27'
+                        oem_model:
+                          type: string
+                          example: ledevb
+                        host_sw_version:
+                          type: string
+                          example: ayla_ledevb_demo 2.0 Jan 23 2026 02:45:02
+                        dsn:
+                          type: string
+                          example: AC000W042116555
+                        sw_version:
+                          type: string
+                          example: ADA 3.3 esp-idf-v5.5.2 2026-01-23 02:43:19 9412ce1950
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+  /filters/{filterId}:
+    get:
+      summary: Get filter
+      description: This API returns a filter.
+      operationId: get-filter
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 4827
+                    name: DeviceFilterTestNew
+                    description: null
+                    attributes: null
+                    dsns:
+                      match:
+                      - AC000W000340384
+                      include: []
+                      exclude: []
+                    properties: []
+                    status: null
+                    oem: 0dfc7900
+                    oem_model: AylaShield
+                    device_metadata: null
+                    created_at: 2020-02-26T06:56:51+0000
+                    updated_at: 2020-02-26T06:58:27+0000
+                    filter_metadata: []
+                    oem_version: demo_msg-spi-2.1
+                    match_oem_version: true
+                    provision_key: null
+                    user_uuid: null
+                    user_role: null
+                    dealer_uuid: null
+                    facility_uuids: []
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 4827
+                    default: 0
+                  name:
+                    type: string
+                    example: DeviceFilterTestNew
+                  description:
+                    type: string
+                  attributes:
+                    type: string
+                  dsns:
+                    type: object
+                    properties:
+                      match:
+                        type: array
+                        items:
+                          type: string
+                          example: AC000W000340384
+                      include:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      exclude:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  status:
+                    type: string
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  oem_model:
+                    type: string
+                    example: AylaShield
+                  device_metadata:
+                    type: string
+                  created_at:
+                    type: string
+                    example: 2020-02-26T06:56:51+0000
+                  updated_at:
+                    type: string
+                    example: 2020-02-26T06:58:27+0000
+                  filter_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  oem_version:
+                    type: string
+                    example: demo_msg-spi-2.1
+                  match_oem_version:
+                    type: boolean
+                    example: true
+                    default: true
+                  provision_key:
+                    type: string
+                  user_uuid:
+                    type: string
+                  user_role:
+                    type: string
+                  dealer_uuid:
+                    type: string
+                  facility_uuids:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+    put:
+      summary: Update filter
+      description: This API updates a filter.
+      operationId: update-filter
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique filter identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - oem_model
+              - name
+              properties:
+                oem_version:
+                  type: string
+                  description: OEM version.
+                oem_model:
+                  type: string
+                  description: OEM model name
+                name:
+                  type: string
+                  description: Name of the filter.
+                attributes:
+                  type: string
+                  description: List of data objects.
+                  format: json
+                description:
+                  type: string
+                  description: Description of the filter.
+                dsn:
+                  properties:
+                    match:
+                      type: array
+                      description: An array of DSNs.
+                      items:
+                        type: string
+                    include:
+                      type: array
+                      description: Additional DSNs to include.
+                      items:
+                        type: string
+                    exclude:
+                      type: array
+                      description: Specific DSNs to exclude.
+                      items:
+                        type: string
+                  required: []
+                  type: object
+                  description: Device Serial Number (DSN) object.
+                properties:
+                  properties:
+                    key:
+                      type: string
+                      description: Name of the property.
+                    op:
+                      type: string
+                      description: Operation can be any one of the following:<br> !=, <=, ==, >=, contain, does_not_contain.
+                    value:
+                      type: string
+                      description: Property key value.
+                    metadata:
+                      properties:
+                        key:
+                          type: string
+                          description: Property metadata key name.
+                        val:
+                          type: string
+                          description: Property metadata key value.
+                      required: []
+                      type: object
+                  required: []
+                  type: object
+                  description: Properties object.
+                status:
+                  type: string
+                  description: List of data Objects. <br>Example:"status":[       {          "key":"activated_at",          "op":">=",          "value":""       },       {          "key":"activated_at",          "op":"<=",          "value":""       }    ]
+                  format: json
+                filter_metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata name.
+                    value:
+                      type: string
+                      description: Metadata value.
+                  required: []
+                  type: object
+                  description: List of data objects.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 300846
+                    name: TestFileter33
+                    description: null
+                    attributes: null
+                    dsns: null
+                    properties: []
+                    status: []
+                    oem: 0dfc7900
+                    oem_model: ledevb
+                    device_metadata: null
+                    created_at: 2026-04-29T07:25:51+0000
+                    updated_at: 2026-04-29T08:42:04+0000
+                    filter_metadata: []
+                    oem_version: null
+                    match_oem_version: true
+                    provision_key: null
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    facility_uuids: []
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 300846
+                    default: 0
+                  name:
+                    type: string
+                    example: TestFileter33
+                  description:
+                    type: string
+                  attributes:
+                    type: string
+                  dsns:
+                    type: string
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  status:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  oem:
+                    type: string
+                    example: 0dfc7900
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  device_metadata:
+                    type: string
+                  created_at:
+                    type: string
+                    example: 2026-04-29T07:25:51+0000
+                  updated_at:
+                    type: string
+                    example: 2026-04-29T08:42:04+0000
+                  filter_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  oem_version:
+                    type: string
+                  match_oem_version:
+                    type: boolean
+                    example: true
+                    default: true
+                  provision_key:
+                    type: string
+                  user_uuid:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  user_role:
+                    type: string
+                    example: Ayla::Admin
+                  dealer_uuid: {}
+                  facility_uuids:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+    delete:
+      summary: Delete filter
+      description: This API deletes a filter.
+      operationId: delete-filter
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+  /filters/{filterId}/copy:
+    post:
+      summary: Copy filter
+      description: This API copies a filter.
+      operationId: copy-filter
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 300848
+                    name: Copy - TestFileter33
+                    description: null
+                    attributes: null
+                    dsns: null
+                    properties: []
+                    status: []
+                    oem: 0dfc7900
+                    oem_model: ledevb
+                    device_metadata: null
+                    created_at: 2026-04-29T08:51:47+0000
+                    updated_at: 2026-04-29T08:51:47+0000
+                    filter_metadata: []
+                    oem_version: null
+                    match_oem_version: true
+                    provision_key: null
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    facility_uuids: []
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2210
+                    default: 0
+                  name:
+                    type: string
+                    example: Copy - Device is on
+                  description:
+                    type: string
+                    example: This filter targets ledevb devices where the device_on prop = 1.
+                  attributes: {}
+                  dsns: {}
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: device_on
+                        value:
+                          type: string
+                          example: '1'
+                        metadata: {}
+                        op:
+                          type: string
+                          example: '='
+                  status: {}
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  device_metadata: {}
+                  created_at:
+                    type: string
+                    example: 2019-12-23T09:13:24+0000
+                  updated_at:
+                    type: string
+                    example: 2019-12-23T09:13:24+0000
+                  filter_metadata:
+                    type: array
+                  oem_version: {}
+                  match_oem_version:
+                    type: boolean
+                    example: false
+                    default: true
+                  provision_key: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Filters
+  /filters/{filterId}/devices/export:
+    get:
+      summary: Export DSNs
+      description: This API exports a list of DSNs in a .csv file.
+      operationId: export-dsn
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: dsn
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Filters
+  /filters/{filterId}/devices/refresh:
+    post:
+      summary: Refresh device list
+      description: This API updates the search results.
+      operationId: refresh-device-list
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value: ''
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Filters
+  /filters/{filterId}/devices_snapshot:
+    get:
+      summary: Get devices by filter
+      description: This API returns a list of devices.
+      operationId: get-devices-by-filter
+      parameters:
+      - name: filterId
+        in: path
+        description: Unique Filter identifier.
+        schema:
+          type: string
+        required: true
+      - name: page
+        in: query
+        description: 'Page number. Default value: 1.'
+        schema:
+          type: integer
+          format: int32
+          default: 1
+      - name: per_page
+        in: query
+        description: Number of entries returned per page.
+        schema:
+          type: integer
+          format: int32
+          default: 10
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 2774
+                    oem_model: ledevb
+                    devices:
+                    - lifecycle: activated
+                      hwsig: mac-b0a732c817b8
+                      connection_status: Offline
+                      connected_at: '2026-04-08 08:37:27'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 2.0 Jan 23 2026 02:45:02
+                      dsn: AC000W042116555
+                      sw_version: ADA 3.3 esp-idf-v5.5.2 2026-01-23 02:43:19 9412ce1950
+                    - lifecycle: not available
+                      hwsig: 'null'
+                      connection_status: 'null'
+                      connected_at: null
+                      oem_model: ledevb
+                      host_sw_version: 'null'
+                      dsn: VD0dfc79000000049
+                      sw_version: unknown
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-04-10 07:21:59'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 1.4 Apr  3 2025 17:02:34
+                      dsn: AC000W047387959
+                      sw_version: ADA 1.12.3 esp-idf-v4.3.4 2025-04-03 17:01:59 32c71d6414
+                    - lifecycle: registered
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-03-23 14:43:59'
+                      oem_model: ledevb
+                      host_sw_version: ayla_ledevb_demo 1.3 Jan 18 2024 23:10:54
+                      dsn: AC000W041245468
+                      sw_version: ADA 1.6.2 esp-idf-v3.3.1 2021-10-26 12:26:13 d95cfce
+                    - lifecycle: activated
+                      hwsig: 'null'
+                      connection_status: Offline
+                      connected_at: '2026-03-18 14:47:47'
+                      oem_model: ledevb
+                      host_sw_version: null
+                      dsn: AC000W046761301
+                      sw_version: ADA 1.6.3 esp-idf-v3.3.1 2025-04-09 13:51:47 751e2853e3
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 5
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 2774
+                    default: 0
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        lifecycle:
+                          type: string
+                          example: activated
+                        hwsig:
+                          type: string
+                          example: mac-b0a732c817b8
+                        connection_status:
+                          type: string
+                          example: Offline
+                        connected_at:
+                          type: string
+                          example: '2026-04-08 08:37:27'
+                        oem_model:
+                          type: string
+                          example: ledevb
+                        host_sw_version:
+                          type: string
+                          example: ayla_ledevb_demo 2.0 Jan 23 2026 02:45:02
+                        dsn:
+                          type: string
+                          example: AC000W042116555
+                        sw_version:
+                          type: string
+                          example: ADA 3.3 esp-idf-v5.5.2 2026-01-23 02:43:19 9412ce1950
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 5
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Filters
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/cancel-job.md
+  - https://docs.aylanetworks.com/reference/copy-filter.md
+  - https://docs.aylanetworks.com/reference/copy-job.md
+  - https://docs.aylanetworks.com/reference/create-file-record-1.md
+  - https://docs.aylanetworks.com/reference/create-file-record.md
+  - https://docs.aylanetworks.com/reference/create-filter.md
+  - https://docs.aylanetworks.com/reference/create-job-schedule.md
+  - https://docs.aylanetworks.com/reference/create-job.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs-batch.md
+  - https://docs.aylanetworks.com/reference/decision-for-devices-and-device-jobs.md
+  - https://docs.aylanetworks.com/reference/delete-file-record.md
+  - https://docs.aylanetworks.com/reference/delete-filter.md
+  - https://docs.aylanetworks.com/reference/delete-job-schedule.md
+  - https://docs.aylanetworks.com/reference/delete-job.md
+  - https://docs.aylanetworks.com/reference/download-file-record.md
+  - https://docs.aylanetworks.com/reference/download-job-report.md
+  - https://docs.aylanetworks.com/reference/edit-schedule.md
+  - https://docs.aylanetworks.com/reference/export-dsn.md
+  - https://docs.aylanetworks.com/reference/get-all-tasks.md
+  - https://docs.aylanetworks.com/reference/get-device-jobs.md
+  - https://docs.aylanetworks.com/reference/get-device-snapshot.md
+  - https://docs.aylanetworks.com/reference/get-device-status.md
+  - https://docs.aylanetworks.com/reference/get-devices-by-filter.md
+  - https://docs.aylanetworks.com/reference/get-file-record.md
+  - https://docs.aylanetworks.com/reference/get-filter.md
+  - https://docs.aylanetworks.com/reference/get-filters.md
+  - https://docs.aylanetworks.com/reference/get-job-report-details.md
+  - https://docs.aylanetworks.com/reference/get-job.md
+  - https://docs.aylanetworks.com/reference/get-jobs.md
+  - https://docs.aylanetworks.com/reference/get-ota-action.md
+  - https://docs.aylanetworks.com/reference/get-otas.md
+  - https://docs.aylanetworks.com/reference/get-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/get-schedule.md
+  - https://docs.aylanetworks.com/reference/get-user-consent.md
+  - https://docs.aylanetworks.com/reference/post-icc-express-job.md
+  - https://docs.aylanetworks.com/reference/preview-filter.md
+  - https://docs.aylanetworks.com/reference/refresh-device-list.md
+  - https://docs.aylanetworks.com/reference/remove-ota-command.md
+  - https://docs.aylanetworks.com/reference/retry-selected-devices.md
+  - https://docs.aylanetworks.com/reference/search-jobs.md
+  - https://docs.aylanetworks.com/reference/set-file-property-1.md
+  - https://docs.aylanetworks.com/reference/set-file-property.md
+  - https://docs.aylanetworks.com/reference/set-ota-action.md
+  - https://docs.aylanetworks.com/reference/set-properties-for-job.md
+  - https://docs.aylanetworks.com/reference/start-job.md
+  - https://docs.aylanetworks.com/reference/start-ota.md
+  - https://docs.aylanetworks.com/reference/stop-ota.md
+  - https://docs.aylanetworks.com/reference/update-file-transfer-record.md
+  - https://docs.aylanetworks.com/reference/update-filter.md
+  - https://docs.aylanetworks.com/reference/update-job-1.md
+  - https://docs.aylanetworks.com/reference/update-ota-job-by-job-id.md
+  - https://docs.aylanetworks.com/reference/upload-file.md
+  merge:
+    pages: 52
+    deduped: 51
+    conflicts_kept_first: 0

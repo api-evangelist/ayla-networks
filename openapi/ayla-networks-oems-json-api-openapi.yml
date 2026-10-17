@@ -1,0 +1,188 @@
+openapi: 3.2.0
+info:
+  title: user-service Oems.json API
+  version: '1.0'
+servers:
+- url: https://user-dev.aylanetworks.com/
+security:
+- sec0: []
+tags:
+- name: Oems.json
+paths:
+  /oems.json:
+    get:
+      summary: Get OEMs
+      description: This API is used to get details of all the OEMs.
+      operationId: get-oems
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 2
+                    name: Ayla
+                    module_manufacturer: false
+                    phone_as_gateway: true
+                    homekit: true
+                    gdpr: false
+                    premium_reports: true
+                    logo: null
+                    file_name: null
+                    mobile_logs_enabled: true
+                    lockout_duration: null
+                    oem_id: 0dfc7900
+                    contact_info_name: Adrian Caceres
+                    contact_info_phone: '4088309844'
+                    contact_info_email: adrian@aylanetworks.com
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2
+                    default: 0
+                  name:
+                    type: string
+                    example: Ayla
+                  module_manufacturer:
+                    type: boolean
+                    example: false
+                    default: true
+                  phone_as_gateway:
+                    type: boolean
+                    example: true
+                    default: true
+                  homekit:
+                    type: boolean
+                    example: true
+                    default: true
+                  gdpr:
+                    type: boolean
+                    example: false
+                    default: true
+                  premium_reports:
+                    type: boolean
+                    example: true
+                    default: true
+                  logo:
+                    type: string
+                  file_name:
+                    type: string
+                  mobile_logs_enabled:
+                    type: boolean
+                    example: true
+                    default: true
+                  lockout_duration:
+                    type: string
+                  oem_id:
+                    type: string
+                    example: 0dfc7900
+                  contact_info_name:
+                    type: string
+                    example: Adrian Caceres
+                  contact_info_phone:
+                    type: string
+                    example: '4088309844'
+                  contact_info_email:
+                    type: string
+                    example: adrian@aylanetworks.com
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Oems.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/assign-label.md
+  - https://docs.aylanetworks.com/reference/assign-role.md
+  - https://docs.aylanetworks.com/reference/associate-role-user.md
+  - https://docs.aylanetworks.com/reference/configure-properties-based-on-role.md
+  - https://docs.aylanetworks.com/reference/confirm-user-account.md
+  - https://docs.aylanetworks.com/reference/create-associated-user.md
+  - https://docs.aylanetworks.com/reference/create-contact.md
+  - https://docs.aylanetworks.com/reference/create-dealer.md
+  - https://docs.aylanetworks.com/reference/create-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/create-role-user.md
+  - https://docs.aylanetworks.com/reference/create-role.md
+  - https://docs.aylanetworks.com/reference/create-share.md
+  - https://docs.aylanetworks.com/reference/create-user-account.md
+  - https://docs.aylanetworks.com/reference/create-user-contact.md
+  - https://docs.aylanetworks.com/reference/create-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/delete-contact.md
+  - https://docs.aylanetworks.com/reference/delete-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/delete-properties-by-roles.md
+  - https://docs.aylanetworks.com/reference/delete-share-by-user-id.md
+  - https://docs.aylanetworks.com/reference/delete-share.md
+  - https://docs.aylanetworks.com/reference/delete-user-account-1.md
+  - https://docs.aylanetworks.com/reference/delete-user-account.md
+  - https://docs.aylanetworks.com/reference/delete-user-contact.md
+  - https://docs.aylanetworks.com/reference/delete-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/disassociate-role-user.md
+  - https://docs.aylanetworks.com/reference/disassociate-user.md
+  - https://docs.aylanetworks.com/reference/edit-property-permissions.md
+  - https://docs.aylanetworks.com/reference/get-clients.md
+  - https://docs.aylanetworks.com/reference/get-contact-details.md
+  - https://docs.aylanetworks.com/reference/get-contacts.md
+  - https://docs.aylanetworks.com/reference/get-end-users.md
+  - https://docs.aylanetworks.com/reference/get-oem-users.md
+  - https://docs.aylanetworks.com/reference/get-oem.md
+  - https://docs.aylanetworks.com/reference/get-oems.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-oem-model-and-role.md
+  - https://docs.aylanetworks.com/reference/get-received-shares.md
+  - https://docs.aylanetworks.com/reference/get-role-users.md
+  - https://docs.aylanetworks.com/reference/get-share.md
+  - https://docs.aylanetworks.com/reference/get-shares.md
+  - https://docs.aylanetworks.com/reference/get-tokens.md
+  - https://docs.aylanetworks.com/reference/get-user-by-id.md
+  - https://docs.aylanetworks.com/reference/get-user-by-universal-user-id.md
+  - https://docs.aylanetworks.com/reference/get-user-contacts.md
+  - https://docs.aylanetworks.com/reference/get-user-metadata.md
+  - https://docs.aylanetworks.com/reference/get-user-metadatum.md
+  - https://docs.aylanetworks.com/reference/get-user-profile-1.md
+  - https://docs.aylanetworks.com/reference/get-users-by-label.md
+  - https://docs.aylanetworks.com/reference/get-users-by-oem.md
+  - https://docs.aylanetworks.com/reference/get-users-by-role.md
+  - https://docs.aylanetworks.com/reference/login.md
+  - https://docs.aylanetworks.com/reference/refresh-token.md
+  - https://docs.aylanetworks.com/reference/reset-password.md
+  - https://docs.aylanetworks.com/reference/return-tokens.md
+  - https://docs.aylanetworks.com/reference/revoke-label.md
+  - https://docs.aylanetworks.com/reference/revoke-role.md
+  - https://docs.aylanetworks.com/reference/send-how-to-confirm.md
+  - https://docs.aylanetworks.com/reference/send-how-to-reset.md
+  - https://docs.aylanetworks.com/reference/update-contact.md
+  - https://docs.aylanetworks.com/reference/update-email.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration-1.md
+  - https://docs.aylanetworks.com/reference/update-firebase-configuration.md
+  - https://docs.aylanetworks.com/reference/update-share.md
+  - https://docs.aylanetworks.com/reference/update-sso-user.md
+  - https://docs.aylanetworks.com/reference/update-user-account-1.md
+  - https://docs.aylanetworks.com/reference/update-user-contact.md
+  - https://docs.aylanetworks.com/reference/update-user-metadatum.md
+  merge:
+    pages: 66
+    deduped: 65
+    conflicts_kept_first: 0

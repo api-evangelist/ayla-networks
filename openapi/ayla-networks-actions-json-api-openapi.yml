@@ -1,0 +1,282 @@
+openapi: 3.2.0
+info:
+  title: rule-service Actions.json API
+  version: '1.0'
+servers:
+- url: https://rulesservice-dev.aylanetworks.com/rulesservice/v1/
+security:
+- sec0: []
+tags:
+- name: Actions.json
+paths:
+  /actions.json:
+    post:
+      summary: Create action
+      description: This API creates an action of the specified action type.
+      operationId: create-action
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+            examples:
+              Datapoint - Request example:
+                value:
+                  action:
+                    name: datapointExample
+                    type: DATAPOINT
+                    parameters:
+                      datapoint: DATAPOINT(TESTDSN_763168_004 ,  boolean_input_tp) = 1
+              Subscription - request example:
+                value:
+                  action:
+                    name: SubscriptionExample
+                    type: SUBSCRIPTION
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    action:
+                      action_uuid: 4633da41-4d03-11f1-b2b0-d1744a9d4c09
+                      name: Blue LED OFF Action
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type: DATAPOINT
+                      is_abstract: false
+                      parameters:
+                        datapoint: DATAPOINT(AC000W000340333,Blue_LED) = 0
+                      rule_ids: []
+                      created_at: '2026-05-11T06:33:08.503Z'
+                      updated_at: '2026-05-11T06:33:08.503Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem: 0dfc7900
+              schema:
+                type: object
+                properties:
+                  action:
+                    type: object
+                    properties:
+                      action_uuid:
+                        type: string
+                        example: 4633da41-4d03-11f1-b2b0-d1744a9d4c09
+                      name:
+                        type: string
+                        example: Blue LED OFF Action
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type:
+                        type: string
+                        example: DATAPOINT
+                      is_abstract:
+                        type: boolean
+                        example: false
+                        default: true
+                      parameters:
+                        type: object
+                        properties:
+                          datapoint:
+                            type: string
+                            example: DATAPOINT(AC000W000340333,Blue_LED) = 0
+                      rule_ids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      created_at:
+                        type: string
+                        example: '2026-05-11T06:33:08.503Z'
+                      updated_at:
+                        type: string
+                        example: '2026-05-11T06:33:08.503Z'
+                      created_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem:
+                        type: string
+                        example: 0dfc7900
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Actions.json
+    get:
+      summary: Get actions
+      description: This API returns an array of actions visible to the caller.
+      operationId: get-actions
+      parameters:
+      - name: user_uuid
+        in: query
+        description: Valid end user identifier.
+        schema:
+          type: string
+      - name: is_internal
+        in: query
+        description: Possible values are as follows:<br><b>true</b> - Only actions which are associated to internal rules will be available in the response.<br><b>false</b> - All actions which are associated to non internal rules + actions which are not associated to any rules will be available in the response.</br><b>When not specified</b> - All actions which are not associated to any rules + all actions which are associated to internal rules + all actions which are associated to non internal rules will be available in the response.
+        schema:
+          type: boolean
+      - name: paginated
+        in: query
+        description: true or 1 means results will be paginated.
+        schema:
+          type: boolean
+      - name: per_page
+        in: query
+        description: Maximum number of records per page.
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: API result page number that you want to display.
+        schema:
+          type: integer
+          format: int32
+      - name: order
+        in: query
+        description: Ascending (asc) or descending (desc).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    action:
+                      action_uuid: 4633da41-4d03-11f1-b2b0-d1744a9d4c09
+                      name: Blue LED OFF Action
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type: DATAPOINT
+                      is_abstract: false
+                      parameters:
+                        datapoint: DATAPOINT(AC000W000340333,Blue_LED) = 0
+                      rule_ids: []
+                      created_at: '2026-05-11T06:33:08.503Z'
+                      updated_at: '2026-05-11T06:33:08.503Z'
+                      created_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem: 0dfc7900
+              schema:
+                type: object
+                properties:
+                  action:
+                    type: object
+                    properties:
+                      action_uuid:
+                        type: string
+                        example: 4633da41-4d03-11f1-b2b0-d1744a9d4c09
+                      name:
+                        type: string
+                        example: Blue LED OFF Action
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      type:
+                        type: string
+                        example: DATAPOINT
+                      is_abstract:
+                        type: boolean
+                        example: false
+                        default: true
+                      parameters:
+                        type: object
+                        properties:
+                          datapoint:
+                            type: string
+                            example: DATAPOINT(AC000W000340333,Blue_LED) = 0
+                      rule_ids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      created_at:
+                        type: string
+                        example: '2026-05-11T06:33:08.503Z'
+                      updated_at:
+                        type: string
+                        example: '2026-05-11T06:33:08.503Z'
+                      created_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      updated_by:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      oem:
+                        type: string
+                        example: 0dfc7900
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+      deprecated: false
+      tags:
+      - Actions.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-action.md
+  - https://docs.aylanetworks.com/reference/create-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/create-rule.md
+  - https://docs.aylanetworks.com/reference/create-rules-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-action.md
+  - https://docs.aylanetworks.com/reference/delete-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-rule-1.md
+  - https://docs.aylanetworks.com/reference/delete-rule-action.md
+  - https://docs.aylanetworks.com/reference/delete-rule-actions-by-dsn.md
+  - https://docs.aylanetworks.com/reference/delete-rule.md
+  - https://docs.aylanetworks.com/reference/delete-rules-actions-by-dsn-user-uuid.md
+  - https://docs.aylanetworks.com/reference/get-action-types.md
+  - https://docs.aylanetworks.com/reference/get-action.md
+  - https://docs.aylanetworks.com/reference/get-actions.md
+  - https://docs.aylanetworks.com/reference/get-diagnostic-states.md
+  - https://docs.aylanetworks.com/reference/get-rule-actions.md
+  - https://docs.aylanetworks.com/reference/get-rule-devices.md
+  - https://docs.aylanetworks.com/reference/get-rule.md
+  - https://docs.aylanetworks.com/reference/get-rules.md
+  - https://docs.aylanetworks.com/reference/update-an-action.md
+  - https://docs.aylanetworks.com/reference/update-rule.md
+  merge:
+    pages: 21
+    deduped: 20
+    conflicts_kept_first: 0

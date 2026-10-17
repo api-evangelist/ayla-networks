@@ -1,0 +1,76 @@
+openapi: 3.2.0
+info:
+  title: reports-service Reportsmetadata API
+  version: '1.0'
+servers:
+- url: https://arsb-dev.aylanetworks.com/reportingservice/api/v1/
+security:
+- sec0: []
+tags:
+- name: Reportsmetadata
+paths:
+  /reportsmetadata:
+    get:
+      summary: Get report metadata
+      description: This API fetches metadata details associated with the specified report.
+      operationId: get-report-metadata
+      parameters:
+      - name: report_name
+        in: query
+        description: Name of the report you want to fetch.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"description\": \"This chart shows the new devices that were activated for the date range and OEM model\",\n  \"expanded_desc\": \"This chart shows the new devices that were activated for the date range and OEM model. If there was already a record of that Device Serial Number (DSN) before with a previous activation, it will not be part of this list. This chart can be displayed in weeks, months or years.\"\n}"
+              schema:
+                type: object
+                properties:
+                  description:
+                    type: string
+                    example: This chart shows the new devices that were activated for the date range and OEM model
+                  expanded_desc:
+                    type: string
+                    example: This chart shows the new devices that were activated for the date range and OEM model. If there was already a record of that Device Serial Number (DSN) before with a previous activation, it will not be part of this list. This chart can be displayed in weeks, months or years.
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Reportsmetadata
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/get-report-data.md
+  - https://docs.aylanetworks.com/reference/get-report-metadata.md
+  merge:
+    pages: 2
+    deduped: 1
+    conflicts_kept_first: 0

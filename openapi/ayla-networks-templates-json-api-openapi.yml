@@ -1,0 +1,419 @@
+openapi: 3.2.0
+info:
+  title: device-service Templates.json API
+  version: '1.0'
+servers:
+- url: https://ads-dev.aylanetworks.com/apiv1/
+security:
+- sec0: []
+tags:
+- name: Templates.json
+paths:
+  /templates.json:
+    post:
+      summary: Create template
+      description: This API creates a template.
+      operationId: create-template
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                template:
+                  properties:
+                    gateway_type:
+                      type: string
+                      description: 'Mandatory if "template_type" is "Gateway". The possible values are: Zigbee or Generic.'
+                    registration_type:
+                      type: string
+                      description: 'Registration method for the device. The possible values are: Same-LAN, Button-Push, AP-Mode, Display, Dsn, or None.'
+                    template_type:
+                      type: string
+                      description: 'Type of template. The possible values are: Wifi, Node, Gateway, Cluster, Sensor, or Remote.'
+                    visibility:
+                      type: string
+                      description: 'Visibility of the template. The possible values are: public, private, or oem.'
+                    connection_priority:
+                      type: array
+                      description: 'Priority order of local connection type(s). The possible values are: [], [“LAN“], [“BLE“],  [“LAN”, ”BLE“], or [“BLE”, “LAN“]. Where, [] is the default value.'
+                      items:
+                        type: string
+                    lanip_auto_sync:
+                      type: boolean
+                      description: Indicates whether the status of the device will echo the datapoints to cloud and other clients.
+                    lanip_keep_alive:
+                      type: integer
+                      description: Mandatory if "connection_priority" is not empty and should be greater than 29.
+                      format: int32
+                    lanip_lifetime:
+                      type: integer
+                      description: Mandatory if "connection_priority" is not empty and should be greater than 0.
+                      format: int32
+                    name:
+                      type: string
+                      description: Name of the template.
+                    description:
+                      type: string
+                      description: Brief info about the template.
+                    model:
+                      type: string
+                      description: OEM Model to which this template applies or Cluster ID in case of Cluster template.
+                    sunrise_sunset_supported:
+                      type: boolean
+                    sync_freq:
+                      type: integer
+                      description: Use this parameter to set the time duration (in seconds) for which the sensor device should be marked as SelfOffline. Please note, this parameter is applicable only for sensor-type templates.
+                      format: int32
+                    classification:
+                      type: integer
+                      description: Specifies the device classification. Valid values are 1 or 2, where 2 indicates a native MQTT device.
+                  required:
+                  - registration_type
+                  - template_type
+                  - visibility
+                  - name
+                  - description
+                  - model
+                  type: object
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                OK:
+                  value: "{\n  \"template\": {\n    \"id\": 20017363\n  }\n}"
+                  summary: OK
+              schema:
+                type: object
+                properties:
+                  template:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 20017363
+                        default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      tags:
+      - Templates.json
+    get:
+      summary: Get templates
+      description: This API is used to fetch all the templates.
+      operationId: create-template-1
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                OK:
+                  value:
+                  - template:
+                      id: 100
+                      visibility: oem
+                      name: SinaWS_v3
+                      description: Sina Weather Station
+                      tags: null
+                      model: SinaTest
+                      product_class: WeatherStation
+                      user_id: 42
+                      oem: 0dfc7900
+                      url: http://cdapp.sina.cn/weatherstation/web/post_ip.php
+                      username: user1
+                      password: password1
+                      on_connect: true
+                      ip_change: false
+                      registration_type: Same-LAN
+                      lanip_enabled: false
+                      lanip_keep_alive: null
+                      lanip_lifetime: null
+                      lanip_auto_sync: false
+                      version: '*'
+                      product_name: null
+                      template_type: null
+                      gateway_type: null
+                      cluster_id: null
+                      created_at: null
+                      updated_at: null
+                      homekit: null
+                      template_key: null
+                      sunrise_sunset_supported: false
+                      connection_priority: []
+                      sync_freq: null
+                      classification: 1
+                  - template:
+                      id: 104
+                      visibility: oem
+                      name: demo_file 2.2
+                      description: Demo
+                      tags: null
+                      model: ledevb
+                      product_class: demo
+                      user_id: 4481
+                      oem: 0dfc7900
+                      url: null
+                      username: null
+                      password: null
+                      on_connect: false
+                      ip_change: false
+                      registration_type: Same-LAN
+                      lanip_enabled: true
+                      lanip_keep_alive: 30
+                      lanip_lifetime: 15552000
+                      lanip_auto_sync: true
+                      version: ababndoned
+                      product_name: Ayla EVB
+                      template_type: Wifi
+                      gateway_type: null
+                      cluster_id: null
+                      created_at: null
+                      updated_at: '2017-08-17T18:45:32Z'
+                      homekit: null
+                      template_key: null
+                      sunrise_sunset_supported: false
+                      connection_priority:
+                      - LAN
+                      sync_freq: null
+                      classification: 1
+                  summary: OK
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    template:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 100
+                          default: 0
+                        visibility:
+                          type: string
+                          example: oem
+                        name:
+                          type: string
+                          example: S1WS_v3
+                        description:
+                          type: string
+                          example: S1 Weather Station
+                        tags:
+                          type: string
+                        model:
+                          type: string
+                          example: S1Test
+                        product_class:
+                          type: string
+                          example: WeatherStation
+                        user_id:
+                          type: integer
+                          example: 422615
+                          default: 0
+                        oem:
+                          type: string
+                          example: 0dfc7900
+                        url:
+                          type: string
+                          example: http://indge.s1.in/ws/web/post_ip.php
+                        username:
+                          type: string
+                          example: user1
+                        password:
+                          type: string
+                          example: password1
+                        on_connect:
+                          type: boolean
+                          example: true
+                          default: true
+                        ip_change:
+                          type: boolean
+                          example: false
+                          default: true
+                        registration_type:
+                          type: string
+                          example: Same-LAN
+                        lanip_enabled:
+                          type: boolean
+                          example: false
+                          default: true
+                        lanip_keep_alive:
+                          type: string
+                        lanip_lifetime:
+                          type: string
+                        lanip_auto_sync:
+                          type: boolean
+                          example: false
+                          default: true
+                        version:
+                          type: string
+                          example: '*'
+                        product_name:
+                          type: string
+                        template_type:
+                          type: string
+                        gateway_type:
+                          type: string
+                        cluster_id:
+                          type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        homekit:
+                          type: string
+                        template_key:
+                          type: string
+                        sunrise_sunset_supported:
+                          type: boolean
+                          example: false
+                          default: true
+                        connection_priority:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        sync_freq:
+                          type: string
+                        classification:
+                          type: integer
+        '401':
+          content: {}
+          description: Unauthorized
+      tags:
+      - Templates.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-bearer-format: ''
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/add-device-to-group.md
+  - https://docs.aylanetworks.com/reference/assign-dealer-to-group.md
+  - https://docs.aylanetworks.com/reference/associate-a-role-label.md
+  - https://docs.aylanetworks.com/reference/clear-schedule.md
+  - https://docs.aylanetworks.com/reference/create-a-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/create-a-notification.md
+  - https://docs.aylanetworks.com/reference/create-a-schedule.md
+  - https://docs.aylanetworks.com/reference/create-associated-user-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoint-message-by-dsn.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group-1.md
+  - https://docs.aylanetworks.com/reference/create-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/create-datapoints.md
+  - https://docs.aylanetworks.com/reference/create-device-metadata.md
+  - https://docs.aylanetworks.com/reference/create-group.md
+  - https://docs.aylanetworks.com/reference/create-notification-app.md
+  - https://docs.aylanetworks.com/reference/create-notification-app1.md
+  - https://docs.aylanetworks.com/reference/create-schedule-action.md
+  - https://docs.aylanetworks.com/reference/create-template-1.md
+  - https://docs.aylanetworks.com/reference/create-template-2.md
+  - https://docs.aylanetworks.com/reference/create-template-properties.md
+  - https://docs.aylanetworks.com/reference/create-template.md
+  - https://docs.aylanetworks.com/reference/create-trigger-1.md
+  - https://docs.aylanetworks.com/reference/create-trigger.md
+  - https://docs.aylanetworks.com/reference/delete-device-address.md
+  - https://docs.aylanetworks.com/reference/delete-device-metadata.md
+  - https://docs.aylanetworks.com/reference/delete-group.md
+  - https://docs.aylanetworks.com/reference/delete-notification-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-notification.md
+  - https://docs.aylanetworks.com/reference/delete-role-label-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-apps-by-id.md
+  - https://docs.aylanetworks.com/reference/delete-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/disassociate-a-role-label-to-a-device.md
+  - https://docs.aylanetworks.com/reference/enable-role-on-device.md
+  - https://docs.aylanetworks.com/reference/factory-reset-device-id114.md
+  - https://docs.aylanetworks.com/reference/get-a-property-by-name.md
+  - https://docs.aylanetworks.com/reference/get-a-schedule-by-name.md
+  - https://docs.aylanetworks.com/reference/get-all-notifications.md
+  - https://docs.aylanetworks.com/reference/get-all-triggers.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-1.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices-by-email.md
+  - https://docs.aylanetworks.com/reference/get-associated-devices.md
+  - https://docs.aylanetworks.com/reference/get-commands-1.md
+  - https://docs.aylanetworks.com/reference/get-commands.md
+  - https://docs.aylanetworks.com/reference/get-connection-history.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoint-by-dsn-id.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-datapoints-in-group.md
+  - https://docs.aylanetworks.com/reference/get-device-address.md
+  - https://docs.aylanetworks.com/reference/get-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-device-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata-by-key.md
+  - https://docs.aylanetworks.com/reference/get-device-metadata.md
+  - https://docs.aylanetworks.com/reference/get-device-role-label.md
+  - https://docs.aylanetworks.com/reference/get-group-by-id.md
+  - https://docs.aylanetworks.com/reference/get-groups.md
+  - https://docs.aylanetworks.com/reference/get-lan-data.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-device-id-id117.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn-1.md
+  - https://docs.aylanetworks.com/reference/get-nodes-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-notification-app.md
+  - https://docs.aylanetworks.com/reference/get-notification-by-id-1.md
+  - https://docs.aylanetworks.com/reference/get-notification.md
+  - https://docs.aylanetworks.com/reference/get-notifications.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-device-id.md
+  - https://docs.aylanetworks.com/reference/get-properties-by-dsn.md
+  - https://docs.aylanetworks.com/reference/get-registrable-device.md
+  - https://docs.aylanetworks.com/reference/get-role-label.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action-by-name.md
+  - https://docs.aylanetworks.com/reference/get-schedule-action.md
+  - https://docs.aylanetworks.com/reference/get-schedule-by-id.md
+  - https://docs.aylanetworks.com/reference/get-schedules-for-user.md
+  - https://docs.aylanetworks.com/reference/get-schedules.md
+  - https://docs.aylanetworks.com/reference/get-template.md
+  - https://docs.aylanetworks.com/reference/get-timezone-1.md
+  - https://docs.aylanetworks.com/reference/get-timezone.md
+  - https://docs.aylanetworks.com/reference/get-trigger-app.md
+  - https://docs.aylanetworks.com/reference/get-trigger-apps.md
+  - https://docs.aylanetworks.com/reference/get-trigger-by-id.md
+  - https://docs.aylanetworks.com/reference/get-trigger.md
+  - https://docs.aylanetworks.com/reference/gets-datapoint-by-device-id.md
+  - https://docs.aylanetworks.com/reference/gets-property-by-device-di.md
+  - https://docs.aylanetworks.com/reference/identify-zigbee-node-id115.md
+  - https://docs.aylanetworks.com/reference/register-device-to-user.md
+  - https://docs.aylanetworks.com/reference/register-device.md
+  - https://docs.aylanetworks.com/reference/remove-device-from-group.md
+  - https://docs.aylanetworks.com/reference/rename-device-by-device-id.md
+  - https://docs.aylanetworks.com/reference/rename-group.md
+  - https://docs.aylanetworks.com/reference/search-devices.md
+  - https://docs.aylanetworks.com/reference/set-device-timezone.md
+  - https://docs.aylanetworks.com/reference/transfer-registration.md
+  - https://docs.aylanetworks.com/reference/unregister-a-device.md
+  - https://docs.aylanetworks.com/reference/unregister-device.md
+  - https://docs.aylanetworks.com/reference/update-device-address.md
+  - https://docs.aylanetworks.com/reference/update-device-location-id116.md
+  - https://docs.aylanetworks.com/reference/update-device-metadata.md
+  - https://docs.aylanetworks.com/reference/update-notification.md
+  - https://docs.aylanetworks.com/reference/update-role-label.md
+  - https://docs.aylanetworks.com/reference/update-schedule-action.md
+  - https://docs.aylanetworks.com/reference/update-schedule1.md
+  - https://docs.aylanetworks.com/reference/update-trigger-app.md
+  - https://docs.aylanetworks.com/reference/update-trigger1.md
+  merge:
+    pages: 106
+    deduped: 105
+    conflicts_kept_first: 0

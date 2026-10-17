@@ -1,0 +1,3956 @@
+openapi: 3.2.0
+info:
+  title: Ayla Networks Jobs API
+  version: '1.0'
+  description: 'Operations tagged Jobs across 2 of this provider''s published API definitions: ayla-networks-iot-command-center-openapi.yml, ayla-networks-iot-command-center-v2-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://icc-dev.aylanetworks.com/icc/v1/
+- url: https://icc-dev.aylanetworks.com/icc/v2/
+security:
+- sec0: []
+tags:
+- name: Jobs
+paths:
+  /jobs:
+    post:
+      summary: Create job
+      description: This API creates a job.
+      operationId: create-job
+      parameters:
+      - name: oem
+        in: query
+        description: Unique OEM identifier
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - type_id
+              - filter_id
+              - exec_method
+              - delivery_option
+              properties:
+                name:
+                  type: string
+                  description: Job name.
+                type_id:
+                  type: integer
+                  description: 'Job type identifier number. Any one of the following: <br> 1: Set properties <br> 2: Reset devices <br> 3: Debug devices <br> 4: OTA <br> 5: File transfer'
+                  format: int32
+                filter_id:
+                  type: integer
+                  description: Unique filter identifier number
+                  format: int32
+                exec_method:
+                  type: string
+                  description: 'Execution method: "ONE_TIME" or "CONTINUOUS".'
+                delivery_option:
+                  type: string
+                  description: 'Delivery option: "SYSTEM_PUSH" or "USER_CONSENT".'
+                description:
+                  type: string
+                  description: Short description of the job.
+                job_metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata key value.
+                  required: []
+                  type: object
+                  description: List of data objects.
+                retries:
+                  type: integer
+                  description: Number of retry if one of the action of the device is failure, how many times should retry the action.
+                  default: 0
+                  format: int32
+                action_payload:
+                  type: string
+                  description: An object that is used for job action, the payload depends on different type of action.
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 204575
+                    name: Api testing1
+                    description: ''
+                    status: CREATED
+                    retries: 0
+                    payload: null
+                    type_id: 1
+                    filter:
+                      id: 300846
+                      name: TestFileter33
+                      description: null
+                      attributes: null
+                      dsns: null
+                      properties: []
+                      status: []
+                      oem: 0dfc7900
+                      oem_model: ledevb
+                      device_metadata: null
+                      created_at: 2026-04-29T07:25:51+0000
+                      updated_at: 2026-04-29T08:42:04+0000
+                      filter_metadata: []
+                      oem_version: null
+                      match_oem_version: true
+                      provision_key: null
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role: Ayla::Admin
+                      dealer_uuid: null
+                      facility_uuids: []
+                    filter_name: TestFileter33
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    schedule_type: IMMEDIATE
+                    started_at: null
+                    stopped_at: null
+                    created_at: 2026-05-07T07:20:07+0000
+                    updated_at: 2026-05-07T07:20:07+0000
+                    device_total: 0
+                    devices_processing: 0
+                    devices_succeed: 0
+                    devices_failed: 0
+                    job_metadata: []
+                    exec_method: CONTINUOUS
+                    delivery_option: USER_CONSENT
+                    last_modified_by: Jennifer Griffin
+                    from_version: All
+                    exclude_version: null
+                    oem_model: ledevb
+                    image_id: 0
+                    stage_config: null
+                    needs_action: false
+                    schedule: null
+                    last_scheduler_query_at: 2026-05-07T07:20:07+0000
+                    job_type: Set property
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 204575
+                    default: 0
+                  name:
+                    type: string
+                    example: Api testing1
+                  description:
+                    type: string
+                    example: ''
+                  status:
+                    type: string
+                    example: CREATED
+                  retries:
+                    type: integer
+                    example: 0
+                    default: 0
+                  payload:
+                    type: string
+                  type_id:
+                    type: integer
+                    example: 1
+                    default: 0
+                  filter:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 300846
+                        default: 0
+                      name:
+                        type: string
+                        example: TestFileter33
+                      description: {}
+                      attributes: {}
+                      dsns: {}
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      status:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      oem:
+                        type: string
+                        example: 0dfc7900
+                      oem_model:
+                        type: string
+                        example: ledevb
+                      device_metadata: {}
+                      created_at:
+                        type: string
+                        example: 2026-04-29T07:25:51+0000
+                      updated_at:
+                        type: string
+                        example: 2026-04-29T08:42:04+0000
+                      filter_metadata:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      oem_version: {}
+                      match_oem_version:
+                        type: boolean
+                        example: true
+                        default: true
+                      provision_key: {}
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role:
+                        type: string
+                        example: Ayla::Admin
+                      dealer_uuid: {}
+                      facility_uuids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  filter_name:
+                    type: string
+                    example: TestFileter33
+                  user_uuid:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  user_role:
+                    type: string
+                    example: Ayla::Admin
+                  dealer_uuid:
+                    type: string
+                  schedule_type:
+                    type: string
+                    example: IMMEDIATE
+                  started_at:
+                    type: string
+                    format: date
+                  stopped_at:
+                    type: string
+                    format: date
+                  created_at:
+                    type: string
+                    example: 2026-05-07T07:20:07+0000
+                  updated_at:
+                    type: string
+                    example: 2026-05-07T07:20:07+0000
+                  device_total:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_processing:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_succeed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_failed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  job_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  exec_method:
+                    type: string
+                    example: CONTINUOUS
+                  delivery_option:
+                    type: string
+                    example: USER_CONSENT
+                  last_modified_by:
+                    type: string
+                    example: Jennifer Griffin
+                  from_version:
+                    type: string
+                    example: All
+                  exclude_version:
+                    type: number
+                  oem_model:
+                    type: string
+                    example: ledevb
+                  image_id:
+                    type: integer
+                    example: 0
+                    default: 0
+                  stage_config:
+                    type: string
+                  needs_action:
+                    type: boolean
+                    example: false
+                    default: true
+                  schedule:
+                    type: string
+                  last_scheduler_query_at:
+                    type: string
+                    example: 2026-05-07T07:20:07+0000
+                  job_type:
+                    type: string
+                    example: Set property
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    get:
+      summary: Get jobs
+      description: This API returns a list of jobs.
+      operationId: get-jobs
+      parameters:
+      - name: job_type
+        in: query
+        description: Job Type.
+        schema:
+          type: string
+      - name: oem
+        in: query
+        description: Unique OEM identifier.
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model.
+        schema:
+          type: string
+      - name: page
+        in: query
+        description: 'Page number. Default value: 1.'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: Max number of records per page.
+        schema:
+          type: integer
+          format: int32
+      - name: sort_by
+        in: query
+        description: Field name. Based on this, the job list will be sorted.
+        schema:
+          type: string
+      - name: direction
+        in: query
+        description: Ascending (asc) or descending (desc).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 730
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 5
+                    jobs:
+                    - id: 19225
+                      name: covid testing multi status filter OTA
+                      description: ''
+                      status: CANCELLED
+                      retries: 1
+                      payload:
+                        type: host
+                        version: '1.7'
+                        command: null
+                        description: null
+                        provider: null
+                        ayla_model: null
+                        property_name: null
+                        image_id: null
+                        from_version: null
+                        dealer_uuid: null
+                        facility_uuid: []
+                      type_id: 4
+                      filter:
+                        id: 23650
+                        name: covid test multi status filter
+                        description: null
+                        attributes: null
+                        dsns:
+                          match: []
+                          include:
+                          - AC000W000340688
+                          - AC000W000458117
+                          exclude: []
+                        properties:
+                        - key: Blue_LED
+                          value: '1'
+                          metadata:
+                          - key: ''
+                            value: null
+                          op: contain
+                        status: null
+                        oem: 0dfc7900
+                        oem_model: AylaShield
+                        device_metadata: null
+                        created_at: 2021-02-19T00:51:14+0000
+                        updated_at: 2021-02-19T00:51:14+0000
+                        filter_metadata: []
+                        oem_version: '1.6'
+                        match_oem_version: true
+                        provision_key: null
+                        user_uuid: null
+                        user_role: null
+                        dealer_uuid: null
+                        facility_uuids: []
+                      filter_name: covid test multi status filter
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role: Ayla::Admin
+                      dealer_uuid: null
+                      schedule_type: IMMEDIATE
+                      started_at: 2023-10-19T05:46:44+0000
+                      stopped_at: 2024-05-30T01:25:29+0000
+                      created_at: 2021-02-19T00:51:15+0000
+                      updated_at: 2023-10-19T05:46:44+0000
+                      device_total: 2
+                      devices_processing: 0
+                      devices_succeed: 0
+                      devices_failed: 2
+                      job_metadata: []
+                      exec_method: ONE_TIME
+                      delivery_option: USER_CONSENT
+                      last_modified_by: Naresh Sugu
+                      from_version: All
+                      exclude_version: null
+                      oem_model: AylaShield
+                      image_id: 0
+                      stage_config: null
+                      needs_action: false
+                      schedule: null
+                      last_scheduler_query_at: 2026-02-11T10:34:09+0000
+                      job_type: OTA
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 730
+                    default: 0
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 5
+                    default: 0
+                  jobs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 19225
+                          default: 0
+                        name:
+                          type: string
+                          example: covid testing multi status filter OTA
+                        description:
+                          type: string
+                          example: ''
+                        status:
+                          type: string
+                          example: CANCELLED
+                        retries:
+                          type: integer
+                          example: 1
+                          default: 0
+                        payload:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: host
+                            version:
+                              type: string
+                              example: '1.7'
+                            command: {}
+                            description: {}
+                            provider: {}
+                            ayla_model: {}
+                            property_name: {}
+                            image_id: {}
+                            from_version: {}
+                            dealer_uuid: {}
+                            facility_uuid:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                        type_id:
+                          type: integer
+                          example: 4
+                          default: 0
+                        filter:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 23650
+                              default: 0
+                            name:
+                              type: string
+                              example: covid test multi status filter
+                            description:
+                              type: string
+                            attributes:
+                              type: string
+                            dsns:
+                              type: object
+                              properties:
+                                match:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties: {}
+                                include:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: AC000W000340688
+                                exclude:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties: {}
+                            properties:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    example: Blue_LED
+                                  value:
+                                    type: string
+                                    example: '1'
+                                  metadata:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        key:
+                                          type: string
+                                          example: ''
+                                        value: {}
+                                  op:
+                                    type: string
+                                    example: contain
+                            status:
+                              type: string
+                            oem:
+                              type: string
+                              example: 0dfc7900
+                            oem_model:
+                              type: string
+                              example: AylaShield
+                            device_metadata:
+                              type: string
+                            created_at:
+                              type: string
+                              example: 2021-02-19T00:51:14+0000
+                            updated_at:
+                              type: string
+                              example: 2021-02-19T00:51:14+0000
+                            filter_metadata:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                            oem_version:
+                              type: string
+                              example: '1.6'
+                            match_oem_version:
+                              type: boolean
+                              example: true
+                              default: true
+                            provision_key:
+                              type: string
+                            user_uuid:
+                              type: string
+                            user_role:
+                              type: string
+                            dealer_uuid:
+                              type: string
+                            facility_uuids:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                        filter_name:
+                          type: string
+                          example: covid test multi status filter
+                        user_uuid:
+                          type: string
+                          example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        user_role:
+                          type: string
+                          example: Ayla::Admin
+                        dealer_uuid:
+                          type: string
+                        schedule_type:
+                          type: string
+                          example: IMMEDIATE
+                        started_at:
+                          type: string
+                          example: 2023-10-19T05:46:44+0000
+                        stopped_at:
+                          type: string
+                          example: 2024-05-30T01:25:29+0000
+                        created_at:
+                          type: string
+                          example: 2021-02-19T00:51:15+0000
+                        updated_at:
+                          type: string
+                          example: 2023-10-19T05:46:44+0000
+                        device_total:
+                          type: integer
+                          example: 2
+                          default: 0
+                        devices_processing:
+                          type: integer
+                          example: 0
+                          default: 0
+                        devices_succeed:
+                          type: integer
+                          example: 0
+                          default: 0
+                        devices_failed:
+                          type: integer
+                          example: 2
+                          default: 0
+                        job_metadata:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        exec_method:
+                          type: string
+                          example: ONE_TIME
+                        delivery_option:
+                          type: string
+                          example: USER_CONSENT
+                        last_modified_by:
+                          type: string
+                          example: Naresh Sugu
+                        from_version:
+                          type: string
+                          example: All
+                        exclude_version:
+                          type: string
+                        oem_model:
+                          type: string
+                          example: AylaShield
+                        image_id:
+                          type: integer
+                          example: 0
+                          default: 0
+                        stage_config:
+                          type: string
+                        needs_action:
+                          type: boolean
+                          example: false
+                          default: true
+                        schedule:
+                          type: string
+                        last_scheduler_query_at:
+                          type: string
+                          example: 2026-02-11T10:34:09+0000
+                        job_type:
+                          type: string
+                          example: OTA
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/express:
+    post:
+      summary: Create job (Fast Track)
+      description: This API creates a job.
+      operationId: post-icc-express-job
+      parameters:
+      - name: oem
+        in: query
+        description: OEM name.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 204024
+                    name: Single Device SET_PROPERTY
+                    description: Manual SET_PROPERTY for 1 device(s)
+                    status: CREATED
+                    retries: 0
+                    payload:
+                      properties:
+                      - key: ' string_input_tp_0'
+                        value: Echo to log
+                    type_id: 1
+                    filter:
+                      id: 301366
+                      name: Single Device SET_PROPERTY
+                      description: null
+                      attributes: null
+                      dsns:
+                        match:
+                        - TESTDSN_500023_045
+                        include: null
+                        exclude: null
+                      properties: []
+                      status: null
+                      oem: 0dfc7900
+                      oem_model: ledevb-test
+                      device_metadata: null
+                      created_at: 2026-05-05T06:17:59+0000
+                      updated_at: 2026-05-05T06:17:59+0000
+                      filter_metadata: []
+                      oem_version: null
+                      match_oem_version: true
+                      provision_key: null
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role: Ayla::Admin
+                      dealer_uuid: null
+                      facility_uuids: []
+                    filter_name: Single Device SET_PROPERTY
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    schedule_type: IMMEDIATE
+                    started_at: null
+                    stopped_at: null
+                    created_at: 2026-05-05T06:17:59+0000
+                    updated_at: 2026-05-05T06:17:59+0000
+                    device_total: 0
+                    devices_processing: 0
+                    devices_succeed: 0
+                    devices_failed: 0
+                    job_metadata: []
+                    exec_method: SINGLE_UPDATE
+                    delivery_option: SYSTEM_PUSH
+                    last_modified_by: null
+                    from_version: All
+                    exclude_version: null
+                    oem_model: ledevb-test
+                    image_id: 0
+                    stage_config: null
+                    needs_action: false
+                    schedule: null
+                    last_scheduler_query_at: 2026-05-05T06:17:59+0000
+                    job_type: Set property
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 204024
+                    default: 0
+                  name:
+                    type: string
+                    example: Single Device SET_PROPERTY
+                  description:
+                    type: string
+                    example: Manual SET_PROPERTY for 1 device(s)
+                  status:
+                    type: string
+                    example: CREATED
+                  retries:
+                    type: integer
+                    example: 0
+                    default: 0
+                  payload:
+                    type: object
+                    properties:
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              example: ' string_input_tp_0'
+                            value:
+                              type: string
+                              example: Echo to log
+                  type_id:
+                    type: integer
+                    example: 1
+                    default: 0
+                  filter:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 301366
+                        default: 0
+                      name:
+                        type: string
+                        example: Single Device SET_PROPERTY
+                      description: {}
+                      attributes: {}
+                      dsns:
+                        type: object
+                        properties:
+                          match:
+                            type: array
+                            items:
+                              type: string
+                              example: TESTDSN_500023_045
+                          include: {}
+                          exclude: {}
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      status: {}
+                      oem:
+                        type: string
+                        example: 0dfc7900
+                      oem_model:
+                        type: string
+                        example: ledevb-test
+                      device_metadata: {}
+                      created_at:
+                        type: string
+                        example: 2026-05-05T06:17:59+0000
+                      updated_at:
+                        type: string
+                        example: 2026-05-05T06:17:59+0000
+                      filter_metadata:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      oem_version: {}
+                      match_oem_version:
+                        type: boolean
+                        example: true
+                        default: true
+                      provision_key: {}
+                      user_uuid:
+                        type: string
+                        example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role:
+                        type: string
+                        example: Ayla::Admin
+                      dealer_uuid: {}
+                      facility_uuids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  filter_name:
+                    type: string
+                    example: Single Device SET_PROPERTY
+                  user_uuid:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  user_role:
+                    type: string
+                    example: Ayla::Admin
+                  dealer_uuid:
+                    type: string
+                  schedule_type:
+                    type: string
+                    example: IMMEDIATE
+                  started_at:
+                    type: string
+                    format: date
+                  stopped_at:
+                    type: string
+                    format: date
+                  created_at:
+                    type: string
+                    example: 2026-05-05T06:17:59+0000
+                  updated_at:
+                    type: string
+                    example: 2026-05-05T06:17:59+0000
+                  device_total:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_processing:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_succeed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_failed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  job_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  exec_method:
+                    type: string
+                    example: SINGLE_UPDATE
+                  delivery_option:
+                    type: string
+                    example: SYSTEM_PUSH
+                  last_modified_by:
+                    type: string
+                  from_version:
+                    type: string
+                    example: All
+                  exclude_version:
+                    type: string
+                  oem_model:
+                    type: string
+                    example: ledevb-test
+                  image_id:
+                    type: integer
+                    example: 0
+                    default: 0
+                  stage_config:
+                    type: string
+                  needs_action:
+                    type: boolean
+                    example: false
+                    default: true
+                  schedule:
+                    type: string
+                  last_scheduler_query_at:
+                    type: string
+                    example: 2026-05-05T06:17:59+0000
+                  job_type:
+                    type: string
+                    example: Set property
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/search:
+    get:
+      summary: Search jobs
+      description: This API fetches jobs based on the specified job search criteria.
+      operationId: search-jobs
+      parameters:
+      - name: name
+        in: query
+        description: Job name.
+        schema:
+          type: string
+      - name: oem_model
+        in: query
+        description: OEM model name.
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Job ID.
+        schema:
+          type: string
+      - name: exec_method
+        in: query
+        description: 'Job recurrence type. Possible values: ONE_TIME, CONTINUOUS, or SINGLE_UPDATE.'
+        schema:
+          type: string
+      - name: job_type
+        in: query
+        description: 'Job type. Possible values: OTA, SET_PROPERTY, or FILE_TRANSFER.'
+        schema:
+          type: string
+      - name: ota_type
+        in: query
+        description: 'OTA type. Possible values: host or module.'
+        schema:
+          type: string
+      - name: schedule_type
+        in: query
+        description: 'Schedule type. Possible values: IMMEDIATE or WEEKLY.'
+        schema:
+          type: string
+      - name: filter_name
+        in: query
+        description: Filter name.
+        schema:
+          type: string
+      - name: filter_id
+        in: query
+        description: Filter ID.
+        schema:
+          type: string
+      - name: oem
+        in: query
+        description: OEM ID.
+        schema:
+          type: string
+      - name: created_at_before
+        in: query
+        description: 'Created At Before Timestamp. Format: yyyy-MM-dd HH:mm:ss'
+        schema:
+          type: string
+          format: date-time
+      - name: created_at_after
+        in: query
+        description: 'Created At After Timestamp. Format: yyyy-MM-dd HH:mm:ss'
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_before
+        in: query
+        description: 'Updated At Before Timestamp. Format: yyyy-MM-dd HH:mm:ss'
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_after
+        in: query
+        description: 'Updated At After Timestamp. Format: yyyy-MM-dd HH:mm:ss'
+        schema:
+          type: string
+          format: date-time
+      - name: page
+        in: query
+        description: Page number that you want to fetch.
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: Records per page.
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: 'Parameter name. Results are sorted based on the specified parameter name. Possible values: created_at, updated_at, name, oem_model, job_type, filter_name, schedule_type, or exec_method.'
+        schema:
+          type: string
+      - name: direction
+        in: query
+        description: 'sorting direction. Possible values: ASC or DESC.'
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 1
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 1
+                    jobs:
+                    - id: 19225
+                      name: covid testing multi status filter OTA
+                      description: ''
+                      status: CANCELLED
+                      retries: 1
+                      payload:
+                        type: host
+                        version: '1.7'
+                        command: null
+                        description: null
+                        provider: null
+                        ayla_model: null
+                        property_name: null
+                        image_id: null
+                        from_version: null
+                        dealer_uuid: null
+                        facility_uuid: []
+                      type_id: 4
+                      filter:
+                        id: 23650
+                        name: covid test multi status filter
+                        description: null
+                        attributes: null
+                        dsns:
+                          match: []
+                          include:
+                          - AC000W000340688
+                          - AC000W000458117
+                          exclude: []
+                        properties:
+                        - key: Blue_LED
+                          value: '1'
+                          metadata:
+                          - key: ''
+                            value: null
+                          op: contain
+                        status: null
+                        oem: 0dfc7900
+                        oem_model: AylaShield
+                        device_metadata: null
+                        created_at: 2021-02-19T00:51:14+0000
+                        updated_at: 2021-02-19T00:51:14+0000
+                        filter_metadata: []
+                        oem_version: '1.6'
+                        match_oem_version: true
+                        provision_key: null
+                        user_uuid: null
+                        user_role: null
+                        dealer_uuid: null
+                        facility_uuids: []
+                      filter_name: covid test multi status filter
+                      user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                      user_role: Ayla::Admin
+                      dealer_uuid: null
+                      schedule_type: IMMEDIATE
+                      started_at: 2023-10-19T05:46:44+0000
+                      stopped_at: 2024-05-30T01:25:29+0000
+                      created_at: 2021-02-19T00:51:15+0000
+                      updated_at: 2023-10-19T05:46:44+0000
+                      device_total: 2
+                      devices_processing: 0
+                      devices_succeed: 0
+                      devices_failed: 2
+                      job_metadata: []
+                      exec_method: ONE_TIME
+                      delivery_option: USER_CONSENT
+                      last_modified_by: Naresh Sugu
+                      from_version: All
+                      exclude_version: null
+                      oem_model: AylaShield
+                      image_id: 0
+                      stage_config: null
+                      needs_action: false
+                      schedule: null
+                      last_scheduler_query_at: 2026-02-11T10:34:09+0000
+                      job_type: OTA
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 1
+                    default: 0
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: string
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  jobs:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 19225
+                          default: 0
+                        name:
+                          type: string
+                          example: covid testing multi status filter OTA
+                        description:
+                          type: string
+                          example: ''
+                        status:
+                          type: string
+                          example: CANCELLED
+                        retries:
+                          type: integer
+                          example: 1
+                          default: 0
+                        payload:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              example: host
+                            version:
+                              type: string
+                              example: '1.7'
+                            command: {}
+                            description: {}
+                            provider: {}
+                            ayla_model: {}
+                            property_name: {}
+                            image_id: {}
+                            from_version: {}
+                            dealer_uuid: {}
+                            facility_uuid:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                        type_id:
+                          type: integer
+                          example: 4
+                          default: 0
+                        filter:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                              example: 23650
+                              default: 0
+                            name:
+                              type: string
+                              example: covid test multi status filter
+                            description: {}
+                            attributes: {}
+                            dsns:
+                              type: object
+                              properties:
+                                match:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties: {}
+                                include:
+                                  type: array
+                                  items:
+                                    type: string
+                                    example: AC000W000340688
+                                exclude:
+                                  type: array
+                                  items:
+                                    type: object
+                                    properties: {}
+                            properties:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    example: Blue_LED
+                                  value:
+                                    type: string
+                                    example: '1'
+                                  metadata:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        key:
+                                          type: string
+                                          example: ''
+                                        value: {}
+                                  op:
+                                    type: string
+                                    example: contain
+                            status: {}
+                            oem:
+                              type: string
+                              example: 0dfc7900
+                            oem_model:
+                              type: string
+                              example: AylaShield
+                            device_metadata: {}
+                            created_at:
+                              type: string
+                              example: 2021-02-19T00:51:14+0000
+                            updated_at:
+                              type: string
+                              example: 2021-02-19T00:51:14+0000
+                            filter_metadata:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                            oem_version:
+                              type: string
+                              example: '1.6'
+                            match_oem_version:
+                              type: boolean
+                              example: true
+                              default: true
+                            provision_key: {}
+                            user_uuid: {}
+                            user_role: {}
+                            dealer_uuid: {}
+                            facility_uuids:
+                              type: array
+                              items:
+                                type: object
+                                properties: {}
+                        filter_name:
+                          type: string
+                          example: covid test multi status filter
+                        user_uuid:
+                          type: string
+                          example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                        user_role:
+                          type: string
+                          example: Ayla::Admin
+                        dealer_uuid:
+                          type: string
+                        schedule_type:
+                          type: string
+                          example: IMMEDIATE
+                        started_at:
+                          type: string
+                          example: 2023-10-19T05:46:44+0000
+                        stopped_at:
+                          type: string
+                          example: 2024-05-30T01:25:29+0000
+                        created_at:
+                          type: string
+                          example: 2021-02-19T00:51:15+0000
+                        updated_at:
+                          type: string
+                          example: 2023-10-19T05:46:44+0000
+                        device_total:
+                          type: integer
+                          example: 2
+                          default: 0
+                        devices_processing:
+                          type: integer
+                          example: 0
+                          default: 0
+                        devices_succeed:
+                          type: integer
+                          example: 0
+                          default: 0
+                        devices_failed:
+                          type: integer
+                          example: 2
+                          default: 0
+                        job_metadata:
+                          type: array
+                          items:
+                            type: object
+                            properties: {}
+                        exec_method:
+                          type: string
+                          example: ONE_TIME
+                        delivery_option:
+                          type: string
+                          example: USER_CONSENT
+                        last_modified_by:
+                          type: string
+                          example: Naresh Sugu
+                        from_version:
+                          type: string
+                          example: All
+                        exclude_version:
+                          type: string
+                        oem_model:
+                          type: string
+                          example: AylaShield
+                        image_id:
+                          type: integer
+                          example: 0
+                          default: 0
+                        stage_config:
+                          type: string
+                        needs_action:
+                          type: boolean
+                          example: false
+                          default: true
+                        schedule:
+                          type: string
+                        last_scheduler_query_at:
+                          type: string
+                          example: 2026-02-11T10:34:09+0000
+                        job_type:
+                          type: string
+                          example: OTA
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}:
+    get:
+      summary: Get job
+      description: This API gets the job details based on the job id.
+      operationId: get-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 19225
+                    name: covid testing multi status filter OTA
+                    description: ''
+                    status: CANCELLED
+                    retries: 1
+                    payload:
+                      type: host
+                      version: '1.7'
+                      command: null
+                      description: joe-test
+                      provider: null
+                      ayla_model: null
+                      property_name: null
+                      image_id: 5366
+                      from_version: null
+                      dealer_uuid: null
+                      facility_uuid: []
+                    type_id: 4
+                    filter:
+                      id: 23650
+                      name: covid test multi status filter
+                      description: null
+                      attributes: null
+                      dsns:
+                        match: []
+                        include:
+                        - AC000W000340688
+                        - AC000W000458117
+                        exclude: []
+                      properties:
+                      - key: Blue_LED
+                        value: '1'
+                        metadata:
+                        - key: ''
+                          value: null
+                        op: contain
+                      status: null
+                      oem: 0dfc7900
+                      oem_model: AylaShield
+                      device_metadata: null
+                      created_at: 2021-02-19T00:51:14+0000
+                      updated_at: 2021-02-19T00:51:14+0000
+                      filter_metadata: []
+                      oem_version: '1.6'
+                      match_oem_version: true
+                      provision_key: null
+                      user_uuid: null
+                      user_role: null
+                      dealer_uuid: null
+                      facility_uuids: []
+                    filter_name: covid test multi status filter
+                    user_uuid: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                    user_role: Ayla::Admin
+                    dealer_uuid: null
+                    schedule_type: IMMEDIATE
+                    started_at: 2023-10-19T05:46:44+0000
+                    stopped_at: 2024-05-30T01:25:29+0000
+                    created_at: 2021-02-19T00:51:15+0000
+                    updated_at: 2023-10-19T05:46:44+0000
+                    device_total: 2
+                    devices_processing: 0
+                    devices_succeed: 0
+                    devices_failed: 2
+                    job_metadata: []
+                    exec_method: ONE_TIME
+                    delivery_option: USER_CONSENT
+                    last_modified_by: Naresh Sugu
+                    from_version: '1.6'
+                    exclude_version: null
+                    oem_model: AylaShield
+                    image_id: 5366
+                    stage_config: null
+                    needs_action: false
+                    schedule: null
+                    last_scheduler_query_at: 2026-02-11T10:34:09+0000
+                    job_type: OTA
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 19225
+                    default: 0
+                  name:
+                    type: string
+                    example: covid testing multi status filter OTA
+                  description:
+                    type: string
+                    example: ''
+                  status:
+                    type: string
+                    example: CANCELLED
+                  retries:
+                    type: integer
+                    example: 1
+                    default: 0
+                  payload:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: host
+                      version:
+                        type: string
+                        example: '1.7'
+                      command: {}
+                      description:
+                        type: string
+                        example: joe-test
+                      provider: {}
+                      ayla_model: {}
+                      property_name: {}
+                      image_id:
+                        type: integer
+                        example: 5366
+                        default: 0
+                      from_version: {}
+                      dealer_uuid: {}
+                      facility_uuid:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  type_id:
+                    type: integer
+                    example: 4
+                    default: 0
+                  filter:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 23650
+                        default: 0
+                      name:
+                        type: string
+                        example: covid test multi status filter
+                      description: {}
+                      attributes: {}
+                      dsns:
+                        type: object
+                        properties:
+                          match:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+                          include:
+                            type: array
+                            items:
+                              type: string
+                              example: AC000W000340688
+                          exclude:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              example: Blue_LED
+                            value:
+                              type: string
+                              example: '1'
+                            metadata:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    example: ''
+                                  value: {}
+                            op:
+                              type: string
+                              example: contain
+                      status: {}
+                      oem:
+                        type: string
+                        example: 0dfc7900
+                      oem_model:
+                        type: string
+                        example: AylaShield
+                      device_metadata: {}
+                      created_at:
+                        type: string
+                        example: 2021-02-19T00:51:14+0000
+                      updated_at:
+                        type: string
+                        example: 2021-02-19T00:51:14+0000
+                      filter_metadata:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      oem_version:
+                        type: string
+                        example: '1.6'
+                      match_oem_version:
+                        type: boolean
+                        example: true
+                        default: true
+                      provision_key: {}
+                      user_uuid: {}
+                      user_role: {}
+                      dealer_uuid: {}
+                      facility_uuids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  filter_name:
+                    type: string
+                    example: covid test multi status filter
+                  user_uuid:
+                    type: string
+                    example: b02ce872-42d8-11f1-8aa5-f6a43ee69b74
+                  user_role:
+                    type: string
+                    example: Ayla::Admin
+                  dealer_uuid:
+                    type: string
+                  schedule_type:
+                    type: string
+                    example: IMMEDIATE
+                  started_at:
+                    type: string
+                    example: 2023-10-19T05:46:44+0000
+                  stopped_at:
+                    type: string
+                    example: 2024-05-30T01:25:29+0000
+                  created_at:
+                    type: string
+                    example: 2021-02-19T00:51:15+0000
+                  updated_at:
+                    type: string
+                    example: 2023-10-19T05:46:44+0000
+                  device_total:
+                    type: integer
+                    example: 2
+                    default: 0
+                  devices_processing:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_succeed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_failed:
+                    type: integer
+                    example: 2
+                    default: 0
+                  job_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  exec_method:
+                    type: string
+                    example: ONE_TIME
+                  delivery_option:
+                    type: string
+                    example: USER_CONSENT
+                  last_modified_by:
+                    type: string
+                    example: Naresh Sugu
+                  from_version:
+                    type: string
+                    example: '1.6'
+                  exclude_version:
+                    type: string
+                  oem_model:
+                    type: string
+                    example: AylaShield
+                  image_id:
+                    type: integer
+                    example: 5366
+                    default: 0
+                  stage_config:
+                    type: string
+                  needs_action:
+                    type: boolean
+                    example: false
+                    default: true
+                  schedule:
+                    type: string
+                  last_scheduler_query_at:
+                    type: string
+                    example: 2026-02-11T10:34:09+0000
+                  job_type:
+                    type: string
+                    example: OTA
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    put:
+      summary: Update job
+      description: 'This API updates a job. NOTE: A job cannot be updated once started.'
+      operationId: update-job-1
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: number
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type_id
+              - filter_id
+              - exec_method
+              properties:
+                name:
+                  type: string
+                  description: Job name.
+                type_id:
+                  type: integer
+                  description: 'Job type identifier number. Any one of the following: <br> 1: Set properties <br> 4: OTA <br> 5: File transfer'
+                  format: int32
+                filter_id:
+                  type: integer
+                  description: Unique filter identifier number.
+                  format: int32
+                exec_method:
+                  type: string
+                  description: 'Execution method: "ONE_TIME" or "CONTINUOUS".'
+                delivery_option:
+                  type: string
+                  description: This can be SYSTEM_PUSH  or USER_CONSENT.
+                description:
+                  type: string
+                  description: Short description about the job update.
+                job_metadata:
+                  properties:
+                    key:
+                      type: string
+                      description: Metadata key name.
+                    value:
+                      type: string
+                      description: Metadata key value.
+                  required: []
+                  type: object
+                  description: List of data objects.
+                retries:
+                  type: string
+                  description: Number of retry if one of the action of the device is failure. How many times should retry the action.
+                  default: '0'
+                action_payload:
+                  type: string
+                  description: An object that is used for job action, the payload depends on different type of action
+                  format: json
+      responses:
+        '200':
+          description: '200'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n   \"id\":8942,\n   \"name\":\"test-job\",\n   \"description\":\"\",\n   \"status\":\"CREATED\",\n   \"retries\":0,\n   \"payload\":null,\n   \"type_id\":4,\n   \"filter\":{\n      \"id\":1,\n      \"name\":\"FOTA Test\",\n      \"description\":\"Test OTA for sim7600\",\n      \"attributes\":[\n         {\n            \"key\":\"modulemaker_model\",\n            \"value\":\"sim7600\",\n            \"op\":\"=\"\n         },\n         {\n            \"key\":\"modulemaker_version\",\n            \"value\":\"1.0.0.0\",\n            \"op\":\"=\"\n         }\n      ],\n      \"dsns\":{\n         \"match\":null,\n         \"include\":null,\n         \"exclude\":null\n      },\n      \"properties\":[\n         \n      ],\n      \"status\":[\n         {\n            \"key\":\"connection_status\",\n            \"value\":\"Online\",\n            \"op\":\"=\"\n         }\n      ],\n      \"oem_model\":\"sim7600\",\n      \"device_metadata\":[\n         \n      ],\n      \"created_at\":\"2020-03-18T10:32:57+0000\",\n      \"updated_at\":\"2020-03-19T06:43:47+0000\",\n      \"filter_metadata\":[\n         \n      ],\n      \"oem_version\":null,\n      \"match_oem_version\":true,\n      \"provision_key\":null\n   },\n   \"filter_name\":\"FOTA Test\",\n   \"schedule_type\":\"IMMEDIATE\",\n   \"started_at\":null,\n   \"stopped_at\":null,\n   \"created_at\":\"2020-10-21T09:47:09+0000\",\n   \"updated_at\":\"2020-10-23T02:45:03+0000\",\n   \"device_total\":0,\n   \"devices_processing\":0,\n   \"devices_succeed\":0,\n   \"devices_failed\":0,\n   \"job_metadata\":[\n      \n   ],\n   \"exec_method\":\"CONTINUOUS\",\n   \"delivery_option\":\"SYSTEM_PUSH\",\n   \"last_modified_by\":\"ayla user\",\n   \"job_type\":\"OTA\"\n}"
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 8942
+                    default: 0
+                  name:
+                    type: string
+                    example: test-job
+                  description:
+                    type: string
+                    example: ''
+                  status:
+                    type: string
+                    example: CREATED
+                  retries:
+                    type: integer
+                    example: 0
+                    default: 0
+                  payload: {}
+                  type_id:
+                    type: integer
+                    example: 4
+                    default: 0
+                  filter:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                        default: 0
+                      name:
+                        type: string
+                        example: FOTA Test
+                      description:
+                        type: string
+                        example: Test OTA for sim7600
+                      attributes:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              example: modulemaker_model
+                            value:
+                              type: string
+                              example: sim7600
+                            op:
+                              type: string
+                              example: '='
+                      dsns:
+                        type: object
+                        properties:
+                          match: {}
+                          include: {}
+                          exclude: {}
+                      properties:
+                        type: array
+                      status:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              example: connection_status
+                            value:
+                              type: string
+                              example: Online
+                            op:
+                              type: string
+                              example: '='
+                      oem_model:
+                        type: string
+                        example: sim7600
+                      device_metadata:
+                        type: array
+                      created_at:
+                        type: string
+                        example: 2020-03-18T10:32:57+0000
+                      updated_at:
+                        type: string
+                        example: 2020-03-19T06:43:47+0000
+                      filter_metadata:
+                        type: array
+                      oem_version: {}
+                      match_oem_version:
+                        type: boolean
+                        example: true
+                        default: true
+                      provision_key: {}
+                  filter_name:
+                    type: string
+                    example: FOTA Test
+                  schedule_type:
+                    type: string
+                    example: IMMEDIATE
+                  started_at: {}
+                  stopped_at: {}
+                  created_at:
+                    type: string
+                    example: 2020-10-21T09:47:09+0000
+                  updated_at:
+                    type: string
+                    example: 2020-10-23T02:45:03+0000
+                  device_total:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_processing:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_succeed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_failed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  job_metadata:
+                    type: array
+                  exec_method:
+                    type: string
+                    example: CONTINUOUS
+                  delivery_option:
+                    type: string
+                    example: SYSTEM_PUSH
+                  last_modified_by:
+                    type: string
+                    example: ayla user
+                  job_type:
+                    type: string
+                    example: OTA
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '403':
+          description: '403'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Jobs
+    delete:
+      summary: Delete job
+      description: This API deletes a job.
+      operationId: delete-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/cancel:
+    post:
+      summary: Cancel job
+      description: This API stops a job.
+      operationId: cancel-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/copy:
+    post:
+      summary: Copy job
+      description: This API copies a job.
+      operationId: copy-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    id: 203551
+                    name: Copy - covid testing multi status filter OTA
+                    description: ''
+                    status: CREATED
+                    retries: 1
+                    payload:
+                      type: host
+                      version: '1.7'
+                      command: null
+                      description: joe-test
+                      provider: null
+                      ayla_model: null
+                      property_name: null
+                      image_id: 5366
+                      from_version: null
+                      dealer_uuid: null
+                      facility_uuid: []
+                    type_id: 4
+                    filter:
+                      id: 23650
+                      name: covid test multi status filter
+                      description: null
+                      attributes: null
+                      dsns:
+                        match: []
+                        include:
+                        - AC000W000340688
+                        - AC000W000458117
+                        exclude: []
+                      properties:
+                      - key: Blue_LED
+                        value: '1'
+                        metadata:
+                        - key: ''
+                          value: null
+                        op: contain
+                      status: null
+                      oem: 0dfc7900
+                      oem_model: AylaShield
+                      device_metadata: null
+                      created_at: 2021-02-19T00:51:14+0000
+                      updated_at: 2021-02-19T00:51:14+0000
+                      filter_metadata: []
+                      oem_version: '1.6'
+                      match_oem_version: true
+                      provision_key: null
+                      user_uuid: null
+                      user_role: null
+                      dealer_uuid: null
+                      facility_uuids: []
+                    filter_name: covid test multi status filter
+                    user_uuid: null
+                    user_role: null
+                    dealer_uuid: null
+                    schedule_type: IMMEDIATE
+                    started_at: null
+                    stopped_at: null
+                    created_at: 2026-04-29T10:00:17+0000
+                    updated_at: 2026-04-29T10:00:17+0000
+                    device_total: 0
+                    devices_processing: 0
+                    devices_succeed: 0
+                    devices_failed: 0
+                    job_metadata: []
+                    exec_method: ONE_TIME
+                    delivery_option: USER_CONSENT
+                    last_modified_by: Jennifer Griffin
+                    from_version: All
+                    exclude_version: null
+                    oem_model: AylaShield
+                    image_id: 5366
+                    stage_config: null
+                    needs_action: false
+                    schedule: null
+                    last_scheduler_query_at: 2026-04-29T10:00:17+0000
+                    job_type: OTA
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 203551
+                    default: 0
+                  name:
+                    type: string
+                    example: Copy - covid testing multi status filter OTA
+                  description:
+                    type: string
+                    example: ''
+                  status:
+                    type: string
+                    example: CREATED
+                  retries:
+                    type: integer
+                    example: 1
+                    default: 0
+                  payload:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: host
+                      version:
+                        type: string
+                        example: '1.7'
+                      command: {}
+                      description:
+                        type: string
+                        example: joe-test
+                      provider: {}
+                      ayla_model: {}
+                      property_name: {}
+                      image_id:
+                        type: integer
+                        example: 5366
+                        default: 0
+                      from_version: {}
+                      dealer_uuid: {}
+                      facility_uuid:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  type_id:
+                    type: integer
+                    example: 4
+                    default: 0
+                  filter:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 23650
+                        default: 0
+                      name:
+                        type: string
+                        example: covid test multi status filter
+                      description: {}
+                      attributes: {}
+                      dsns:
+                        type: object
+                        properties:
+                          match:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+                          include:
+                            type: array
+                            items:
+                              type: string
+                              example: AC000W000340688
+                          exclude:
+                            type: array
+                            items:
+                              type: object
+                              properties: {}
+                      properties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: string
+                              example: Blue_LED
+                            value:
+                              type: string
+                              example: '1'
+                            metadata:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: string
+                                    example: ''
+                                  value: {}
+                            op:
+                              type: string
+                              example: contain
+                      status: {}
+                      oem:
+                        type: string
+                        example: 0dfc7900
+                      oem_model:
+                        type: string
+                        example: AylaShield
+                      device_metadata: {}
+                      created_at:
+                        type: string
+                        example: 2021-02-19T00:51:14+0000
+                      updated_at:
+                        type: string
+                        example: 2021-02-19T00:51:14+0000
+                      filter_metadata:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                      oem_version:
+                        type: string
+                        example: '1.6'
+                      match_oem_version:
+                        type: boolean
+                        example: true
+                        default: true
+                      provision_key: {}
+                      user_uuid: {}
+                      user_role: {}
+                      dealer_uuid: {}
+                      facility_uuids:
+                        type: array
+                        items:
+                          type: object
+                          properties: {}
+                  filter_name:
+                    type: string
+                    example: covid test multi status filter
+                  user_uuid:
+                    type: string
+                  user_role:
+                    type: string
+                  dealer_uuid:
+                    type: string
+                  schedule_type:
+                    type: string
+                    example: IMMEDIATE
+                  started_at:
+                    type: string
+                  stopped_at:
+                    type: string
+                  created_at:
+                    type: string
+                    example: 2026-04-29T10:00:17+0000
+                  updated_at:
+                    type: string
+                    example: 2026-04-29T10:00:17+0000
+                  device_total:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_processing:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_succeed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  devices_failed:
+                    type: integer
+                    example: 0
+                    default: 0
+                  job_metadata:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+                  exec_method:
+                    type: string
+                    example: ONE_TIME
+                  delivery_option:
+                    type: string
+                    example: USER_CONSENT
+                  last_modified_by:
+                    type: string
+                    example: Jennifer Griffin
+                  from_version:
+                    type: string
+                    example: All
+                  exclude_version:
+                    type: string
+                  oem_model:
+                    type: string
+                    example: AylaShield
+                  image_id:
+                    type: integer
+                    example: 5366
+                    default: 0
+                  stage_config:
+                    type: string
+                  needs_action:
+                    type: boolean
+                    example: false
+                    default: true
+                  schedule:
+                    type: string
+                  last_scheduler_query_at:
+                    type: string
+                    example: 2026-04-29T10:00:17+0000
+                  job_type:
+                    type: string
+                    example: OTA
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/devices/{dsn}/details:
+    get:
+      summary: Get device status
+      description: This API returns the status details of a device.
+      operationId: get-device-status
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      - name: dsn
+        in: path
+        description: Unique device serial number.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    actions:
+                    - status: SENT
+                      action_content: Blue_LED
+                      created_at: 2021-02-24T16:15:58+0000
+                    - status: FAILED
+                      action_content: brightness
+                      created_at: 2021-02-24T16:15:58+,0000
+                    task_id: 13021
+                    job_type: SET_PROPERTY
+              schema:
+                type: object
+                properties:
+                  actions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          example: SENT
+                        action_content:
+                          type: string
+                          example: Blue_LED
+                        created_at:
+                          type: string
+                          example: 2021-02-24T16:15:58+0000
+                  task_id:
+                    type: integer
+                    example: 13021
+                    default: 0
+                  job_type:
+                    type: string
+                    example: SET_PROPERTY
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/devices_snapshot:
+    get:
+      summary: Get device snapshot
+      description: This API returns a list of devices.
+      operationId: get-device-snapshot
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    total: 2
+                    oem_model: AylaShield
+                    devices:
+                    - lifecycle: activated
+                      hwsig: 00480032-32354717-38303039
+                      connection_status: Offline
+                      connected_at: '2025-02-28 07:18:20'
+                      oem_model: AylaShield
+                      host_sw_version: null
+                      dsn: AC000W000458117
+                      sw_version: bc 2.11 10/15/19 14:18:25 ID c2d5f77
+                      status: CONSENT
+                    - connection_status: Offline
+                      oem_model: null
+                      dsn: AC000W000340688
+                      status: CONSENT
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 2
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 2
+                    default: 0
+                  oem_model:
+                    type: string
+                    example: AylaShield
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        lifecycle:
+                          type: string
+                          example: activated
+                        hwsig:
+                          type: string
+                          example: 00480032-32354717-38303039
+                        connection_status:
+                          type: string
+                          example: Offline
+                        connected_at:
+                          type: string
+                          example: '2025-02-28 07:18:20'
+                        oem_model:
+                          type: string
+                          example: AylaShield
+                        host_sw_version: {}
+                        dsn:
+                          type: string
+                          example: AC000W000458117
+                        sw_version:
+                          type: string
+                          example: bc 2.11 10/15/19 14:18:25 ID c2d5f77
+                        status:
+                          type: string
+                          example: CONSENT
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: string
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 2
+                    default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/ota:
+    post:
+      summary: Set OTA action
+      description: This API is deprecated. This API sets or updates the OTA action for the specified job.
+      operationId: set-ota-action
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - type
+              - version
+              properties:
+                type:
+                  type: string
+                  description: 'OTA type: "host" or "module".'
+                ayla_model:
+                  type: string
+                  description: Ayla model name. **Mandatory** if type=module.
+                version:
+                  type: string
+                  description: Image version.
+                description:
+                  type: string
+                  description: User friendly description.
+                command:
+                  type: string
+                  description: Additional string type information passing into device.
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    type: host
+                    version: '1.7'
+                    command: null
+                    description: null
+                    provider: null
+                    ayla_model: null
+                    property_name: null
+                    image_id: 5366
+                    from_version: null
+                    dealer_uuid: null
+                    facility_uuid: []
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: host
+                  version:
+                    type: string
+                    example: '1.7'
+                  command:
+                    type: string
+                  description:
+                    type: string
+                  provider:
+                    type: string
+                  ayla_model:
+                    type: string
+                  property_name:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5366
+                    default: 0
+                  from_version: {}
+                  dealer_uuid:
+                    type: string
+                  facility_uuid:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    get:
+      summary: Get OTA action
+      description: This API gets the OTA action for the specified job.
+      operationId: get-ota-action
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    type: host
+                    version: '1.7'
+                    command: null
+                    description: joe-test
+                    provider: null
+                    ayla_model: null
+                    property_name: null
+                    image_id: 5366
+                    from_version: null
+                    dealer_uuid: null
+                    facility_uuid: []
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: host
+                  version:
+                    type: string
+                    example: '1.7'
+                  command:
+                    type: string
+                  description:
+                    type: string
+                    example: joe-test
+                  provider:
+                    type: string
+                  ayla_model:
+                    type: string
+                  property_name:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5366
+                    default: 0
+                  from_version: {}
+                  dealer_uuid: {}
+                  facility_uuid:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/properties:
+    post:
+      summary: Set properties for job
+      description: This API sets the properties for a job that is configured to execute a SET_PROPERTY action.
+      operationId: set-properties-for-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    properties:
+                    - key: cmd
+                      value: Echo to log
+                    - key: input
+                      value: '5'
+              schema:
+                type: object
+                properties:
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: cmd
+                        value:
+                          type: string
+                          example: Echo to log
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    get:
+      summary: Get properties for job
+      description: This API returns the properties for the job.
+      operationId: get-properties-for-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    properties:
+                    - key: input
+                      value: '5'
+                    - key: cmd
+                      value: Echo to log
+              schema:
+                type: object
+                properties:
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: input
+                        value:
+                          type: string
+                          example: '5'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/schedule:
+    post:
+      summary: Create job schedule
+      description: This API adds a schedule to a job.
+      operationId: create-job-schedule
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - RAW_BODY
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"name\": \"Name\",\n  \"timezone\": \"UTC\",\n  \"start_time\": \"2021-03-16 07:16:53\",\n  \"end_time\": \"2021-03-17 23:59:59\",\n  \"schedule_type\": \"WEEKLY\",\n  \"repeats\": [\n    {\n      \"start_time\": {\n        \"month_of_year\": [\n          10\n        ],\n        \"day_of_month\": [\n          1\n        ],\n        \"day_of_week\": [\n          7\n        ],\n        \"time\": \"00:00\"\n      },\n      \"stop_time\": {\n        \"month_of_year\": [\n          10\n        ],\n        \"day_of_month\": [\n          1\n        ],\n        \"day_of_week\": [\n          7\n        ],\n        \"time\": \"23:59\"\n      }\n    }\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Name
+                  timezone:
+                    type: string
+                    example: UTC
+                  start_time:
+                    type: string
+                    example: '2021-03-16 07:16:53'
+                  end_time:
+                    type: string
+                    example: '2021-03-17 23:59:59'
+                  schedule_type:
+                    type: string
+                    example: WEEKLY
+                  repeats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start_time:
+                          type: object
+                          properties:
+                            month_of_year:
+                              type: array
+                              items:
+                                type: integer
+                                example: 10
+                                default: 0
+                            day_of_month:
+                              type: array
+                              items:
+                                type: integer
+                                example: 1
+                                default: 0
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 7
+                                default: 0
+                            time:
+                              type: string
+                              example: 00:00
+                        stop_time:
+                          type: object
+                          properties:
+                            month_of_year:
+                              type: array
+                              items:
+                                type: integer
+                                example: 10
+                                default: 0
+                            day_of_month:
+                              type: array
+                              items:
+                                type: integer
+                                example: 1
+                                default: 0
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 7
+                                default: 0
+                            time:
+                              type: string
+                              example: '23:59'
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    get:
+      summary: Get schedule
+      description: This API returns the schedule of the job.
+      operationId: get-schedule
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    name: test_ayla_staff_icc_ayla_module_scheduled_job
+                    timezone: UTC
+                    repeats:
+                    - start_time:
+                        time: 00:00
+                        day_of_week:
+                        - 2
+                      stop_time:
+                        time: '23:59'
+                        day_of_week:
+                        - 2
+                    start_time: '2026-04-07 00:00:00'
+                    end_time: '2026-04-07 23:59:00'
+                    schedule_type: WEEKLY
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: test_ayla_staff_icc_ayla_module_scheduled_job
+                  timezone:
+                    type: string
+                    example: UTC
+                  repeats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start_time:
+                          type: object
+                          properties:
+                            time:
+                              type: string
+                              example: 00:00
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 2
+                                default: 0
+                        stop_time:
+                          type: object
+                          properties:
+                            time:
+                              type: string
+                              example: '23:59'
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 2
+                                default: 0
+                  start_time:
+                    type: string
+                    example: '2026-04-07 00:00:00'
+                  end_time:
+                    type: string
+                    example: '2026-04-07 23:59:00'
+                  schedule_type:
+                    type: string
+                    example: WEEKLY
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Jobs
+    delete:
+      summary: Delete job schedule
+      description: This API removes a schedule from a job.
+      operationId: delete-job-schedule
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '204':
+          description: No Content
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{jobId}/start:
+    post:
+      summary: Start job
+      description: This API starts a job.
+      operationId: start-job
+      parameters:
+      - name: jobId
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/consents:
+    get:
+      summary: Get user consent
+      description: This API gets all the running user consent jobs with the same job ID type from the target job (specified job ID).
+      operationId: get-user-consent
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total:
+                    type: integer
+                    example: 0
+                    default: 0
+                  previous_page:
+                    type: integer
+                  next_page:
+                    type: integer
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 0
+                    default: 0
+                  jobs:
+                    type: array
+                    items:
+                      type: object
+                      properties: {}
+              examples:
+                OK:
+                  summary: OK
+                  value:
+                    total: 0
+                    previous_page: null
+                    next_page: null
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 0
+                    jobs: []
+          description: OK
+        '201':
+          description: '201'
+          content:
+            application/json: {}
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/delete_ota_command:
+    delete:
+      summary: Remove OTA command
+      description: This API removes the OTA command queued for the specified job for the DSNs that are in the "Queued" state. This API can be used only for the active jobs.
+      operationId: remove-ota-command
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                devices:
+                  type: array
+                  description: List of DSNs.
+                  items:
+                    type: string
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"errors\": []\n}"
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/file_property:
+    post:
+      summary: Set file property
+      description: This API sets file property for the mentioned job.
+      operationId: set-file-property
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  properties:
+                    key:
+                      type: string
+                      description: Property name.
+                    value:
+                      type: string
+                      description: Property value.
+                  required: []
+                  type: object
+      responses:
+        '201':
+          description: '201'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"properties\":[\n{\n\"key\":\" string_input_tp_0\",\n\"value\":\"Echo to log\"\n}\n]\n}"
+              schema:
+                type: object
+                properties:
+                  properties:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          example: ' string_input_tp_0'
+                        value:
+                          type: string
+                          example: Echo to log
+        '401':
+          description: '401'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: '{}'
+              schema:
+                type: object
+                properties: {}
+        '404':
+          description: '404'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '422':
+          description: '422'
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+      deprecated: false
+      tags:
+      - Jobs
+    get:
+      summary: Get file property
+      description: This API gets file property for the mentioned job.
+      operationId: set-file-property-1
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          content: {}
+          description: OK
+        '401':
+          content: {}
+          description: Unauthorized
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/jobreport:
+    get:
+      summary: Get job report details
+      description: This API returns job report details based on the job_id.
+      operationId: get-job-report-details
+      parameters:
+      - name: ota_status
+        in: query
+        description: 'Status of the OTA.<br>Possible values can be:<br>processing, failed, succeeded, queued, or waiting. <br>NOTE: Processing will be the aggregation of queued and waiting.'
+        schema:
+          type: string
+      - name: task_id
+        in: query
+        description: Unique task identifier. Data will be fetched based on this task ID.
+        schema:
+          type: integer
+          format: int32
+      - name: page
+        in: query
+        description: 'Page number. Default value: 1.'
+        schema:
+          type: integer
+          format: int32
+      - name: per_page
+        in: query
+        description: 'Max number of records per page.<br>Default: 10. Minimum: 5. Maximum: 100.'
+        schema:
+          type: integer
+          format: int32
+      - name: sort_by
+        in: query
+        description: 'Field name on which to sort.<br> Possible values can be: <br>DSN<br>Task_ID<br>Ayla_Module<br>Ayla_Module_Version<br>Current_Host_Software_Version<br>Queued_At<br>Last_connected_At<br>Failure_Reason<br>Updated_At<br><br>NOTE: All the above are case-insensitive.'
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: Ascending (asc) or descending (desc).
+        schema:
+          type: string
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    job_id: 203069
+                    previous_page: null
+                    next_page: 2
+                    current_page_number: 1
+                    start_count_on_page: 1
+                    end_count_on_page: 10
+                    total: 35
+                    devices:
+                    - dsn: AC000W000340524
+                      ayla_module: AY001MTC1
+                      ayla_module_version: bc 1.9.17 12/08/15 22:06:35 ID 9b4b7c4
+                      current_host_software_version: demo_dp 0.10
+                      queued_at: null
+                      last_connected_at: 2018-02-08T15:01:27+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:01+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: AC000W000340743
+                      ayla_module: AY001MTC1
+                      ayla_module_version: bc 1.9.17 12/08/15 22:06:35 ID 9b4b7c4
+                      current_host_software_version: demo_dp 0.10
+                      queued_at: null
+                      last_connected_at: 2017-11-27T03:48:08+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:01+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: AC000W000340688
+                      ayla_module: AY001MTC1
+                      ayla_module_version: bc 2.11.2 10/04/21 17:13:00 ID 4e66ae3
+                      current_host_software_version: 'demo_dp 1.3 '
+                      queued_at: null
+                      last_connected_at: 2024-05-23T13:14:58+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:01+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: AC000W006310822
+                      ayla_module: AY008MVL1
+                      ayla_module_version: ADA 1.3.7-beta wmsdk-3.4 2018-09-06 18:15:52 f50766e
+                      current_host_software_version: '1.0'
+                      queued_at: null
+                      last_connected_at: 2019-01-11T18:04:01+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:01+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: TESTDSN_4061771_003
+                      ayla_module: AY001MSL1
+                      ayla_module_version: '1.0'
+                      current_host_software_version: '10'
+                      queued_at: null
+                      last_connected_at: 2024-09-17T07:39:20+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:02+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: TESTDSN_4534622_005
+                      ayla_module: AY001MTC1
+                      ayla_module_version: '1.0'
+                      current_host_software_version: '10'
+                      queued_at: null
+                      last_connected_at: 2024-11-28T09:22:26+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:02+0000
+                      task_id: 172700
+                      status: WAITING
+                    - dsn: TESTDSN_498341_001
+                      ayla_module: AY001MRT1
+                      ayla_module_version: 9.6.5.80
+                      current_host_software_version: null
+                      queued_at: null
+                      last_connected_at: 2024-09-17T07:40:16+0000
+                      failure_reason: null
+                      updated_at: 2026-04-23T21:22:02+0000
+                      task_id: 172700
+                      status: WAITING
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: integer
+                    example: 203069
+                    default: 0
+                  previous_page:
+                    type: string
+                  next_page:
+                    type: integer
+                    example: 2
+                    default: 0
+                  current_page_number:
+                    type: integer
+                    example: 1
+                    default: 0
+                  start_count_on_page:
+                    type: integer
+                    example: 1
+                    default: 0
+                  end_count_on_page:
+                    type: integer
+                    example: 10
+                    default: 0
+                  total:
+                    type: integer
+                    example: 35
+                    default: 0
+                  devices:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        dsn:
+                          type: string
+                          example: AC000W000340524
+                        ayla_module:
+                          type: string
+                          example: AY001MTC1
+                        ayla_module_version:
+                          type: string
+                          example: bc 1.9.17 12/08/15 22:06:35 ID 9b4b7c4
+                        current_host_software_version:
+                          type: string
+                          example: demo_dp 0.10
+                        queued_at:
+                          type: string
+                        last_connected_at:
+                          type: string
+                          example: 2018-02-08T15:01:27+0000
+                        failure_reason:
+                          type: string
+                        updated_at:
+                          type: string
+                          example: 2026-04-23T21:22:01+0000
+                        task_id:
+                          type: integer
+                          example: 172700
+                          default: 0
+                        status:
+                          type: string
+                          example: WAITING
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/jobreport/download:
+    get:
+      summary: Download job report
+      description: This API downloads job report based on the job_id.
+      operationId: download-job-report
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      responses:
+        '202':
+          description: Accepted
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: ''
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/jobreport/retry_ota:
+    post:
+      summary: Retry selected devices
+      description: This API is used to retry the selected DSN(s). This API can be used only for active/finished jobs.
+      operationId: retry-selected-devices
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier. Job for which device needs to be removed.
+        schema:
+          type: integer
+          format: int32
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                devices:
+                  type: array
+                  description: List of DSNs to be removed from the job.
+                  items:
+                    type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n    \"errors\": []\n}"
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/ota:
+    put:
+      summary: Update OTA job by job ID
+      description: This API updates the OTA action. This API can be used only for new jobs.
+      operationId: update-ota-job-by-job-id
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                version:
+                  type: string
+                  description: 'This is the target-version (OTA version).<br> Example: <br>{“version”:”appd_demo 1.1.1-beta 2016-11-25 04:05:47 /”}'
+                property_name:
+                  type: string
+                  description: 'Name of the property. <br>NOTE: It is mandatory if the image is multi-component.'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    type: host
+                    version: '1.7'
+                    description: null
+                    property_name: null
+                    image_id: 5366
+              schema:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: host
+                  version:
+                    type: string
+                    example: '1.7'
+                  description:
+                    type: string
+                  property_name:
+                    type: string
+                  image_id:
+                    type: integer
+                    example: 5366
+                    default: 0
+        '400':
+          content: {}
+          description: Bad Request
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/schedule:
+    put:
+      summary: Edit schedule
+      description: This API is used to edit schedule values.
+      operationId: edit-schedule
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                RAW_BODY:
+                  type: string
+                  format: json
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value:
+                    name: test_ayla_staff_icc_ayla_module_scheduled_job
+                    timezone: UTC
+                    repeats:
+                    - start_time:
+                        time: 00:00
+                        day_of_week:
+                        - 2
+                      stop_time:
+                        time: '23:59'
+                        day_of_week:
+                        - 2
+                    start_time: '2026-04-07 00:00:00'
+                    end_time: '2026-04-07 23:59:00'
+                    schedule_type: WEEKLY
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: test_ayla_staff_icc_ayla_module_scheduled_job
+                  timezone:
+                    type: string
+                    example: UTC
+                  repeats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        start_time:
+                          type: object
+                          properties:
+                            time:
+                              type: string
+                              example: 00:00
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 2
+                                default: 0
+                        stop_time:
+                          type: object
+                          properties:
+                            time:
+                              type: string
+                              example: '23:59'
+                            day_of_week:
+                              type: array
+                              items:
+                                type: integer
+                                example: 2
+                                default: 0
+                  start_time:
+                    type: string
+                    example: '2026-04-07 00:00:00'
+                  end_time:
+                    type: string
+                    example: '2026-04-07 23:59:00'
+                  schedule_type:
+                    type: string
+                    example: WEEKLY
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+  /jobs/{job_id}/tasks:
+    get:
+      summary: Get all tasks
+      description: This API gets all the tasks associated with the job_id.
+      operationId: get-all-tasks
+      parameters:
+      - name: job_id
+        in: path
+        description: Unique job identifier.
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              examples:
+                Result:
+                  value: "{\n  \"job_id\" : 8,\n  \"tasks\" :[\n    144,621,188\n  ]\n}"
+              schema:
+                type: object
+                properties:
+                  job_id:
+                    type: integer
+                    example: 8
+                    default: 0
+                  tasks:
+                    type: array
+                    items:
+                      type: integer
+                      example: 144
+                      default: 0
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+        '422':
+          content: {}
+          description: Unprocessable Entity
+      deprecated: false
+      tags:
+      - Jobs
+    servers:
+    - url: https://icc-dev.aylanetworks.com/icc/v1/
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-refined-from:
+- ayla-networks-iot-command-center-openapi.yml
+- ayla-networks-iot-command-center-v2-openapi.yml
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-filter-1.md
+  - https://docs.aylanetworks.com/reference/delete-filter-copy.md
+  - https://docs.aylanetworks.com/reference/get-associated-topic.md
+  - https://docs.aylanetworks.com/reference/get-filters-1.md
+  - https://docs.aylanetworks.com/reference/get-filters-by-uuid.md
+  - https://docs.aylanetworks.com/reference/get-mqtt-credentials.md
+  - https://docs.aylanetworks.com/reference/update-filter-1.md
+  merge:
+    pages: 7
+    deduped: 6
+    conflicts_kept_first: 0

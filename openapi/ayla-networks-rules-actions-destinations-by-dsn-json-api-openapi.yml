@@ -1,0 +1,85 @@
+openapi: 3.2.0
+info:
+  title: rule-service Rules Actions Destinations By Dsn.json API
+  version: '1.0'
+servers:
+- url: https://rulesservice-dev.aylanetworks.com/rulesservice/v1/
+security:
+- sec0: []
+tags:
+- name: Rules Actions Destinations By Dsn.json
+paths:
+  /rules_actions_destinations_by_dsn.json:
+    delete:
+      summary: Delete rules actions by DSN
+      description: This API deletes rules actions and destinations associated with a specified DSN.
+      operationId: delete-rule-actions-by-dsn
+      parameters:
+      - name: dsn
+        in: query
+        description: Device serial number.
+        required: true
+        schema:
+          type: string
+      - name: oem_id
+        in: query
+        description: OEM ID.
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          content: {}
+          description: No Content
+        '401':
+          content: {}
+          description: Unauthorized
+        '403':
+          content: {}
+          description: Forbidden
+        '404':
+          content: {}
+          description: Not Found
+      deprecated: false
+      tags:
+      - Rules Actions Destinations By Dsn.json
+components:
+  securitySchemes:
+    sec0:
+      type: apiKey
+      in: header
+      name: Authorization
+      x-default: auth_token
+x-readme-fauxas: true
+x-provenance:
+  method: searched
+  source: https://docs.aylanetworks.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.aylanetworks.com/reference/create-action.md
+  - https://docs.aylanetworks.com/reference/create-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/create-rule.md
+  - https://docs.aylanetworks.com/reference/create-rules-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-action.md
+  - https://docs.aylanetworks.com/reference/delete-actions-in-bulk.md
+  - https://docs.aylanetworks.com/reference/delete-rule-1.md
+  - https://docs.aylanetworks.com/reference/delete-rule-action.md
+  - https://docs.aylanetworks.com/reference/delete-rule-actions-by-dsn.md
+  - https://docs.aylanetworks.com/reference/delete-rule.md
+  - https://docs.aylanetworks.com/reference/delete-rules-actions-by-dsn-user-uuid.md
+  - https://docs.aylanetworks.com/reference/get-action-types.md
+  - https://docs.aylanetworks.com/reference/get-action.md
+  - https://docs.aylanetworks.com/reference/get-actions.md
+  - https://docs.aylanetworks.com/reference/get-diagnostic-states.md
+  - https://docs.aylanetworks.com/reference/get-rule-actions.md
+  - https://docs.aylanetworks.com/reference/get-rule-devices.md
+  - https://docs.aylanetworks.com/reference/get-rule.md
+  - https://docs.aylanetworks.com/reference/get-rules.md
+  - https://docs.aylanetworks.com/reference/update-an-action.md
+  - https://docs.aylanetworks.com/reference/update-rule.md
+  merge:
+    pages: 21
+    deduped: 20
+    conflicts_kept_first: 0
