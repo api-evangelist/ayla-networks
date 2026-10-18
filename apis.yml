@@ -125,6 +125,8 @@ apis:
   name: Ayla Networks Apiv1 API
   description: The Apiv1 API from Ayla Networks — 2 operation(s) for apiv1.
   tags:
+  - ApiV1
+  tags_raw:
   - Apiv1
   properties:
   - type: OpenAPI
@@ -150,6 +152,8 @@ apis:
   name: Ayla Networks Collections API
   description: The Collections API from Ayla Networks — 22 operation(s) for collections.
   tags:
+  - Collection
+  tags_raw:
   - Collections
   properties:
   - type: OpenAPI
@@ -183,6 +187,8 @@ apis:
   name: Ayla Networks Destinations API
   description: The Destinations API from Ayla Networks — 3 operation(s) for destinations.
   tags:
+  - Destination
+  tags_raw:
   - Destinations
   properties:
   - type: OpenAPI
@@ -240,6 +246,8 @@ apis:
   name: Ayla Networks Files API
   description: The Files API from Ayla Networks — 5 operation(s) for files.
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -265,6 +273,8 @@ apis:
   name: Ayla Networks Groups API
   description: The Groups API from Ayla Networks — 5 operation(s) for groups.
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -289,6 +299,8 @@ apis:
   name: Ayla Networks Jobs API
   description: The Jobs API from Ayla Networks — 21 operation(s) for jobs.
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -321,6 +333,8 @@ apis:
   name: Ayla Networks Notifications API
   description: The Notifications API from Ayla Networks — 3 operation(s) for notifications.
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -329,6 +343,8 @@ apis:
   name: Ayla Networks Oems API
   description: The Oems API from Ayla Networks — 13 operation(s) for oems.
   tags:
+  - OEMS
+  tags_raw:
   - Oems
   properties:
   - type: OpenAPI
@@ -345,6 +361,8 @@ apis:
   name: Ayla Networks Otas API
   description: The Otas API from Ayla Networks — 1 operation(s) for otas.
   tags:
+  - OTAs
+  tags_raw:
   - Otas
   properties:
   - type: OpenAPI
@@ -456,6 +474,8 @@ apis:
   name: Ayla Networks Schedules API
   description: The Schedules API from Ayla Networks — 5 operation(s) for schedules.
   tags:
+  - Schedule
+  tags_raw:
   - Schedules
   properties:
   - type: OpenAPI
@@ -528,6 +548,8 @@ apis:
   name: Ayla Networks Users API
   description: The Users API from Ayla Networks — 34 operation(s) for users.
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
