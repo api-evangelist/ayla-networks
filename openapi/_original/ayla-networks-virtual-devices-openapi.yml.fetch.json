@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.aylanetworks.com/openapi/virtual-devices.json",
+ "requested_url": "https://docs.aylanetworks.com/openapi/virtual-devices.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 1305,
+ "sha256": "c0d6eac30bda61ffd0558709fb6f101e309c46c1f14648f01a35b877d756b6fc",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}

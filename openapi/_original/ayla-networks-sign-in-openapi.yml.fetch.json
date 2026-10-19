@@ -1,0 +1,12 @@
+{
+ "url": "https://docs.aylanetworks.com/openapi/sign-in.json",
+ "requested_url": "https://docs.aylanetworks.com/openapi/sign-in.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 1843,
+ "sha256": "f9f8723938a86dbfc32db36ca2f20dc0d95f1572781d0b6da9bdc1b3f2403415",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 1.0), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
